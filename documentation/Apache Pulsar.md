@@ -7,14 +7,20 @@
 
 - messages will be retained by Pulsar, even if the consumer gets disconnected (https://pulsar.apache.org/docs/en/concepts-messaging/)
 
-### Architecture Overview (https://pulsar.apache.org/docs/en/concepts-architecture-overview/)
+## Architecture Overview (https://pulsar.apache.org/docs/en/concepts-architecture-overview/)
 A Pulsar instance is composed of one or more Pulsar clusters the cluster contains:
  - Brokers
  - Bookkeeper
  - Zookeeper
 
-#### Brokers
+### Brokers
 - stateless component
 runs:
     - HTTP server that exposes a REST API 
     - dispatcher, which is an asynchronous TCP server for all data transfers
+
+### Bookkeeper
+Used for persistent message storage
+
+### Zookeeper 
+ZooKeeper cluster called the configuration store handles coordination tasks involving multiple clusters
