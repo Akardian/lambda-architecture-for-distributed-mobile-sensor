@@ -13,11 +13,9 @@ Quality Goals {#_quality_goals}
 Stakeholders {#_stakeholders}
 ------------
 
-| Role/Name | Contact |
-|-----------|---------|
-| *\<Role-1\> | *\<Contact-1\>* |
-|-------------|-----------------|
-| *           |                 |
+| Role/Name  | Contact         |
+|------------|-----------------|
+| \<Role-1\> | *\<Contact-1\>* |
 
 Architecture Constraints {#section-architecture-constraints}
 ========================
