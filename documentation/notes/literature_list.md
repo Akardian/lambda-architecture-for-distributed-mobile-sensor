@@ -1,4 +1,6 @@
- Batch Layer
+# Literature list
+
+Batch Layer
  - https://hadoop.apache.org/
  - https://en.wikipedia.org/wiki/Hadoop
  
@@ -35,6 +37,9 @@
  
  Kafka
  - https://kafka.apache.org/
+ 
+ Pulsar
+ - https://pulsar.apache.org/
  
  NoSQL DB
  - http://cassandra.apache.org/
