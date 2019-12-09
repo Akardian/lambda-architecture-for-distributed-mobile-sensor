@@ -37,9 +37,13 @@ Batch Layer
  
  Kafka
  - https://kafka.apache.org/
+
+- Lessons learned form Kafka in production: https://youtu.be/1vLMuWsfMcA
  
  Pulsar
  - https://pulsar.apache.org/
+
+- A tour of Apache Pulsar - Jowanza Joseph: https://youtu.be/7h7hA7APa5Y
  
  NoSQL DB
  - http://cassandra.apache.org/
