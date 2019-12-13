@@ -24,13 +24,23 @@ Batch Layer
  Other
  - https://en.wikipedia.org/wiki/Apache_License_2.0
  
- Lambda
+ Lambda 
  - Big Data Principles and Best Practices of Scalable Realtime Data Systems - Nathan Marz, James Warren
+
+- Deconstructing the Lambda Architecture: An Experience Report
+- https://ieeexplore.ieee.org/abstract/document/8712381
+- Implementation of Lambda Architecture: A Restaurant Recommender System over Apache Mesos
+- https://ieeexplore.ieee.org/document/7921013
+- Comparison of MongoDB and Cassandra Databases for supporting Open-Source Platforms tailored to Spectrum Monitoring as-a-Service
+- https://ieeexplore.ieee.org/document/8844790
+- Apache storm based on topology for real-time processing of streaming data from social networks
+- https://ieeexplore.ieee.org/document/7583573
  
  - https://en.wikipedia.org/wiki/Lambda_architecture
  - https://dzone.com/articles/lambda-architecture-with-apache-spark
  - https://towardsdatascience.com/lambda-architecture-how-to-build-a-big-data-pipeline-part-1-8b56075e83fe
  - https://databricks.com/glossary/lambda-architecture
+ - https://proceedings.ictinnovations.org/attachment/paper/299/lambda-architecture-for-real-time-big-data-analytic.pdf
  
  HDFS
  - https://searchdatamanagement.techtarget.com/definition/Hadoop-Distributed-File-System-HDFS
