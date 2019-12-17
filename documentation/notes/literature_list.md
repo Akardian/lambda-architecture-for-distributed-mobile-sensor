@@ -26,6 +26,7 @@ Batch Layer
  
  Lambda 
  - Big Data Principles and Best Practices of Scalable Realtime Data Systems - Nathan Marz, James Warren
+ - http://nathanmarz.com/about/
 
 - Deconstructing the Lambda Architecture: An Experience Report
 - https://ieeexplore.ieee.org/abstract/document/8712381
