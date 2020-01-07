@@ -59,6 +59,9 @@ Batch Layer
  NoSQL DB
  - http://cassandra.apache.org/
 
+Arc42
+- https://docs.arc42.org/home/
+
 Abstract 
 - https://writingcenter.gmu.edu/guides/writing-an-abstract
  

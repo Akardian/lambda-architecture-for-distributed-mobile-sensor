@@ -8,10 +8,10 @@ In "Internet of Things" setups large amounts of data are generate from sensors a
 
 Requirements Overview {#_requirements_overview}
 ---------------------
-    -Design and build a Lambda architecture
+    - Design and build a Lambda architecture
         - Batch layer
-        - speed layer
-        - serving layer
+        - Speed layer
+        - Serving layer
     - Compare messaging service Kafka and Pulsar
 
 Quality Goals {#_quality_goals}
@@ -26,6 +26,9 @@ Stakeholders {#_stakeholders}
 
 Architecture Constraints {#section-architecture-constraints}
 ========================
+| Constraint                          | Explanation                             |
+|-------------------------------------|-----------------------------------------|
+| Data Transfer with Kafka and Pulsar | The task is to compare Pulsar and Kafka |
 
 System Scope and Context {#section-system-scope-and-context}
 ========================
