@@ -6,7 +6,7 @@ Introduction and Goals
 In "Internet of Things" setups large amounts of data are generate from sensors and communication. The large amount of data results in a high complexity which makes the data hard to handle and complex to analyse. Nathan Marz developed the lambda architecture to reduce the rising complexity. The lambda architecture duplicates the incoming data onto 2 path. The Batch layer and speed layer, this reduces the complexity of each path. The architecture is scalable and distributed which makes a good messenger important. We compared the wide spread Apache Kafka with new Apache Pulsar to find the differences between the messengers. 
 (TODO: Research Results)
 
-Requirements Overview {#_requirements_overview}
+Requirements Overview
 ---------------------
     - Design and build a Lambda architecture
         - Batch layer
@@ -14,33 +14,38 @@ Requirements Overview {#_requirements_overview}
         - Serving layer
     - Compare messaging service Kafka and Pulsar
 
-Quality Goals {#_quality_goals}
+Quality Goals
 -------------
 - working Lambda architecture
 - comparative test for Kafka and Pulsar
 
-Stakeholders {#_stakeholders}
+Stakeholders
 ------------
 
 | Role/Name  | Contact         |
 |------------|-----------------|
 | \<Role-1\> | *\<Contact-1\>* |
 
-Architecture Constraints {#section-architecture-constraints}
+Architecture Constraints
 ========================
 | Constraint                          | Explanation                             |
 |-------------------------------------|-----------------------------------------|
 | Data Transfer with Kafka and Pulsar | The task is to compare Pulsar and Kafka |
 
-System Scope and Context {#section-system-scope-and-context}
+System Scope and Context
 ========================
 
-Business Context {#_business_context}
+Business Context
 ----------------
 
 ![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/Business_context.png "Business Context")
 
-**\<optionally: Explanation of external domain interfaces\>**
+| Component           | Explanation                                                    |
+|---------------------|----------------------------------------------------------------|
+| Mobile Sensors      | Provides sonsore data for the lambda architecktuer             |
+| Test data generator | Generates test data for a comparation between Kafka and Pulsar |
+| User                | Views the data the lambda architecture provides                |
+
 
 Technical Context {#_technical_context}
 -----------------
