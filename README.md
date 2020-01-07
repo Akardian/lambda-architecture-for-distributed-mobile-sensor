@@ -16,6 +16,8 @@ Requirements Overview {#_requirements_overview}
 
 Quality Goals {#_quality_goals}
 -------------
+- working Lambda architecture
+- comparative test for Kafka and Pulsar
 
 Stakeholders {#_stakeholders}
 ------------
@@ -36,7 +38,7 @@ System Scope and Context {#section-system-scope-and-context}
 Business Context {#_business_context}
 ----------------
 
-**\<Diagram or Table\>**
+![alt text](https://github.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/tree/master/images/Business_context.png "Business Context")
 
 **\<optionally: Explanation of external domain interfaces\>**
 
