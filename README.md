@@ -49,7 +49,7 @@ Business Context
 
 Technical Context
 -----------------
-![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/Context.png "Business Context")
+![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/TechnicalContext.png "Technical Context")
 
 **\<Mapping Input/Output to Channels\>**
 
