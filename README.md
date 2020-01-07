@@ -3,10 +3,16 @@ Lambda architecture for distributed mobile sensor: Pulsar vs Kafka
 
 Introduction and Goals
 ====================
-In "Internet of Things" setups large amounts of data are generate from sensors and communication. The large amount of data results in a high complexity which makes the data hard to handle and complex to analyse. Nathan Marz developed the lambda architecture to reduce the rising complexity. The lambda architecture duplicates the incoming data onto 2 path. The Batch layer and speed layer, this reduces the complexity of each path. The architecture is scalable and distributed which makes a good messenger important. We compared the wide spread Apache Kafka with new Apache Pulsar to find the differences between the messengers. (TODO: Research Results)
+In "Internet of Things" setups large amounts of data are generate from sensors and communication. The large amount of data results in a high complexity which makes the data hard to handle and complex to analyse. Nathan Marz developed the lambda architecture to reduce the rising complexity. The lambda architecture duplicates the incoming data onto 2 path. The Batch layer and speed layer, this reduces the complexity of each path. The architecture is scalable and distributed which makes a good messenger important. We compared the wide spread Apache Kafka with new Apache Pulsar to find the differences between the messengers. 
+(TODO: Research Results)
 
 Requirements Overview {#_requirements_overview}
 ---------------------
+    -Design and build a Lambda architecture
+        - Batch layer
+        - speed layer
+        - serving layer
+    - Compare messaging service Kafka and Pulsar
 
 Quality Goals {#_quality_goals}
 -------------
