@@ -38,7 +38,7 @@ System Scope and Context
 Business Context
 ----------------
 
-![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/Business_context.png "Business Context")
+![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/BusinessContext.png "Business Context")
 
 | Component           | Explanation                                                    |
 |---------------------|----------------------------------------------------------------|
@@ -47,12 +47,9 @@ Business Context
 | User                | Views the data the lambda architecture provides                |
 
 
-Technical Context {#_technical_context}
+Technical Context
 -----------------
-
-**\<Diagram or Table\>**
-
-**\<optionally: Explanation of technical interfaces\>**
+![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/Context.png "Business Context")
 
 **\<Mapping Input/Output to Channels\>**
 

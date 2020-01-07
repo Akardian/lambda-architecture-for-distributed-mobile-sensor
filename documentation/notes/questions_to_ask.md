@@ -1,3 +1,5 @@
 ## Questions to ask
 
-- Is the data source a IoT device. (IoT used in abstract)
+- What is the data source
+- What data provides the data source 
+- Who has wants to use the data
