@@ -27,6 +27,7 @@ Batch Layer
  Lambda 
  - Big Data Principles and Best Practices of Scalable Realtime Data Systems - Nathan Marz, James Warren
  - http://nathanmarz.com/about/
+ - https://github.com/Big-Data-Manning/big-data-code
 
 - Deconstructing the Lambda Architecture: An Experience Report
 - https://ieeexplore.ieee.org/abstract/document/8712381
@@ -45,16 +46,28 @@ Batch Layer
  
  HDFS
  - https://searchdatamanagement.techtarget.com/definition/Hadoop-Distributed-File-System-HDFS
+
+- Kafka and Hadoop
+- https://data-flair.training/blogs/hadoop-ecosystem/
  
  Kafka
  - https://kafka.apache.org/
 
 - Lessons learned form Kafka in production: https://youtu.be/1vLMuWsfMcA
+
+- Connect Kafka to Hadoop
+- https://kafka.apache.org/documentation/#connect
+- https://www.baeldung.com/kafka-connectors-guide
  
  Pulsar
  - https://pulsar.apache.org/
 
 - A tour of Apache Pulsar - Jowanza Joseph: https://youtu.be/7h7hA7APa5Y
+
+- https://pulsar.apache.org/docs/en/next/io-hdfs3-sink/
+
+Flume
+- https://flume.apache.org/
  
  NoSQL DB
  - http://cassandra.apache.org/

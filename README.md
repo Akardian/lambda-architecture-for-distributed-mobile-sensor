@@ -17,7 +17,7 @@ Requirements Overview
 Quality Goals
 -------------
 - working Lambda architecture
-- comparative test for Kafka and Pulsar
+- comparison between Kafka and Pulsar
 
 Stakeholders
 ------------
@@ -40,11 +40,11 @@ Business Context
 
 ![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/BusinessContext.png "Business Context")
 
-| Component           | Explanation                                                    |
-|---------------------|----------------------------------------------------------------|
-| Mobile Sensors      | Provides sonsore data for the lambda architecktuer             |
-| Test data generator | Generates test data for a comparation between Kafka and Pulsar |
-| User                | Views the data the lambda architecture provides                |
+| Component           | Explanation                                                   |
+|---------------------|---------------------------------------------------------------|
+| Mobile Sensors      | Provides sonsore data for the lambda architecktuer            |
+| Test data generator | Generates test data for a comparison between Kafka and Pulsar |
+| User                | Views the data the lambda architecture provides               |
 
 
 Technical Context
@@ -53,8 +53,10 @@ Technical Context
 
 **\<Mapping Input/Output to Channels\>**
 
-Solution Strategy {#section-solution-strategy}
+Solution Strategy
 =================
+
+
 
 Building Block View {#section-building-block-view}
 ===================
