@@ -56,7 +56,26 @@ Technical Context
 Solution Strategy
 =================
 
+Lambda Architecture
+![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/LamdaA.png "Architecture")
 
+Technologies
+- Input
+    - Apache Kafka: Transmission of Data
+    - Apache Pulsar: Transmission of Data
+- Batch Layer
+    - Hadoop HDFS: Persistent distributed data storage
+- Speed Layer
+- Serving Layer
+
+(TODO: What to use)
+Hadoop, Storm, MapReduce 
+- Pro: Better Realtime, Low Level
+- Neg: Complex, different code for Batch and Speed Layer
+
+Apache Storm
+- Pro: Both Batch and Speed layer, "Easy" to use
+- Neg: no real realtime processing, sits on top of Hadoop
 
 Building Block View {#section-building-block-view}
 ===================
