@@ -15,11 +15,14 @@ Batch Layer
  
  Spark
  - https://spark.apache.org/
+ - https://www2.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-259.pdf
+ - https://youtu.be/g171ndOHgJ0
  
  
  Serving layer
  - https://en.wikipedia.org/wiki/Druid_(open-source_data_store)
  - https://druid.apache.org/
+ - https://www.linkedin.com/pulse/combining-druid-spark-interactive-flexible-analytics-scale-butani
  
  Other
  - https://en.wikipedia.org/wiki/Apache_License_2.0
@@ -50,6 +53,13 @@ Batch Layer
 - Kafka and Hadoop
 - https://data-flair.training/blogs/hadoop-ecosystem/
  
+ Data ingestion
+ - Goblin for kafka: https://github.com/apache/incubator-gobblin
+
+
+- Spark: https://dzone.com/articles/kafka-gt-hdfss3-batch-ingestion-through-spark?fromrel=true
+- Spark: https://www.ae.be/blog-en/ingesting-data-spark-using-custom-hadoop-fileinputformat/
+ 
  Kafka
  - https://kafka.apache.org/
 
@@ -77,4 +87,7 @@ Arc42
 
 Abstract 
 - https://writingcenter.gmu.edu/guides/writing-an-abstract
+
+UML
+- https://www.guru99.com/deployment-diagram-uml-example.html
  
