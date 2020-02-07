@@ -31,8 +31,9 @@ Batch Layer
  - Big Data Principles and Best Practices of Scalable Realtime Data Systems - Nathan Marz, James Warren
  - http://nathanmarz.com/about/
  - https://github.com/Big-Data-Manning/big-data-code
+ - http://nathanmarz.com/blog/how-to-beat-the-cap-theorem.html
 
-- Deconstructing the Lambda Architecture: An Experience Report
+- Deconstructing the Lambda Architecture: An Experience Report	
 - https://ieeexplore.ieee.org/abstract/document/8712381
 - Implementation of Lambda Architecture: A Restaurant Recommender System over Apache Mesos
 - https://ieeexplore.ieee.org/document/7921013
@@ -91,3 +92,7 @@ Abstract
 UML
 - https://www.guru99.com/deployment-diagram-uml-example.html
  
+ Kappa
+ - https://www.datanami.com/2016/06/01/merging-batch-streaming-post-lambda-world/
+ - https://dl.gi.de/bitstream/handle/20.500.12116/28983/SKILL2018-05.pdf?sequence=1&isAllowed=y
+ - The Lambda and the Kappa: https://ieeexplore.ieee.org/document/8039313
