@@ -18,6 +18,7 @@ Batch Layer
  - https://www2.eecs.berkeley.edu/Pubs/TechRpts/2012/EECS-2012-259.pdf
  - https://youtu.be/g171ndOHgJ0
  
+ - https://intellipaat.com/blog/tutorial/spark-tutorial/loading-and-saving-your-data/
  
  Serving layer
  - https://en.wikipedia.org/wiki/Druid_(open-source_data_store)
@@ -47,6 +48,8 @@ Batch Layer
  - https://towardsdatascience.com/lambda-architecture-how-to-build-a-big-data-pipeline-part-1-8b56075e83fe
  - https://databricks.com/glossary/lambda-architecture
  - https://proceedings.ictinnovations.org/attachment/paper/299/lambda-architecture-for-real-time-big-data-analytic.pdf
+
+- Applying the Lambda Architecture with Spark - Jim Scott (MapR): https://youtu.be/HNKRp_afMk4
  
  HDFS
  - https://searchdatamanagement.techtarget.com/definition/Hadoop-Distributed-File-System-HDFS
@@ -60,6 +63,7 @@ Batch Layer
 
 - Spark: https://dzone.com/articles/kafka-gt-hdfss3-batch-ingestion-through-spark?fromrel=true
 - Spark: https://www.ae.be/blog-en/ingesting-data-spark-using-custom-hadoop-fileinputformat/
+- Spark: https://github.com/datastax/spark-cassandra-connector
  
  Kafka
  - https://kafka.apache.org/
@@ -69,6 +73,7 @@ Batch Layer
 - Connect Kafka to Hadoop
 - https://kafka.apache.org/documentation/#connect
 - https://www.baeldung.com/kafka-connectors-guide
+- https://engineering.linkedin.com/kafka/benchmarking-apache-kafka-2-million-writes-second-three-cheap-machines
  
  Pulsar
  - https://pulsar.apache.org/
@@ -96,3 +101,6 @@ UML
  - https://www.datanami.com/2016/06/01/merging-batch-streaming-post-lambda-world/
  - https://dl.gi.de/bitstream/handle/20.500.12116/28983/SKILL2018-05.pdf?sequence=1&isAllowed=y
  - The Lambda and the Kappa: https://ieeexplore.ieee.org/document/8039313
+
+Misc.
+- https://hbase.apache.org/
