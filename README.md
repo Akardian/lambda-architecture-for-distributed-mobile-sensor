@@ -38,18 +38,18 @@ System Scope and Context
 Business Context
 ----------------
 
-![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/BusinessContext.png "Business Context")
+![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/BusinessContext.emf)
 
 | Component           | Explanation                                                   |
 |---------------------|---------------------------------------------------------------|
 | Mobile Sensors      | Provides sonsore data for the lambda architecktuer            |
 | Test data generator | Generates test data for a comparison between Kafka and Pulsar |
 | User                | Views the data the lambda architecture provides               |
-
+| Lambda Architecktue | Stores and processes the collected data                       |
 
 Technical Context
 -----------------
-![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/TechnicalContext.png "Technical Context")
+![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/TechnicalContext.png)
 
 **\<Mapping Input/Output to Channels\>**
 
@@ -57,7 +57,7 @@ Solution Strategy
 =================
 
 Lambda Architecture
-![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/LamdaA.png "Architecture")
+![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/LamdaA.png)
 
 Technologies
 - Input
@@ -79,9 +79,9 @@ Apache Spark
 
 Deployment (TODO: Method A or B?, Unclear Serving Layer/ Druid)
 
-![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/DeployUMLA.png "DeployUMLA")
+![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/DeployUMLA.png)
 
-![alt text](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/DeployUMLB.png "DeployUMLB")
+![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/DeployUMLB.png)
 
 Building Block View {#section-building-block-view}
 ===================
