@@ -48,6 +48,7 @@ Batch Layer
  - https://towardsdatascience.com/lambda-architecture-how-to-build-a-big-data-pipeline-part-1-8b56075e83fe
  - https://databricks.com/glossary/lambda-architecture
  - https://proceedings.ictinnovations.org/attachment/paper/299/lambda-architecture-for-real-time-big-data-analytic.pdf
+ - https://www.opitz-consulting.com/lambda-architektur-in-der-praxis.html
 
 - Applying the Lambda Architecture with Spark - Jim Scott (MapR): https://youtu.be/HNKRp_afMk4
  
