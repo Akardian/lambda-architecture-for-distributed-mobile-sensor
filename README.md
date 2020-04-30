@@ -38,7 +38,7 @@ System Scope and Context
 Business Context
 ----------------
 
-![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/BusinessContext.emf)
+![](https://github.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/blob/master/images/BusinessContext.png)
 
 | Component           | Explanation                                                   |
 |---------------------|---------------------------------------------------------------|
