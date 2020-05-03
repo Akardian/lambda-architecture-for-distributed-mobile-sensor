@@ -49,10 +49,11 @@ Business Context
 | Test data generator | Generates test data for a comparison between Kafka and Pulsar |
 | User                | Views the data the lambda architecture provides               |
 | Lambda Architecktue | Stores and processes the collected data                       |
+<sub>Table 3. Business Context</sub>
 
 Technical Context
 -----------------
-![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/TechnicalContext.png)
+![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/2-1TechnicalContext.png)
 
 **\<Mapping Input/Output to Channels\>**
 
