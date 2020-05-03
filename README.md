@@ -29,9 +29,10 @@ Stakeholders
 
 Architecture Constraints
 ========================
-| Constraint                          | Explanation                             |
-|-------------------------------------|-----------------------------------------|
-| Data Transfer with Kafka and Pulsar | The task is to compare Pulsar and Kafka |
+| Constraint | Explanation |
+|------------|-------------|
+| TODO:      |             |
+<sub>Table 2. Constraints</sub>
 
 System Scope and Context
 ========================
