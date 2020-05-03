@@ -54,8 +54,20 @@ Business Context
 Technical Context
 -----------------
 ![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/2-1TechnicalContext.png)
+<sub>Figure 2. Technical Context</sub>
 
-**\<Mapping Input/Output to Channels\>**
+
+| Component           | Input                                    | Output                               |
+|---------------------|------------------------------------------|--------------------------------------|
+| Loomo               | none                                     | Generates Sensore data               |
+| Test Device         | none                                     | Generates Test data                  |
+| Messaging Service   | Raw Sensore data from Loomo, Test Device | Raw Sensore data to Streaming layer  |
+|                     | Transformed data from Streaming Layer    | Transformed data to Serving Layer    |
+| Streaming Layer     | Raw Sensore Data from Messaging Service  | Saves data to HDFS                   |
+|                     | none                                     | Tranformed data to Messaging Service |
+| Master Data Storage | Raw Data from Streaming Layer            | Archived data to Batch Layer         |
+| Batch Layer         | Archived Date from Master Data Storage   | Transformed data to Serviing layer   |
+<sub>Table 4. Technical Context</sub>
 
 Solution Strategy
 =================
