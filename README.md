@@ -22,9 +22,10 @@ Quality Goals
 Stakeholders
 ------------
 
-| Role/Name  | Contact         |
-|------------|-----------------|
-| \<Role-1\> | *\<Contact-1\>* |
+| Role/Name       | Description                         |
+|-----------------|-------------------------------------|
+| Mike Wüstenberg | Documentation, Research, Programing |
+<sub>Table 1. Stakeholder</sub>
 
 Architecture Constraints
 ========================
