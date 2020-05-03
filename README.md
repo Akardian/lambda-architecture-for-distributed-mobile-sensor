@@ -67,6 +67,7 @@ Technical Context
 |                     | none                                     | Tranformed data to Messaging Service |
 | Master Data Storage | Raw Data from Streaming Layer            | Archived data to Batch Layer         |
 | Batch Layer         | Archived Date from Master Data Storage   | Transformed data to Serviing layer   |
+
 <sub>Table 4. Technical Context</sub>
 
 Solution Strategy
