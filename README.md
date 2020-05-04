@@ -26,7 +26,7 @@ Stakeholders
 |-----------------|-------------------------------------|
 | Mike Wüstenberg | Documentation, Research, Programing |
 
-    <span style="color:orange"><sub>Table 1. Stakeholder</sub></span>
+<sub>Table 1. Stakeholder</sub>
 
 Architecture Constraints
 ========================
@@ -43,6 +43,7 @@ Business Context
 ----------------
 
 ![](https://github.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/blob/master/images/1-1BusinessContext.png?raw=true)
+
 <sub>Figure 1. Business Context</sub>
 
 | Component           | Explanation                                                   |
@@ -57,8 +58,9 @@ Business Context
 Technical Context
 -----------------
 ![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/2-1TechnicalContext.png)
-<sub>Figure 2. Technical Context</sub>
 
+<sub>Figure 2. Technical Context</sub>
+TODO: Output Data from Serving Layer
 
 | Component           | Input                                    | Output                               |
 |---------------------|------------------------------------------|--------------------------------------|
@@ -77,31 +79,20 @@ Solution Strategy
 =================
 
 Lambda Architecture
-![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/LamdaA.png)
+![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/3-1LambdaArchitecture.png)
+
+<sub>Figure 3. Lambda Architecture</sub>
 
 Technologies
 - Input
     - Apache Kafka: Transmission of Data
-    - Apache Pulsar: Transmission of Data
 - Batch Layer
     - Hadoop HDFS: Persistent distributed data storage
+    - Spark
 - Speed Layer
+    - Spark Streaming
 - Serving Layer
-
-(TODO: What to use)
-Hadoop, Storm, MapReduce 
-- Pro: Better Realtime, Low Level
-- Neg: Complex, different code for Batch and Speed Layer
-
-Apache Spark
-- Pro: Both Batch and Speed layer, "Easy" to use
-- Neg: no real realtime processing, sits on top of Hadoop
-
-Deployment (TODO: Method A or B?, Unclear Serving Layer/ Druid)
-
-![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/DeployUMLA.png)
-
-![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/DeployUMLB.png)
+    - Apache Druid
 
 Building Block View {#section-building-block-view}
 ===================
