@@ -1,10 +1,10 @@
 # lambda-architecture-for-distributed-mobile-sensor
-Lambda architecture for distributed mobile sensor: Pulsar vs Kafka
+Lambda architecture for distributed mobile sensor
 
 Introduction and Goals
 ====================
 In "Internet of Things" setups large amounts of data are generate from sensors and communication. The large amount of data results in a high complexity which makes the data hard to handle and complex to analyse. Nathan Marz developed the lambda architecture to reduce the rising complexity. The lambda architecture duplicates the incoming data onto 2 path. The Batch layer and speed layer, this reduces the complexity of each path. The architecture is scalable and distributed which makes a good messenger important. We compared the wide spread Apache Kafka with new Apache Pulsar to find the differences between the messengers. 
-(TODO: Research Results)
+(TODO: Redo)
 
 Requirements Overview
 ---------------------
@@ -12,12 +12,10 @@ Requirements Overview
         - Batch layer
         - Speed layer
         - Serving layer
-    - Compare messaging service Kafka and Pulsar
 
 Quality Goals
 -------------
 - working Lambda architecture
-- comparison between Kafka and Pulsar
 
 Stakeholders
 ------------
@@ -81,11 +79,11 @@ Solution Strategy
 Lambda Architecture
 ![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/3-1LambdaArchitecture.png)
 
-<sub>Figure 3. Lambda Architecture Clean</sub>
+<sub>Figure 3-1. Lambda Architecture Clean</sub>
 
 ![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/3-2LambdaArchitectureTechnollogy.png)
 
-<sub>Figure 3. Lambda Architecture Technology </sub>
+<sub>Figure 3-2. Lambda Architecture Technology </sub>
 
 Technologies
 - Input
