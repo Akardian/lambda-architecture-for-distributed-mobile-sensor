@@ -81,7 +81,11 @@ Solution Strategy
 Lambda Architecture
 ![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/3-1LambdaArchitecture.png)
 
-<sub>Figure 3. Lambda Architecture</sub>
+<sub>Figure 3. Lambda Architecture Clean</sub>
+
+![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/3-2LambdaArchitectureTechnollogy.png)
+
+<sub>Figure 3. Lambda Architecture Technology </sub>
 
 Technologies
 - Input
