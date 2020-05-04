@@ -25,13 +25,15 @@ Stakeholders
 | Role/Name       | Description                         |
 |-----------------|-------------------------------------|
 | Mike Wüstenberg | Documentation, Research, Programing |
-<sub>Table 1. Stakeholder</sub>
+
+    <span style="color:orange"><sub>Table 1. Stakeholder</sub></span>
 
 Architecture Constraints
 ========================
 | Constraint | Explanation |
 |------------|-------------|
 | TODO:      |             |
+
 <sub>Table 2. Constraints</sub>
 
 System Scope and Context
@@ -49,6 +51,7 @@ Business Context
 | Test data generator | Generates test data for a comparison between Kafka and Pulsar |
 | User                | Views the data the lambda architecture provides               |
 | Lambda Architecktue | Stores and processes the collected data                       |
+
 <sub>Table 3. Business Context</sub>
 
 Technical Context
