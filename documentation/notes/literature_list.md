@@ -51,6 +51,7 @@ Batch Layer
  - https://www.opitz-consulting.com/lambda-architektur-in-der-praxis.html
 
 - Applying the Lambda Architecture with Spark - Jim Scott (MapR): https://youtu.be/HNKRp_afMk4
+- Git Project https://github.com/apssouza22/lambda-arch
  
  HDFS
  - https://searchdatamanagement.techtarget.com/definition/Hadoop-Distributed-File-System-HDFS
@@ -105,3 +106,10 @@ UML
 
 Misc.
 - https://hbase.apache.org/
+
+Docker Images
+- https://hub.docker.com/_/zookeeper
+- https://hub.docker.com/_/alpine
+
+Docker Swarm
+- https://github.com/tsmean/docker-tutorial
