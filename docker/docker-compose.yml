@@ -1,26 +1,54 @@
-version: '3.8'
+version: "3.7"
+
 services:
+    visualizer:
+        image: dockersamples/visualizer:latest
+        hostname: visualizer
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints:
+                    - "node.role==manager"
+        ports:
+            - target: 8080
+              published: 8080
+              protocol: tcp
+              mode: ingress
+        networks:
+            - lambda-network
+        volumes:
+            - type: bind
+              source: /var/run/docker.sock
+              target: /var/run/docker.sock
+
     zookeeper-01:
         image: zookeeper:3.6
         hostname: zookeeper-01
         restart: always
         ports:
-            - 2181:2181
-            - 8080:8090
+            - target: 2181
+              published: 2181
+              protocol: tcp
+              mode: ingress
+            - target: 8091
+              published: 8091
+              protocol: tcp
+              mode: ingress
         networks:
-            - lamdba
+            - lambda-network
         volumes:
-            - type: bind
-              source: F:\Docker Data\Image\Volumes
-              target: /conf
+            - type: volume
+              source: zookeeper-conf
+              target: /conf/
         environment:
             ZOO_MY_ID: 1
-            ZOO_SERVERS: server.1=0.0.0.0:2888:3888
-            
-networks:
-    lamdba:
-        name: lamdba-network
-        driver: bridge
-        
+            ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
+
 volumes:
     zookeeper-conf:
+  
+networks:
+    lambda-network:
+        name: lambda-network
+        driver: overlay
