@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+    zookeeper-01:
+        image: zookeeper:3.6
+        hostname: zookeeper-01
+        restart: always
+        ports:
+            - 2181:2181
+            - 8080:8091
+        networks:
+            - lamdba
+        volumes:
+            - type: bind
+              source: F:\Docker Data\Image\Volumes
+              target: /conf
+        environment:
+            ZOO_MY_ID: 1
+            ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181 server.2=zookeeper-02:2888:3888;2181 server.3=zookeeper-03:2888:3888;2181
+            
+	zookeeper-02:
+    	image: zookeeper:3.6
+        restart: always
+        hostname: zookeeper-02
+        ports:
+            - 2182:2181
+            - 8080:8092
+        networks:
+            - lamdba
+        environment:
+            ZOO_MY_ID: 2
+            ZOO_SERVERS: server.1=zookeeper-01:2888:3888;2181 server.2=0.0.0.0:2888:3888;2181 server.3=zookeeper-03:2888:3888;2181
+
+    zookeeper-03:
+        image: zookeeper:3.6
+        restart: always
+        hostname: zookeeper-03
+        ports:
+            - 2183:2181
+            - 8080:8093
+        networks:
+            - lamdba
+        environment:
+            ZOO_MY_ID: 3
+            ZOO_SERVERS: server.1=zookeeper-01:2888:3888;2181 server.2=zookeeper-02:2888:3888;2181 server.3=0.0.0.0:2888:3888;2181
+        
+volumes:
+    zookeeper-conf:
