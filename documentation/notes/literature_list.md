@@ -110,6 +110,7 @@ Misc.
 Docker Images
 - https://hub.docker.com/_/zookeeper
 - https://hub.docker.com/_/alpine
+- https://hub.docker.com/r/obsidiandynamics/kafdrop
 
 Docker Swarm
 - https://github.com/tsmean/docker-tutorial
