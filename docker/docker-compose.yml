@@ -1,30 +1,48 @@
 version: "3.7"
 
 services:
-    visualizer:
-        image: dockersamples/visualizer:latest
-        hostname: visualizer
-        deploy:
-            mode: replicated
-            replicas: 1
-            placement:
-                constraints:
-                    - "node.role==manager"
-        ports:
-            - target: 8080
-              published: 8080
-              protocol: tcp
-              mode: ingress
+
+##### Monitoring
+    portainer-agent:
+        image: portainer/agent
         networks:
             - lambda-network
         volumes:
             - type: bind
               source: /var/run/docker.sock
               target: /var/run/docker.sock
-              
+            - type: bind
+              source: /var/lib/docker/volumes
+              target: /var/lib/docker/volumes
+        deploy:
+            mode: global
+            placement:
+                constraints: [node.platform.os == linux]
+
+    portainer:
+        image: portainer/portainer
+        command: -H tcp://tasks.portainer-agent:9001 --tlsskipverify
+        ports: 
+            - target: 9000
+              published: 8100
+              mode: ingress
+            - target: 8000
+              published: 8000
+              mode: ingress
+        networks:
+            - lambda-network
+        volumes: 
+            - type: volume
+              source: portainer-persistence
+              target: /data
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]
+
     kafdrop:
         image: obsidiandynamics/kafdrop:3.26.0
-        hostname: kafdrop
         ports:
             - target: 9000
               published: 9000
@@ -35,36 +53,37 @@ services:
         environment:
             KAFKA_BROKERCONNECT: "kafka-01:9092"
             JVM_OPTS: "-Xms32M -Xmx64M"
-            SERVER_SERVLET_CONTEXTPATH: "/"
-        depends_on:
-            - kafka-01
-          
-            
+            SERVER_SERVLET_CONTEXTPATH: "/"       
 
+##### Kafka
     zookeeper-01:
-        image: zookeeper:3.6
-        hostname: zookeeper-01
-        restart: always
+        image: bitnami/zookeeper:3.6.1
         ports:
-            - target: 8080
-              published: 8091
+            - target: 2181
+              published: 2181
               protocol: tcp
               mode: ingress
         networks:
             - lambda-network
         volumes:
             - type: volume
-              source: zookeeper-conf
-              target: /conf/
+              source: zookeeper-persistence
+              target: /bitnami/zookeeper/
         environment:
-            ZOO_MY_ID: 1
-            ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
+            ZOO_PORT_NUMBER: 2181
+            ZOO_SERVER_ID: 1
+            ZOO_SERVERS: "server.1=0.0.0.0:2888:3888"
+            ALLOW_ANONYMOUS_LOGIN: "yes"
             
     kafka-01:
         image: bitnami/kafka:2.5.0
         ports:
             - target: 9092
               published: 9092
+              protocol: tcp
+              mode: ingress
+            - target: 29092
+              published: 29092
               protocol: tcp
               mode: ingress
         networks:
@@ -74,15 +93,16 @@ services:
               source: kafka-persistence
               target: /bitnami/kafka/
         environment:
-            - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-01:2181
-            - ALLOW_PLAINTEXT_LISTENER=yes
-        depends_on:
-            - zookeeper-01
+            KAFKA_CFG_ZOOKEEPER_CONNECT: "zookeeper-01:2181"
+            ALLOW_PLAINTEXT_LISTENER: "yes"
+            KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+            KAFKA_CFG_LISTENERS: "PLAINTEXT://:9092,PLAINTEXT_HOST://:29092"
+            KAFKA_CFG_ADVERTISED_LISTENERS: "PLAINTEXT://kafka-01:9092,PLAINTEXT_HOST://localhost:29092"
 
 volumes:
-    zookeeper-conf:
-    kafka-conf:  
+    zookeeper-persistence:
     kafka-persistence:
+    portainer-persistence:
   
 networks:
     lambda-network:

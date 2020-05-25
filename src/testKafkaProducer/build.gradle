@@ -11,6 +11,7 @@ plugins {
     id 'java-library'
     id 'java'
 	id 'application'
+	id 'eclipse'
 }
 
 repositories {
@@ -33,4 +34,4 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
 }
 
-mainClassName = 'main.SimpleConsumer'  // Main class with main method
+mainClassName = 'main.SimpleProducer'  // Main class with main method
