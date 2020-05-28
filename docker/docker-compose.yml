@@ -24,10 +24,10 @@ services:
         command: -H tcp://tasks.portainer-agent:9001 --tlsskipverify
         ports: 
             - target: 9000
-              published: 8100
+              published: 8010
               mode: ingress
             - target: 8000
-              published: 8000
+              published: 8020
               mode: ingress
         networks:
             - lambda-network
@@ -45,7 +45,7 @@ services:
         image: obsidiandynamics/kafdrop:3.26.0
         ports:
             - target: 9000
-              published: 9000
+              published: 8000
               protocol: tcp
               mode: ingress
         networks:
@@ -99,10 +99,112 @@ services:
             KAFKA_CFG_LISTENERS: "PLAINTEXT://:9092,PLAINTEXT_HOST://:29092"
             KAFKA_CFG_ADVERTISED_LISTENERS: "PLAINTEXT://kafka-01:9092,PLAINTEXT_HOST://localhost:29092"
 
+##### Hadoop
+# https://github.com/big-data-europe/docker-hadoop
+
+    hadoop-namenode:
+        image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+        ports:
+            - target: 9870
+              published: 9870
+              protocol: tcp
+              mode: ingress
+        networks:
+            - lambda-network
+        volumes:
+            - type: volume
+              source: namenode
+              target: /hadoop/dfs/name
+        environment:
+            - CLUSTER_NAME=lambda_hadoop
+        env_file:
+            - ./hadoop.env
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints: [node.role == manager]  # No need to be on the manager (node.hostname == ???)
+            labels:
+                traefik.docker.network: lambda-network
+                traefik.port: 50070
+                
+    hadoop-datanode:
+        image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+        networks:
+            - lambda-network
+        ports:
+            - target: 9864
+              published: 9864
+              protocol: tcp
+              mode: ingress
+        volumes:
+            - type: volume
+              source: datanode
+              target: /hadoop/dfs/data
+        env_file:
+          - ./hadoop.env
+        environment:
+          SERVICE_PRECONDITION: "hadoop-namenode:50070"
+        deploy:
+            mode: global
+            restart_policy:
+                condition: on-failure
+        labels:
+            traefik.docker.network: lambda-network
+            traefik.port: 50075
+            
+##### Spark
+# https://github.com/bitnami/bitnami-docker-spark
+
+    spark-master:
+        image: bitnami/spark:2.4.5
+        networks:
+            - lambda-network
+        ports:
+            - target: 8080
+              published: 8080
+              protocol: tcp
+              mode: ingress
+        environment:
+            SPARK_MODE: "master"
+            SPARK_RPC_AUTHENTICATION_ENABLED: "no"
+            SPARK_RPC_ENCRYPTION_ENABLED: "no"
+            SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
+            SPARK_SSL_ENABLED: "no"
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]  # No need to be on the manager (node.hostname == ???)
+                
+    spark-worker:
+        image: bitnami/spark:2.4.5
+        networks:
+            - lambda-network
+        environment:
+            SPARK_MODE: "worker"
+            SPARK_MASTER_URL: "spark://spark-master:7077"
+            SPARK_WORKER_MEMORY: "1G"
+            SPARK_WORKER_CORES: "1"
+            SPARK_RPC_AUTHENTICATION_ENABLED: "no"
+            SPARK_RPC_ENCRYPTION_ENABLED: "no"
+            SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
+            SPARK_SSL_ENABLED: "no"
+        deploy:
+            mode: replicated
+            replicas: 1
+                           
 volumes:
+# Monitoring
+    portainer-persistence:
+# Kafka
     zookeeper-persistence:
     kafka-persistence:
-    portainer-persistence:
+# Hadoop
+    namenode:
+    datanode:    
   
 networks:
     lambda-network:

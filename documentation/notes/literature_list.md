@@ -111,6 +111,7 @@ Docker Images
 - https://hub.docker.com/_/zookeeper
 - https://hub.docker.com/_/alpine
 - https://hub.docker.com/r/obsidiandynamics/kafdrop
+- https://hub.docker.com/r/bde2020/hadoop-namenode
 
 Docker Swarm
 - https://github.com/tsmean/docker-tutorial
