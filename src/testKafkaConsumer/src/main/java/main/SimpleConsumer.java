@@ -17,7 +17,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 public class SimpleConsumer { 
 
     private final static String TOPIC = "kafka-test-topic";
-    private final static String BOOTSTRAP_SERVERS = "localhost:29092";
+    private final static String BOOTSTRAP_SERVERS = "192.168.80.113:29092";
     private final static String GROUP_ID = "Test-Consumer";
     
 	public static void main(String[] args) throws Exception {		
