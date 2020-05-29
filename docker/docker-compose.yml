@@ -92,12 +92,12 @@ services:
             - type: volume
               source: kafka-persistence
               target: /bitnami/kafka/
-        environment:
+        environment: # PLAINTEXT_HOST needs to be Docker Host IP/Hostname (TODO: Set constrain)
             KAFKA_CFG_ZOOKEEPER_CONNECT: "zookeeper-01:2181"
             ALLOW_PLAINTEXT_LISTENER: "yes"
             KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
             KAFKA_CFG_LISTENERS: "PLAINTEXT://:9092,PLAINTEXT_HOST://:29092"
-            KAFKA_CFG_ADVERTISED_LISTENERS: "PLAINTEXT://kafka-01:9092,PLAINTEXT_HOST://localhost:29092"
+            KAFKA_CFG_ADVERTISED_LISTENERS: "PLAINTEXT://kafka-01:9092,PLAINTEXT_HOST://192.168.80.113:29092"
 
 ##### Hadoop
 # https://github.com/big-data-europe/docker-hadoop
