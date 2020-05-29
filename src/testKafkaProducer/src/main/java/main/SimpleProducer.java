@@ -19,7 +19,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 // http://cloudurable.com/blog/kafka-tutorial-kafka-producer/index.html
 public class SimpleProducer {
     private final static String TOPIC = "kafka-test-topic";
-    private final static String BOOTSTRAP_SERVERS = "localhost:29092";
+    private final static String BOOTSTRAP_SERVERS = "192.168.80.113:29092";
     private final static String GROUP_ID = "Test-Producer";
 
 	public static void main(String[] args) throws Exception {	
