@@ -115,3 +115,6 @@ Docker Images
 
 Docker Swarm
 - https://github.com/tsmean/docker-tutorial
+
+loomo
+ - https://developer.segwayrobotics.com/developer/documents/segway-robots-sdk.html

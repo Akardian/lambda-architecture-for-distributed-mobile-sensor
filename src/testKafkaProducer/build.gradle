@@ -9,9 +9,7 @@
 plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
-    id 'java'
 	id 'application'
-	id 'eclipse'
 }
 
 repositories {
@@ -30,8 +28,8 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
     
-    compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.5.0'
-    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '2.5.0'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
 }
 
 mainClassName = 'main.SimpleProducer'  // Main class with main method
