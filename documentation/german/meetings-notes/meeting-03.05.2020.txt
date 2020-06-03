@@ -1,0 +1,10 @@
+implementierungs risiko minimieren
+abstract vorbereiten
+dashboard für mobile sensoren erforschen
+    darstellungs formen
+    in welcher form müssen die daten vorhanden sein
+    welche daten kann ich verbarbeiten
+    etc.
+    
+2 wochen sprint 
+14 juni neuen termin machen
