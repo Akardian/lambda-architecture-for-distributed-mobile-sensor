@@ -118,3 +118,13 @@ Docker Swarm
 
 loomo
  - https://developer.segwayrobotics.com/developer/documents/segway-robots-sdk.html
+
+Dashboard
+- http://cs.furman.edu/~pbatchelor/csc105/articles/TUN_DM_ONLINE.pdf
+- https://www.researchgate.net/profile/Alberto_Sillitti/publication/286996830_Effective_dashboard_design/links/57c699e208aec24de0414df1/Effective-dashboard-design.pdf
+
+- https://patentimages.storage.googleapis.com/a0/37/44/3aab74e336a715/US20090021486A1.pdf
+- https://hal.archives-ouvertes.fr/hal-01322550/document
+
+- https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4755377
+- http://blogs.ischool.berkeley.edu/i247s12/files/2012/01/Dashboard-Design-Overview-Presentation.pdf

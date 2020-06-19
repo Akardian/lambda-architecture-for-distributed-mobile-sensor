@@ -33,6 +33,6 @@ hs_err_pid*
 #path
 build/
 .settings/
-.vs-code/
+.vscode/
 .metals/
 
