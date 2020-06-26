@@ -159,7 +159,7 @@ services:
 # https://github.com/bitnami/bitnami-docker-spark
 
     spark-master:
-        image: bitnami/spark:2.4.5
+        image: bitnami/spark:3.0.0
         networks:
             - lambda-network
         ports:
@@ -180,7 +180,7 @@ services:
                 constraints: [node.role == manager]  # No need to be on the manager (node.hostname == ???)
                 
     spark-worker:
-        image: bitnami/spark:2.4.5
+        image: bitnami/spark:3.0.0
         networks:
             - lambda-network
         environment:

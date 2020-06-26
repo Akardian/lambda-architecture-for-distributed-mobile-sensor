@@ -7,7 +7,7 @@ object Test {
     val CONTEXT_NAME = "WordCountTest"
     val BOOTSTRAP_SERVERS = "kafka-01:9092";
 
-    def main(args: Array[String]): Unit = {
+    def main(args: Array[String]) {
         val spark = SparkSession
             .builder()
             .appName(CONTEXT_NAME)

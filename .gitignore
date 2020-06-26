@@ -1,10 +1,12 @@
 # Compiled class file
 *.class
-gradlew*
 *.metadata
+*.code-workspace
+*.bin
+*.lock
+
 .project
 .classpath
-*.code-workspace
 
 # Log file
 *.log

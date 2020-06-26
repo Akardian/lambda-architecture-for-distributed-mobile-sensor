@@ -1,8 +1,18 @@
-# Run on a Spark standalone cluster in client deploy mode
-../../../spark-3.0.0-bin-hadoop3.2/bin/spark-submit \
+HDFS_CONTAINER=lambda_hadoop-datanode.p9ui3d0x46fhizffwucvrs73y.es4nqs9hy3gkp0469u8klx9zq
+SPARK_CONTAINER=lambda_spark-master.1.d0mq78o9yh5kakzcroz8ag8vp
+
+#Save jars to HDFS
+#Local   container only
+docker cp build/libs/Spark-Test-v01-all.jar $HDFS_CONTAINER:tmp/
+
+docker exec $HDFS_CONTAINER hdfs dfs -mkdir /spark-jars
+docker exec $HDFS_CONTAINER hdfs dfs -put -f tmp/Spark-Test-v01-all.jar /spark-jars
+
+# Run on a Spark standalone cluster in cluster deploy mode
+docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
   --class scala.Test \
-  --master spark://192.168.80.113:29092 \
+  --master spark://spark-master:7077 \
   --deploy-mode cluster \
   --executor-memory 2G \
   --total-executor-cores 2 \
-  build\libs\Spark-Test-v01-all.scala
+  hdfs://hadoop-namenode:50070/spark-jars/Spark-Test-v01-all.jar
