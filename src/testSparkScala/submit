@@ -1,5 +1,5 @@
-HDFS_CONTAINER=lambda_hadoop-datanode.p9ui3d0x46fhizffwucvrs73y.es4nqs9hy3gkp0469u8klx9zq
-SPARK_CONTAINER=lambda_spark-master.1.d0mq78o9yh5kakzcroz8ag8vp
+HDFS_CONTAINER=lambda_hadoop-datanode.p9ui3d0x46fhizffwucvrs73y.nl3zor25hsmv80vcuqa25plbb
+SPARK_CONTAINER=lambda_spark-master.1.nwjv3r7aikc5e06b7d85dafqh
 
 #Save jars to HDFS
 #Local   container only

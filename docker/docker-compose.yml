@@ -183,6 +183,11 @@ services:
         image: bitnami/spark:3.0.0
         networks:
             - lambda-network
+        ports:
+            - target: 8081
+              published: 8081
+              protocol: tcp
+              mode: host
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://spark-master:7077"
