@@ -41,4 +41,4 @@ shadowJar {
    baseName = 'Spark-Test-v01'
 }
 
-mainClassName = 'Test'  // Main class with main method
+mainClassName = 'MyKafkaTest'  // Main class with main method

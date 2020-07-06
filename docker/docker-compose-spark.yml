@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+##### Spark
+# https://github.com/bitnami/bitnami-docker-spark
+    spark-master:
+        image: bitnami/spark:3.0.0
+        hostname: spark-master
+        networks:
+            - lambda-network
+        ports:
+            - target: 8080
+              published: 8080
+              protocol: tcp
+              mode: ingress
+            - target: 7077
+              published: 7077
+              protocol: tcp
+              mode: ingress
+        environment:
+            SPARK_MODE: "master"
+            SPARK_RPC_AUTHENTICATION_ENABLED: "no"
+            SPARK_RPC_ENCRYPTION_ENABLED: "no"
+            SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
+            SPARK_SSL_ENABLED: "no"
+            SPARK_PUBLIC_DNS: "192.168.80.113" # Docker host IP
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]  # No need to be on the manager (node.hostname == ???)
+                
+    spark-worker:
+        image: bitnami/spark:3.0.0
+        hostname: spark-worker
+        networks:
+            - lambda-network
+        ports:
+            - target: 8081
+              published: 8081
+              protocol: tcp
+              mode: host
+        environment:
+            SPARK_MODE: "worker"
+            SPARK_MASTER_URL: "spark://spark-master:7077"
+            SPARK_WORKER_MEMORY: "1G"
+            SPARK_WORKER_CORES: "1"
+            SPARK_RPC_AUTHENTICATION_ENABLED: "no"
+            SPARK_RPC_ENCRYPTION_ENABLED: "no"
+            SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
+            SPARK_SSL_ENABLED: "no"
+            SPARK_PUBLIC_DNS: "192.168.80.113" # Docker host IP
+        deploy:
+            mode: replicated
+            replicas: 1                           
+  
+networks:
+    lambda-network:
+        name: lambda-network
