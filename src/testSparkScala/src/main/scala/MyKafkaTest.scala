@@ -52,6 +52,6 @@ object MyKafkaTest {
             .option("topic", TOPICS_OUTPUT)
             .start()*/
 
-        dataSet.awaitTermination();
+        query.awaitTermination();
     }
 }

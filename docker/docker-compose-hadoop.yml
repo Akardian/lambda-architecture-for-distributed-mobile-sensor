@@ -1,53 +1,130 @@
-version: "3.7"
+version: '3.8'
 
 services:
-  hadoop-namenode:
+  namenode:
     image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    hostname: namenode
+    networks:
+      - lambda-network
     ports:
       - target: 9870
         published: 9870
+        protocol: tcp
+        mode: host
       - target: 9000
         published: 9000
+        protocol: tcp
+        mode: host
     volumes:
-      - hadoop_namenode:/hadoop/dfs/name
+      - namenode:/hadoop/dfs/name
     environment:
-      - CLUSTER_NAME=test
+      - CLUSTER_NAME=lambda-hadoop
     env_file:
       - ./hadoop.env
+    deploy:
+      endpoint_mode: dnsrr
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        traefik.docker.network: lambda-network
+        traefik.port: 9870
 
   datanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    hostname: datanode
+    networks:
+      - lambda-network
+    ports:
+      - target: 9864
+        published: 9864
+        protocol: tcp
+        mode: host
     volumes:
-      - hadoop_datanode:/hadoop/dfs/data
+      - datanode:/hadoop/dfs/data
+    env_file:
+      - ./hadoop.env
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
-    env_file:
-      - ./hadoop.env
-  
+    deploy:
+      endpoint_mode: dnsrr
+      mode: global
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.docker.network: lambda-network
+        traefik.port: 9864
+
   resourcemanager:
     image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+    hostname: resourcemanager
+    networks:
+      - lambda-network
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864"
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864"
     env_file:
       - ./hadoop.env
+    deploy:
+      endpoint_mode: dnsrr
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        traefik.docker.network: lambda-network
+        traefik.port: 8088
+    healthcheck:
+      disable: true
 
-  nodemanager1:
+  nodemanager:
     image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+    hostname: nodemanager
+    networks:
+      - lambda-network
     environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
     env_file:
       - ./hadoop.env
-  
+    deploy:
+      endpoint_mode: dnsrr
+      mode: global
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.docker.network: lambda-network
+        traefik.port: 8042
+
   historyserver:
-    image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8s
-    environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode:9864 resourcemanager:8088"
+    image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
+    hostname: historyserver
+    networks:
+      - lambda-network
     volumes:
       - hadoop_historyserver:/hadoop/yarn/timeline
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
     env_file:
       - ./hadoop.env
-  
+    deploy:
+      endpoint_mode: dnsrr
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        traefik.docker.network: lambda-network
+        traefik.port: 8188
+
 volumes:
-  hadoop_namenode:
-  hadoop_datanode:
+  datanode:
+  namenode:
   hadoop_historyserver:
+
+networks:
+  lambda-network:
+    name: lambda-network

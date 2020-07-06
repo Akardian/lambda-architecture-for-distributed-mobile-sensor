@@ -40,7 +40,7 @@ object MyKafkaTest {
             .writeStream
             .outputMode("complete")
             .format("console")
-            .start()
+            .start()                                                                                                                                                                                                                                                                                                                                                    
 
         // Write key-value data from a DataFrame to a specific Kafka topic specified in an option
         /*log.debug("Write stream to Kafka")
@@ -52,6 +52,6 @@ object MyKafkaTest {
             .option("topic", TOPICS_OUTPUT)
             .start()*/
 
-        dataSet.awaitTermination();
+        query.awaitTermination();
     }
 }
