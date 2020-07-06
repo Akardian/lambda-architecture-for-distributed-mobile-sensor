@@ -38,7 +38,8 @@ dependencies {
 
 // Output to build/libs/shadow.jar
 shadowJar {
-   baseName = 'Spark-Test-v01'
+    mergeServiceFiles()
+    baseName = 'Spark-Test-v01'
 }
 
 mainClassName = 'MyKafkaTest'  // Main class with main method

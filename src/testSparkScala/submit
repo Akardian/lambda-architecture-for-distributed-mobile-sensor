@@ -25,6 +25,6 @@ docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
   --class MyKafkaTest \
   --master spark://spark-master:7077 \
   --deploy-mode cluster \
-  --executor-memory 2G \
-  --total-executor-cores 2 \
+  --executor-memory 1G \
+  --total-executor-cores 1 \
   hdfs://namenode:9000/user/haw/spark-jars/Spark-Test-v01-all.jar
