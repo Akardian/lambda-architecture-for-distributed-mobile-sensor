@@ -37,4 +37,6 @@ build/
 .settings/
 .vscode/
 .metals/
+.gradle/
+.bloop/
 

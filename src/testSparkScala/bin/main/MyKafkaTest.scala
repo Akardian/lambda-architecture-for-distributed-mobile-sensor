@@ -34,23 +34,20 @@ object MyKafkaTest {
             .load()
         dataFrame.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
             .as[(String, String)]
+        dataFrame.printSchema()
+
+        val words = dataFrame.select("value").as[String].flatMap(_.split(" "))
+        
+        val wordcounts = words.groupBy("value").count()
 
         log.debug("Show stream")
-        val query = dataFrame
+        wordcounts.printSchema()
+
+        val query = wordcounts
             .writeStream
             .outputMode("complete")
             .format("console")
-            .start()                                                                                                                                                                                                                                                                                                                                                    
-
-        // Write key-value data from a DataFrame to a specific Kafka topic specified in an option
-        /*log.debug("Write stream to Kafka")
-        val dataSet = dataFrame
-            .selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
-            .writeStream
-            .format("kafka")
-            .option("kafka.bootstrap.servers", BOOTSTRAP_SERVERS)
-            .option("topic", TOPICS_OUTPUT)
-            .start()*/
+            .start()   
 
         query.awaitTermination();
     }
