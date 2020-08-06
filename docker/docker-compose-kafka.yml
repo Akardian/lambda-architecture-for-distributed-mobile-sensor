@@ -8,7 +8,7 @@ services:
             - target: 2181
               published: 2181
               protocol: tcp
-              mode: ingress
+              mode: host
         networks:
             - lambda-network
         deploy:
@@ -17,7 +17,7 @@ services:
         volumes:
             - type: volume
               source: zookeeper-persistence
-              target: /bitnami/zookeeper/
+              target: /bitnami/zookeeper/  
         environment:
             ZOO_PORT_NUMBER: 2181
             ZOO_SERVER_ID: 1
@@ -61,7 +61,6 @@ services:
             KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
             KAFKA_CFG_LISTENERS: "PLAINTEXT://:9092,PLAINTEXT_HOST://:29092"
             KAFKA_CFG_ADVERTISED_LISTENERS: "PLAINTEXT://kafka-01:9092,PLAINTEXT_HOST://192.168.116.129:29092" # Docker Host and Docker Intern address
-
                            
 volumes:
     zookeeper-persistence:

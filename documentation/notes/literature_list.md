@@ -69,6 +69,8 @@ Batch Layer
  
  Kafka
  - https://kafka.apache.org/
+ - https://databricks.com/blog/2017/04/26/processing-data-in-apache-kafka-with-structured-streaming-in-apache-spark-2-2.html
+ - 
 
 - Lessons learned form Kafka in production: https://youtu.be/1vLMuWsfMcA
 
@@ -123,8 +125,21 @@ Dashboard
 - http://cs.furman.edu/~pbatchelor/csc105/articles/TUN_DM_ONLINE.pdf
 - https://www.researchgate.net/profile/Alberto_Sillitti/publication/286996830_Effective_dashboard_design/links/57c699e208aec24de0414df1/Effective-dashboard-design.pdf
 
+- flood Dashboard: https://pdfs.semanticscholar.org/513b/276fab645a1eb0dc20813f78f33d6baf9f90.pdf
+- O-LCA: https://www.aifb.kit.edu/images/6/67/O_LCA_Dashboard_preprint.pdf
+
 - https://patentimages.storage.googleapis.com/a0/37/44/3aab74e336a715/US20090021486A1.pdf
 - https://hal.archives-ouvertes.fr/hal-01322550/document
 
 - https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4755377
 - http://blogs.ischool.berkeley.edu/i247s12/files/2012/01/Dashboard-Design-Overview-Presentation.pdf
+
+Database
+
+- Druid: https://druid.apache.org/docs/latest/design/index.html
+- Druid&Spark: https://www.linkedin.com/pulse/combining-druid-spark-interactive-flexible-analytics-scale-butani
+- Casandra: https://blog.pythian.com/cassandra-use-cases/
+
+Dashboard Software
+- https://www.totaljs.com/dashboard/
+- https://grafana.com/grafana/

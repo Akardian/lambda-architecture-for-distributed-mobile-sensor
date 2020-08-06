@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+##### Spark
+# https://github.com/bitnami/bitnami-docker-spark
+    grafana:
+        image: grafana/grafana:7.1.1
+        hostname: spark-master
+        networks:
+            - lambda-network
+        ports:
+            - target: 3000
+              published: 3000
+              mode: ingress
+        environment:
+            GF_INSTALL_PLUGINS: "grafana-clock-panel,abhisant-druid-datasource" 
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]  # No need to be on the manager (node.hostname == ???                       
+  
+networks:
+    lambda-network:
+        name: grafana-network

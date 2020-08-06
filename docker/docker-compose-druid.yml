@@ -1,0 +1,120 @@
+version: "3"
+
+services:
+    postgres:
+        image: postgres:latest
+        hostname: postgres
+        networks: 
+            - druid-network
+        expose: 
+            - "5432"
+        volumes:
+            - metadata_data:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_PASSWORD=druid
+            - POSTGRES_USER=druid
+            - POSTGRES_DB=druid
+
+    zookeeper:
+        image: bitnami/zookeeper:3.6.1
+        hostname: zookeeper
+        networks:
+            - druid-network
+        expose: 
+            - "2181"
+        volumes: 
+            - zookeeper_data:/bitnami/zookeeper/ 
+        environment:
+            ZOO_PORT_NUMBER: 2181
+            ZOO_SERVER_ID: 1
+            ZOO_SERVERS: server.1=0.0.0.0:2888:3888
+            ZOO_ENABLE_AUTH: "yes"
+            ZOO_CLIENT_USER: druid
+            ZOO_CLIENT_PASSWORD: druid
+            ZOO_LOG_LEVEL: DEBUG
+
+    coordinator:
+        image: apache/druid:0.19.0
+        hostname: coordinator
+        networks: 
+            - druid-network
+        volumes:
+            - ./storage:/opt/data
+            - coordinator_var:/opt/druid/var
+        ports:
+            - "5000:8081"
+        command:
+            - coordinator
+        env_file: 
+            - druid.env
+
+    broker:
+        image: apache/druid:0.19.0
+        hostname: broker
+        networks: 
+            - druid-network
+        volumes:
+            - broker_var:/opt/druid/var
+        ports:
+            - "5100:8082"
+        command:
+            - broker
+        env_file:
+            - druid.env
+
+    router:
+        image: apache/druid:0.19.0
+        hostname: router
+        networks: 
+            - druid-network
+        volumes:
+            - router_var:/opt/druid/var
+        ports:
+            - "5200:8888"
+        command:
+            - router
+        env_file:
+            - druid.env
+        
+    middlemanager:
+        image: apache/druid:0.19.0
+        hostname: middlemanager
+        networks: 
+            - druid-network
+        volumes:
+            - ./storage:/opt/data
+            - middle_var:/opt/druid/var
+        ports:
+            - "5300:8091"
+        command:
+            - middleManager
+        env_file:
+            - druid.env
+
+    historical:
+        image: apache/druid:0.19.0
+        hostname: historical
+        networks:
+            - druid-network
+        volumes:
+            - ./storage:/opt/data
+            - historical_var:/opt/druid/var
+        ports:
+            - "5400:8083"
+        command:
+            - historical
+        env_file:
+           - druid.env
+
+networks:
+    druid-network:
+        driver: bridge
+
+volumes:
+    metadata_data:
+    zookeeper_data:
+    coordinator_var:
+    historical_var:
+    broker_var:
+    router_var:
+    middle_var:
