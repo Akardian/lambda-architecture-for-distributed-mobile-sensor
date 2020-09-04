@@ -4,6 +4,7 @@
 *.code-workspace
 *.bin
 *.lock
+*.scala
 
 .project
 .classpath
@@ -39,4 +40,5 @@ build/
 .metals/
 .gradle/
 .bloop/
+docker/storage/
 
