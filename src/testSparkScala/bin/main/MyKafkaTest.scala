@@ -11,8 +11,8 @@ object MyKafkaTest {
     val TOPICS_INPUT = "kafka-test-topic"
     val CONTEXT_NAME = "Scala Streaming Test"
     val BOOTSTRAP_SERVERS = "kafka-01:9092";
-    val WINDOW_SIZE = "60 seconds"
-    val SLIDE_SZIZE = "60 seconds"
+    val WINDOW_SIZE = "30 seconds"
+    val SLIDE_SZIZE = "30 seconds"
 
     def main(args: Array[String]) {
         val log = LogManager.getRootLogger
@@ -44,6 +44,7 @@ object MyKafkaTest {
 
         // Daten auf hadoop schreiben
 
+        //Splitt words and keep timestamp
         val words = dataFrame
             .selectExpr("CAST(value AS STRING)", "CAST(timestamp AS Timestamp)")
             .as[(String, Timestamp)]
@@ -53,23 +54,21 @@ object MyKafkaTest {
         
         words.printSchema()
 
+        //Count Words https://sparkbyexamples.com/spark/using-groupby-on-dataframe/
         val wordcounts = words
             .withWatermark("timestamp", WINDOW_SIZE)
             .groupBy("value", "timestamp")
-            //.groupBy("value") //window($"timestamp", WINDOW_SIZE, SLIDE_SZIZE), $
             .count()
 
         log.debug("Show stream")
         wordcounts.printSchema()
 
-        /*val query = wordcounts
-            .writeStream
-            .outputMode("complete")
-            .format("console")
-            .start()  */ 
+        //Create JSON dataset https://spark.apache.org/docs/latest/sql-data-sources-json.html
+        //val jsonData = spark.read.json(wordcounts)
+        //jsonData.printSchema()
 
         val query = wordcounts
-            .selectExpr("CAST(value AS STRING) AS key", "CAST(timestamp AS STRING) as timestamp", "CAST(count AS STRING) AS value")
+            .selectExpr("CAST(timestamp AS STRING) as timestamp", "to_json(struct(*)) AS value")
             .writeStream
             .format("kafka")
             .option("kafka.bootstrap.servers", BOOTSTRAP_SERVERS)

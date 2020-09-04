@@ -143,3 +143,4 @@ Database
 Dashboard Software
 - https://www.totaljs.com/dashboard/
 - https://grafana.com/grafana/
+- https://superset.apache.org/index.html
