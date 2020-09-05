@@ -1,13 +1,13 @@
-version: "3.7"
+version: "3.8"
 
 services:
-##### Kafka
     zookeeper-01:
         image: bitnami/zookeeper:3.6.1
+        hostname: zookeeper-01
+        restart: unless-stopped
         ports:
             - target: 2181
               published: 2181
-              protocol: tcp
               mode: host
         networks:
             - lambda-network
@@ -26,11 +26,11 @@ services:
 
     kafdrop:
         image: obsidiandynamics/kafdrop
+        hostname: kafdrop
+        restart: unless-stopped
         ports:
             - target: 9000
               published: 8000
-              protocol: tcp
-              mode: ingress
         networks:
             - lambda-network
         environment:
@@ -40,15 +40,13 @@ services:
 
     kafka-01:
         image: bitnami/kafka:2.5.0
+        hostname: kafka-01
+        restart: unless-stopped
         ports:
             - target: 9092
               published: 9092
-              protocol: tcp
-              mode: ingress
             - target: 29092
               published: 29092
-              protocol: tcp
-              mode: ingress
         networks:
             - lambda-network
         volumes:
@@ -67,5 +65,5 @@ volumes:
     kafka-persistence:
   
 networks:
-  lambda-network:
-    name: lambda-network
+    lambda-network:
+        name: lambda-network

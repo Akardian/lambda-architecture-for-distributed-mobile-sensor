@@ -8,10 +8,8 @@ services:
         ports: 
             - target: 9000
               published: 8010
-              mode: ingress
             - target: 8000
               published: 8020
-              mode: ingress
         networks:
             - portainer-network
         volumes: 

@@ -4,7 +4,6 @@
 *.code-workspace
 *.bin
 *.lock
-*.scala
 
 .project
 .classpath

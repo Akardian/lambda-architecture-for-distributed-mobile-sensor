@@ -1,22 +1,18 @@
 version: "3.8"
 
-services:
-##### Spark
 # https://github.com/bitnami/bitnami-docker-spark
+services:
     spark-master:
-        image: bitnami/spark:3.0.0
+        image: bitnami/spark:3.0.0-debian-10-r43
         hostname: spark-master
+        restart: unless-stopped
         networks:
             - lambda-network
         ports:
             - target: 8080
               published: 8080
-              protocol: tcp
-              mode: ingress
             - target: 7077
               published: 7077
-              protocol: tcp
-              mode: ingress
         environment:
             SPARK_MODE: "master"
             SPARK_RPC_AUTHENTICATION_ENABLED: "no"
@@ -31,15 +27,14 @@ services:
                 constraints: [node.role == manager]  # No need to be on the manager (node.hostname == ???)
                 
     spark-worker:
-        image: bitnami/spark:3.0.0
+        image: bitnami/spark:3.0.0-debian-10-r43
         hostname: spark-worker
+        restart: unless-stopped
         networks:
             - lambda-network
         ports:
             - target: 8081
               published: 8081
-              protocol: tcp
-              mode: host
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://spark-master:7077"

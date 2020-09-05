@@ -1,15 +1,16 @@
-version: "3"
+version: "3.8"
 
 services:
     postgres:
         image: postgres:latest
         hostname: postgres
+        restart: unless-stopped
         networks: 
             - druid-network
-        expose: 
-            - "5432"
         volumes:
-            - metadata_data:/var/lib/postgresql/data
+            - type: volume
+              source: metadata_data
+              target: /var/lib/postgresql/data
         environment:
             - POSTGRES_PASSWORD=druid
             - POSTGRES_USER=druid
@@ -18,12 +19,13 @@ services:
     zookeeper:
         image: bitnami/zookeeper:3.6.1
         hostname: zookeeper
+        restart: unless-stopped
         networks:
             - druid-network
-        expose: 
-            - "2181"
         volumes: 
-            - zookeeper_data:/bitnami/zookeeper/ 
+            - type: volume
+              source: zookeeper_data
+              target: /bitnami/zookeeper/ 
         environment:
             ZOO_PORT_NUMBER: 2181
             ZOO_SERVER_ID: 1
@@ -36,13 +38,19 @@ services:
     coordinator:
         image: apache/druid:0.19.0
         hostname: coordinator
+        restart: unless-stopped
         networks: 
             - druid-network
         volumes:
-            - ./storage:/opt/data
-            - coordinator_var:/opt/druid/var
+            - type: bind
+              source: ./storage
+              target: /opt/data
+            - type: volume
+              source: coordinator_var
+              target: /opt/druid/var
         ports:
-            - "5000:8081"
+            - target: 8081
+              published: 5000
         command:
             - coordinator
         env_file: 
@@ -51,12 +59,16 @@ services:
     broker:
         image: apache/druid:0.19.0
         hostname: broker
+        restart: unless-stopped
         networks: 
             - druid-network
         volumes:
-            - broker_var:/opt/druid/var
+            - type: volume
+              source: broker_var
+              target: /opt/druid/var
         ports:
-            - "5100:8082"
+            - target: 8082
+              published: 5100
         command:
             - broker
         env_file:
@@ -65,12 +77,16 @@ services:
     router:
         image: apache/druid:0.19.0
         hostname: router
+        restart: unless-stopped
         networks: 
             - druid-network
         volumes:
-            - router_var:/opt/druid/var
+            - type: volume
+              source: router_var
+              target: /opt/druid/var
         ports:
-            - "5200:8888"
+            - target: 8888
+              published: 5200
         command:
             - router
         env_file:
@@ -79,13 +95,19 @@ services:
     middlemanager:
         image: apache/druid:0.19.0
         hostname: middlemanager
+        restart: unless-stopped
         networks: 
             - druid-network
         volumes:
-            - ./storage:/opt/data
-            - middle_var:/opt/druid/var
+            - type: bind
+              source: ./storage
+              target: /opt/data
+            - type: volume
+              source: middle_var
+              target: /opt/druid/var
         ports:
-            - "5300:8091"
+            - target: 8091
+              published: 5300
         command:
             - middleManager
         env_file:
@@ -94,13 +116,19 @@ services:
     historical:
         image: apache/druid:0.19.0
         hostname: historical
+        restart: unless-stopped
         networks:
             - druid-network
         volumes:
-            - ./storage:/opt/data
-            - historical_var:/opt/druid/var
+            - type: bind
+              source: ./storage
+              target: /opt/data
+            - type: volume 
+              source: historical_var
+              target: /opt/druid/var
         ports:
-            - "5400:8083"
+            - target: 8083
+              published: 5400
         command:
             - historical
         env_file:
@@ -108,7 +136,7 @@ services:
 
 networks:
     druid-network:
-        driver: bridge
+        name: druid-network
 
 volumes:
     metadata_data:
