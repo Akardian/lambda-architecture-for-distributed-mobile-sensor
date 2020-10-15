@@ -1,0 +1,10 @@
+{
+    "namespace": "avro",
+    "type": "record",
+    "name": "TestData",
+    "version": "1",
+    "fields": [
+        {"name": "sendereName", "type": "string", "doc": "Name of the sender"},
+        {"name": "senderType",  "type": "string", "doc": "Type ot the sender"},
+        {"name": "message",  "type": "string", "doc": "String Message"} ]
+}

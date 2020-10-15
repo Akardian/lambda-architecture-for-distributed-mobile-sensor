@@ -5,7 +5,6 @@
  */
 package producer.avro;
 
-import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
 import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
@@ -13,7 +12,7 @@ import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
-public class TestData extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+public class TestData extends org.apache.avro.specific.SpecificRecordBase {
   private static final long serialVersionUID = -8150466757757616806L;
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TestData\",\"namespace\":\"producer.avro\",\"fields\":[{\"name\":\"sendereName\",\"type\":\"string\",\"doc\":\"Name of the sender\"},{\"name\":\"senderType\",\"type\":\"string\",\"doc\":\"Type ot the sender\"},{\"name\":\"message\",\"type\":\"string\",\"doc\":\"Type ot the sender\"}],\"version\":\"1\"}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
@@ -110,7 +109,6 @@ public class TestData extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   // Used by DatumReader.  Applications should not call.
-  @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: sendereName = (java.lang.CharSequence)value$; break;
@@ -213,7 +211,7 @@ public class TestData extends org.apache.avro.specific.SpecificRecordBase implem
    */
   @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<TestData>
-    implements org.apache.avro.data.RecordBuilder<TestData> {
+    {
 
     /** Name of the sender */
     private java.lang.CharSequence sendereName;
@@ -400,7 +398,6 @@ public class TestData extends org.apache.avro.specific.SpecificRecordBase implem
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public TestData build() {
       try {
         TestData record = new TestData();
