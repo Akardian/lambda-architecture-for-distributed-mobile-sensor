@@ -1,14 +1,10 @@
 version: "3.8"
 
 services:
-    zookeeper-01:
+    zookeeper01:
         image: bitnami/zookeeper:3.6.1
-        hostname: zookeeper-01
+        hostname: zookeeper01
         restart: unless-stopped
-        ports:
-            - target: 2181
-              published: 2181
-              mode: host
         networks:
             - lambda-network
         deploy:
@@ -34,17 +30,15 @@ services:
         networks:
             - lambda-network
         environment:
-            KAFKA_BROKERCONNECT: "kafka-01:9092"
+            KAFKA_BROKERCONNECT: "kafka01:9092"
             JVM_OPTS: "-Xms32M -Xmx64M"
             SERVER_SERVLET_CONTEXTPATH: "/" 
 
-    kafka-01:
+    kafka01:
         image: bitnami/kafka:2.5.0
-        hostname: kafka-01
+        hostname: kafka01
         restart: unless-stopped
         ports:
-            - target: 9092
-              published: 9092
             - target: 29092
               published: 29092
         networks:
@@ -54,11 +48,11 @@ services:
               source: kafka-persistence
               target: /bitnami/kafka/
         environment: # PLAINTEXT_HOST needs to be Docker Host IP/Hostname (TODO: Set constrain)
-            KAFKA_CFG_ZOOKEEPER_CONNECT: "zookeeper-01:2181"
+            KAFKA_CFG_ZOOKEEPER_CONNECT: "zookeeper01:2181"
             ALLOW_PLAINTEXT_LISTENER: "yes"
             KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
             KAFKA_CFG_LISTENERS: "PLAINTEXT://:9092,PLAINTEXT_HOST://:29092"
-            KAFKA_CFG_ADVERTISED_LISTENERS: "PLAINTEXT://kafka-01:9092,PLAINTEXT_HOST://192.168.80.139:29092" # Docker Host and Docker Intern address
+            KAFKA_CFG_ADVERTISED_LISTENERS: "PLAINTEXT://kafka01:9092,PLAINTEXT_HOST://${HOST_IP:?err}:29092" # Docker Host and Docker Intern address
                            
 volumes:
     zookeeper-persistence:

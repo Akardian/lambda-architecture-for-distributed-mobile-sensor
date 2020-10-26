@@ -1,0 +1,1 @@
+docker exec -it dashboard_superset_1 superset-init
