@@ -1,0 +1,68 @@
+version: '3.8'
+
+# https://hub.docker.com/r/bde2020/hadoop-namenode
+services:
+    namenode:
+        image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+        hostname: namenode
+        restart: unless-stopped
+        networks:
+            - lambda-network
+        ports:
+            - target: 9870
+              published: 9870
+              mode: host
+        volumes:
+            - type: volume
+              source: namenode
+              target: /hadoop/dfs/name
+        environment:
+            - CLUSTER_NAME=lambda-hadoop
+        env_file:
+            - ./hadoop.env
+        deploy:
+            endpoint_mode: dnsrr
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints: [node.role == manager]
+            labels:
+                traefik.docker.network: lambda-network
+                traefik.port: 9870
+
+    datanode:
+        image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+        hostname: datanode
+        restart: unless-stopped
+        networks:
+            - lambda-network
+        ports:
+            - target: 9864
+              published: 9864
+              mode: host
+        volumes:
+            - type: volume
+              source: datanode
+              target: /hadoop/dfs/data
+        env_file:
+            - ./hadoop.env
+        environment:
+            SERVICE_PRECONDITION: "namenode:9870"
+        deploy:
+            endpoint_mode: dnsrr
+            mode: global
+            restart_policy:
+                condition: on-failure
+            labels:
+                traefik.docker.network: lambda-network
+                traefik.port: 9864
+
+volumes:
+    datanode:
+    namenode:
+
+networks:
+    lambda-network:
+        name: lambda-network

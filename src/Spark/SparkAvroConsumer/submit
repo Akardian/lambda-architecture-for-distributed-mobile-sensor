@@ -1,5 +1,5 @@
-HDFS_CONTAINER=$(docker ps -q -n 1 -f name=hadoop_datanode*)
-SPARK_CONTAINER=$(docker ps -q -n 1 -f name=spark_spark-master*)
+HDFS_CONTAINER=$(docker ps -q -n 1 -f name=hdfs_datanode*)
+SPARK_CONTAINER=$(docker ps -q -n 1 -f name=spark_master*)
 
 echo Found HDFS datanode: $HDFS_CONTAINER
 echo Found SPARK master: $SPARK_CONTAINER
@@ -23,7 +23,7 @@ echo Submit jar file to Spark
 # Run on a Spark standalone cluster in cluster deploy mode
 docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
     --class SparkAvroConsumer \
-    --master spark://spark-master:7077 \
+    --master spark://master:7077 \
     --deploy-mode cluster \
     --executor-memory 3G \
     --total-executor-cores 4 \

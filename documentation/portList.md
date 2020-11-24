@@ -2,13 +2,10 @@ Hadoop
     Namenode WebUI:
         Target: 9870
         published: 9870
-    NameNode metadata:
-        T: 9000
-        P: 9000
         
     Datanode WebUI:
         Target: 9864
-        published: 9864       
+        published: 9864
 
 Kafka
     kafdrop WebUI:

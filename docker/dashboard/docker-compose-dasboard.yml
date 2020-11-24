@@ -27,6 +27,7 @@ services:
               source: postgres
               target: /var/lib/postgresql/data
     
+    # https://hub.docker.com/r/amancevice/superset/
     superset:
         image: amancevice/superset
         hostname: superset
