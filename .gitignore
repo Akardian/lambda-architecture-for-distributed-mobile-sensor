@@ -39,5 +39,5 @@ build/
 .metals/
 .gradle/
 .bloop/
-docker/storage/
+storage/
 
