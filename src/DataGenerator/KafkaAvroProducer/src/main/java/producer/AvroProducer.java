@@ -22,7 +22,7 @@ import producer.avro.TestData;
 // http://cloudurable.com/blog/kafka-tutorial-kafka-producer/index.html
 public class AvroProducer {
     //Configuration values
-    private final static String TOPIC = "test-data-generator";
+    private final static String TOPIC = "test-data-generator-input";
     private final static String BOOTSTRAP_SERVERS = "192.168.80.139:29092"; //list of broker addresses "IP:Port,IP:Port"
     private final static String CLIENT_ID = "data-generator-1"; //to track the source of a requests
 
@@ -35,7 +35,7 @@ public class AvroProducer {
 
         System.out.println(testData.getSchema().toString(true));
         System.out.println(testData.toString());
-        runProducer(5, testData); //Send message 5 times
+        runProducer(1, testData); //Send message 5 times
 	}
 
     private static Producer<Long, TestData> createProducer() {

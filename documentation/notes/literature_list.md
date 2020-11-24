@@ -144,3 +144,9 @@ Dashboard Software
 - https://www.totaljs.com/dashboard/
 - https://grafana.com/grafana/
 - https://superset.apache.org/index.html
+
+MarkDown
+
+- CodiMD
+- https://hackmd.io/
+- https://pandoc.org/MANUAL.html#slide-shows
