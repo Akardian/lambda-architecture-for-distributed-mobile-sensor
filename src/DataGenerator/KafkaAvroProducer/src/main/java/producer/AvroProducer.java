@@ -2,6 +2,7 @@ package producer;
 
 //import util.properties packages
 import java.util.Properties;
+import java.util.Random;
 
 //import simple producer packages
 import org.apache.kafka.clients.producer.Producer;
@@ -30,12 +31,29 @@ public class AvroProducer {
         TestData testData = TestData.newBuilder() //Create message to be send
              .setSenderType("data-generator")
              .setSendereName("data-generator-01")
-             .setMessage("Hello Bob")
+             .setMessage("Hello Bob, das wetter ist gut")
              .build();
 
         System.out.println(testData.getSchema().toString(true));
         System.out.println(testData.toString());
-        runProducer(1, testData); //Send message 5 times
+
+        while(true) {
+            Random rand = new Random(12345);
+            Random count = new Random(67890);
+            for(int n = 0; n < 10; n++) {
+                int time = 60
+                for(int i = 0; i < count.nextInt(25) +1; i++) {
+                    val waitTime = rand.nextInt(2);
+                    val++;
+        
+                    time = time - waitTime;
+                    Thread.Seconds.sleep(Seconds);
+        
+                    runProducer(1, testData); //Send message 5 times
+                }
+                Thread.Seconds.sleep(time);
+            }  
+        }      
 	}
 
     private static Producer<Long, TestData> createProducer() {
