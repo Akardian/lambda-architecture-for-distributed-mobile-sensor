@@ -3,6 +3,7 @@ package producer;
 //import util.properties packages
 import java.util.Properties;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 //import simple producer packages
 import org.apache.kafka.clients.producer.Producer;
@@ -24,14 +25,14 @@ import producer.avro.TestData;
 public class AvroProducer {
     //Configuration values
     private final static String TOPIC = "test-data-generator-input";
-    private final static String BOOTSTRAP_SERVERS = "192.168.80.139:29092"; //list of broker addresses "IP:Port,IP:Port"
+    private final static String BOOTSTRAP_SERVERS = "141.22.10.55:29092"; //list of broker addresses "IP:Port,IP:Port"
     private final static String CLIENT_ID = "data-generator-1"; //to track the source of a requests
 
 	public static void main(final String[] args) throws Exception {	
         TestData testData = TestData.newBuilder() //Create message to be send
              .setSenderType("data-generator")
              .setSendereName("data-generator-01")
-             .setMessage("Hello Bob, das wetter ist gut")
+             .setMessage("Hello Bob")
              .build();
 
         System.out.println(testData.getSchema().toString(true));
@@ -41,17 +42,17 @@ public class AvroProducer {
             Random rand = new Random(12345);
             Random count = new Random(67890);
             for(int n = 0; n < 10; n++) {
-                int time = 60
+                int time = 60;
                 for(int i = 0; i < count.nextInt(25) +1; i++) {
-                    val waitTime = rand.nextInt(2);
-                    val++;
+                    int waitTime = rand.nextInt(2);
+                    waitTime++;
         
                     time = time - waitTime;
-                    Thread.Seconds.sleep(Seconds);
+                    TimeUnit.SECONDS.sleep(waitTime);
         
                     runProducer(1, testData); //Send message 5 times
                 }
-                Thread.Seconds.sleep(time);
+                TimeUnit.SECONDS.sleep(time);
             }  
         }      
 	}
