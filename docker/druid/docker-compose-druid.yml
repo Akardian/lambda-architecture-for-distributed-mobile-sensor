@@ -135,8 +135,8 @@ services:
            - druid.env
 
 networks:
-    druid-network:
-        name: druid-network
+    lambda-network:
+        name: lambda-network
 
 volumes:
     metadata_data:
