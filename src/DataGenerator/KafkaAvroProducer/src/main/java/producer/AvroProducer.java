@@ -25,7 +25,7 @@ import producer.avro.TestData;
 public class AvroProducer {
     //Configuration values
     private final static String TOPIC = "test-data-generator-input";
-    private final static String BOOTSTRAP_SERVERS = "141.22.10.55:29092"; //list of broker addresses "IP:Port,IP:Port"
+    private final static String BOOTSTRAP_SERVERS = "10.8.0.123:800"; //list of broker addresses "IP:Port,IP:Port"
     private final static String CLIENT_ID = "data-generator-1"; //to track the source of a requests
 
 	public static void main(final String[] args) throws Exception {	
@@ -79,6 +79,7 @@ public class AvroProducer {
         } catch (ProducerFencedException | OutOfOrderSequenceException | AuthorizationException e) {
             // We can't recover from these exceptions, so our only option is to close the producer and exit.
             producer.close();
+            System.exit(-1);
         } finally {
             producer.flush();
             producer.close();
