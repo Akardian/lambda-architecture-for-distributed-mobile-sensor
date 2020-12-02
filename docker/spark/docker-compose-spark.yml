@@ -31,7 +31,8 @@ services:
         networks:
             - lambda-network
         ports:
-            - "8070-8079:8070-8079"
+            - target: 8081
+              published: 8081
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
