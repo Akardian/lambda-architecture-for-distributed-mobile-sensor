@@ -24,7 +24,7 @@ import producer.avro.TestData;
 // http://cloudurable.com/blog/kafka-tutorial-kafka-producer/index.html
 public class AvroProducer {
     //Configuration values
-    private final static String TOPIC = "test-data-generator";
+    private final static String TOPIC = "test-data-generator-input";
     private final static String BOOTSTRAP_SERVERS = "10.8.0.1:9093"; //list of broker addresses "IP:Port,IP:Port"
     private final static String CLIENT_ID = "data-generator-1"; //to track the source of a requests
 

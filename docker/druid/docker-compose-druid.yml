@@ -6,7 +6,7 @@ services:
         hostname: postgres
         restart: unless-stopped
         networks: 
-            - druid-network
+            - lambda-network
         volumes:
             - type: volume
               source: metadata_data
@@ -21,7 +21,7 @@ services:
         hostname: zookeeper
         restart: unless-stopped
         networks:
-            - druid-network
+            - lambda-network
         volumes: 
             - type: volume
               source: zookeeper_data
@@ -40,7 +40,7 @@ services:
         hostname: coordinator
         restart: unless-stopped
         networks: 
-            - druid-network
+            - lambda-network
         volumes:
             - type: bind
               source: ./storage
@@ -61,7 +61,7 @@ services:
         hostname: broker
         restart: unless-stopped
         networks: 
-            - druid-network
+            - lambda-network
         volumes:
             - type: volume
               source: broker_var
@@ -79,7 +79,7 @@ services:
         hostname: router
         restart: unless-stopped
         networks: 
-            - druid-network
+            - lambda-network
         volumes:
             - type: volume
               source: router_var
@@ -97,7 +97,7 @@ services:
         hostname: middlemanager
         restart: unless-stopped
         networks: 
-            - druid-network
+            - lambda-network
         volumes:
             - type: bind
               source: ./storage
@@ -118,7 +118,7 @@ services:
         hostname: historical
         restart: unless-stopped
         networks:
-            - druid-network
+            - lambda-network
         volumes:
             - type: bind
               source: ./storage
