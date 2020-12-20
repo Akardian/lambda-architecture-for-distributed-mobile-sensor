@@ -3,20 +3,25 @@ scalaVersion := "2.12.12"
 // ============================================================================
 
 val sparkVersion = "3.0.0"
-val sparkName = "SparkFind3"
+val projectName = "SparkFind3"
+val projectVersion = "0.2"
 
-name := sparkName
+name := projectName
 organization := "de.cads.scala"
-version := "0.1"
+version := projectVersion
   
 // ============================================================================
 
-lazy val SparkFind3 = (project in file("."))
-.settings(
-    name := sparkName,
-    libraryDependencies ++= Seq(
-        "org.apache.spark" %% "spark-sql" % sparkVersion,
-        "org.apache.spark" %% "spark-sql-kafka-0-10" % sparkVersion,
-        "org.apache.spark" %% "spark-avro" % sparkVersion,
-    )
-)
+libraryDependencies ++= Seq(
+            "org.apache.spark" %% "spark-sql" % sparkVersion,
+            "org.apache.spark" %% "spark-sql-kafka-0-10" % sparkVersion,
+            "org.apache.spark" %% "spark-avro" % sparkVersion
+        )
+
+assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = false)
+assemblyJarName in assembly := (projectName + "-" + projectVersion + ".jar")
+
+assemblyMergeStrategy in assembly := {
+    case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+    case x => MergeStrategy.first
+}
