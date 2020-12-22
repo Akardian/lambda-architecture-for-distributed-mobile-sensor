@@ -1,0 +1,69 @@
+version: '3.7'
+
+services:
+    build-sbt:
+        image: build-sbt
+        volumes:
+            - type: bind
+              source: ${S_PATH_PROJECT:?err}
+              target: ${T_PATH_PROJECT:?err}
+            - type: bind
+              source: ${S_PATH_SBT:?err}
+              target: ${T_PATH_SBT:?err}
+            - type: bind
+              source: ${S_PATH_M2:?err}
+              target: ${T_PATH_M2:?err}
+            - type: bind
+              source: ${S_PATH_IVY2:?err}
+              target: ${T_PATH_IVY2:?err}
+        
+    sbt-run:
+        image : build-sbt
+        volumes:
+            - type: bind
+              source: ${S_PATH_PROJECT:?err}
+              target: ${T_PATH_PROJECT:?err}
+            - type: bind
+              source: ${S_PATH_SBT:?err}
+              target: ${T_PATH_SBT:?err}
+            - type: bind
+              source: ${S_PATH_M2:?err}
+              target: ${T_PATH_M2:?err}
+            - type: bind
+              source: ${S_PATH_IVY2:?err}
+              target: ${T_PATH_IVY2:?err}
+        command: sbt run
+
+    sbt-assembly:
+        image : build-sbt
+        volumes:
+            - type: bind
+              source: ${S_PATH_PROJECT:?err}
+              target: ${T_PATH_PROJECT:?err}
+            - type: bind
+              source: ${S_PATH_SBT:?err}
+              target: ${T_PATH_SBT:?err}
+            - type: bind
+              source: ${S_PATH_M2:?err}
+              target: ${T_PATH_M2:?err}
+            - type: bind
+              source: ${S_PATH_IVY2:?err}
+              target: ${T_PATH_IVY2:?err}
+        command: sbt assembly
+
+    sbt-package:
+        image : build-sbt
+        volumes:
+            - type: bind
+              source: ${S_PATH_PROJECT:?err}
+              target: ${T_PATH_PROJECT:?err}
+            - type: bind
+              source: ${S_PATH_SBT:?err}
+              target: ${T_PATH_SBT:?err}
+            - type: bind
+              source: ${S_PATH_M2:?err}
+              target: ${T_PATH_M2:?err}
+            - type: bind
+              source: ${S_PATH_IVY2:?err}
+              target: ${T_PATH_IVY2:?err}
+        command: sbt package
