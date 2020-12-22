@@ -24,7 +24,7 @@ services:
             placement:
                 constraints: [node.role == manager]  # No need to be on the manager (node.hostname == ???)
                 
-    worker:
+    worker-1:
         image: bitnami/spark:3.0.0-debian-10-r43
         hostname: worker
         restart: unless-stopped
@@ -45,7 +45,76 @@ services:
             SPARK_PUBLIC_DNS: ${HOST_IP:?err} # Docker host IP
         deploy:
             mode: replicated
-            replicas: 1                           
+            replicas: 1           
+
+    worker-2:
+        image: bitnami/spark:3.0.0-debian-10-r43
+        hostname: worker
+        restart: unless-stopped
+        networks:
+            - lambda-network
+        ports:
+            - target: 8081
+              published: 8082
+        environment:
+            SPARK_MODE: "worker"
+            SPARK_MASTER_URL: "spark://master:7077"
+            SPARK_WORKER_MEMORY: "8G"
+            SPARK_WORKER_CORES: "1"
+            SPARK_RPC_AUTHENTICATION_ENABLED: "no"
+            SPARK_RPC_ENCRYPTION_ENABLED: "no"
+            SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
+            SPARK_SSL_ENABLED: "no"
+            SPARK_PUBLIC_DNS: ${HOST_IP:?err} # Docker host IP
+        deploy:
+            mode: replicated
+            replicas: 1           
+
+    worker-3:
+        image: bitnami/spark:3.0.0-debian-10-r43
+        hostname: worker
+        restart: unless-stopped
+        networks:
+            - lambda-network
+        ports:
+            - target: 8081
+              published: 8083
+        environment:
+            SPARK_MODE: "worker"
+            SPARK_MASTER_URL: "spark://master:7077"
+            SPARK_WORKER_MEMORY: "8G"
+            SPARK_WORKER_CORES: "1"
+            SPARK_RPC_AUTHENTICATION_ENABLED: "no"
+            SPARK_RPC_ENCRYPTION_ENABLED: "no"
+            SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
+            SPARK_SSL_ENABLED: "no"
+            SPARK_PUBLIC_DNS: ${HOST_IP:?err} # Docker host IP
+        deploy:
+            mode: replicated
+            replicas: 1           
+
+    worker-4:
+        image: bitnami/spark:3.0.0-debian-10-r43
+        hostname: worker
+        restart: unless-stopped
+        networks:
+            - lambda-network
+        ports:
+            - target: 8081
+              published: 8084
+        environment:
+            SPARK_MODE: "worker"
+            SPARK_MASTER_URL: "spark://master:7077"
+            SPARK_WORKER_MEMORY: "8G"
+            SPARK_WORKER_CORES: "1"
+            SPARK_RPC_AUTHENTICATION_ENABLED: "no"
+            SPARK_RPC_ENCRYPTION_ENABLED: "no"
+            SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
+            SPARK_SSL_ENABLED: "no"
+            SPARK_PUBLIC_DNS: ${HOST_IP:?err} # Docker host IP
+        deploy:
+            mode: replicated
+            replicas: 1                          
   
 networks:
     lambda-network:
