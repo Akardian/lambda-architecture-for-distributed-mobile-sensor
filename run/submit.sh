@@ -9,12 +9,12 @@ docker cp $FAT_JAR_PATH
 echo
 
 echo Create jar folder
-docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $PATH_HDFS
+docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH
 echo
 
 echo Copy jar file from local file system into HDFS
 docker exec $HDFS_CONTAINER hdfs dfs -put -f $HDFS_JAR $HDFS_PATH
-docker exec $HDFS_CONTAINER hadoop fs -chown -R haw:hadoop $HDFS=USER
+docker exec $HDFS_CONTAINER hadoop fs -chown -R haw:hadoop $HDFS_USER
 echo
 
 echo Submit jar file to Spark
@@ -23,6 +23,6 @@ docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
     --class $SPARK_CLASS \
     --master spark://master:7077 \
     --deploy-mode cluster \
-    --executor-memory 2G \
+    --executor-memory 8G \
     --total-executor-cores 1 \
     $SPARK_PATH
