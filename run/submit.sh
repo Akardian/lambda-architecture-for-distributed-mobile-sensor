@@ -5,7 +5,7 @@ echo
 #Save jars to HDFS
 #Local   container only
 echo Copy jar file to HDFS datanode
-docker cp $FAT_JAR_PATH
+docker cp $FAT_JAR_PATH $HDFS_CONTAINER:tmp/
 echo
 
 echo Create jar folder
