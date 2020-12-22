@@ -24,7 +24,7 @@ services:
             placement:
                 constraints: [node.role == manager]  # No need to be on the manager (node.hostname == ???)
                 
-    worker-1:
+    worker:
         image: bitnami/spark:3.0.0-debian-10-r43
         hostname: worker
         restart: unless-stopped
@@ -47,7 +47,7 @@ services:
             mode: replicated
             replicas: 1           
 
-    worker-2:
+    worker:
         image: bitnami/spark:3.0.0-debian-10-r43
         hostname: worker
         restart: unless-stopped
@@ -70,7 +70,7 @@ services:
             mode: replicated
             replicas: 1           
 
-    worker-3:
+    worker:
         image: bitnami/spark:3.0.0-debian-10-r43
         hostname: worker
         restart: unless-stopped
@@ -93,7 +93,7 @@ services:
             mode: replicated
             replicas: 1           
 
-    worker-4:
+    worker:
         image: bitnami/spark:3.0.0-debian-10-r43
         hostname: worker
         restart: unless-stopped
