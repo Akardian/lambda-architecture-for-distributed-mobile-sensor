@@ -73,7 +73,7 @@ object SparkFind3 {
             .writeStream
             .format("kafka")
             .trigger(Trigger.ProcessingTime("2 seconds"))
-            .outputMode("append")
+            .outputMode("update")
             .option("kafka.bootstrap.servers", BOOTSTRAP_SERVERS)
             .option("topic", TOPICS_OUTPUT)
             .option("checkpointLocation", CHECKPOINT_KAFKA)
