@@ -26,7 +26,7 @@ services:
                 
     worker01:
         image: bitnami/spark:3.0.0-debian-10-r43
-        hostname: worker
+        hostname: worker01
         restart: unless-stopped
         networks:
             - lambda-network
@@ -49,7 +49,7 @@ services:
 
     worker02:
         image: bitnami/spark:3.0.0-debian-10-r43
-        hostname: worker
+        hostname: worker02
         restart: unless-stopped
         networks:
             - lambda-network
@@ -72,7 +72,7 @@ services:
 
     worker03:
         image: bitnami/spark:3.0.0-debian-10-r43
-        hostname: worker
+        hostname: worker03
         restart: unless-stopped
         networks:
             - lambda-network
@@ -95,7 +95,7 @@ services:
 
     worker04:
         image: bitnami/spark:3.0.0-debian-10-r43
-        hostname: worker
+        hostname: worker04
         restart: unless-stopped
         networks:
             - lambda-network

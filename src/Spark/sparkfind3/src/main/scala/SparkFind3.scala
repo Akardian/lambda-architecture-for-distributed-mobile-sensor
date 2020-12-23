@@ -14,8 +14,7 @@ import org.apache.spark.sql.SaveMode
 import org.apache.spark.sql.streaming.OutputMode
 
 object SparkFind3 {
- 
-
+    
     def main(args: Array[String]) {
         // Import config data
         import config.Config._
