@@ -14,7 +14,7 @@ import org.apache.spark.sql.SaveMode
 import org.apache.spark.sql.streaming.OutputMode
 
 object SparkFind3 {
-    
+
     def main(args: Array[String]) {
         // Import config data
         import config.Config._
@@ -36,6 +36,7 @@ object SparkFind3 {
 
         //Read Avro Schema from Resource and convert it to a String
         val source = Source.fromResource(SCHEMA_PATH)
+        log.debug(DEBUG_MSG + "Source is empty=" + source.isEmpty)
         val jsonFormatSchema = source.mkString
         log.debug(DEBUG_MSG + "Json Schema Format\n" + jsonFormatSchema)
 
