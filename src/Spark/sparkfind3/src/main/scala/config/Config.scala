@@ -13,7 +13,7 @@ object Config {
     val GROUP_ID = "Spark-Find3"
     val CONTEXT_NAME = "Find3-Consumer"
 
-    val BOOTSTRAP_SERVERS = "kafka01:9092";
+    val BOOTSTRAP_SERVERS = "kafka01:9092"
     val TOPICS_INPUT = NAME + "-input"
     val TOPICS_OUTPUT = NAME + "-output"
     
