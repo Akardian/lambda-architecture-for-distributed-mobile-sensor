@@ -22,6 +22,8 @@ assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeSca
 assemblyJarName in assembly := (projectName + "-" + projectVersion + ".jar")
 
 assemblyMergeStrategy in assembly := {
+    case "reference.conf" => MergeStrategy.concat
+    case "META-INF/services/org.apache.spark.sql.sources.DataSourceRegister" => MergeStrategy.concat
     case PathList("META-INF", xs @ _*) => MergeStrategy.discard
     case x => MergeStrategy.first
 }
