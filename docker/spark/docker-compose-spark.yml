@@ -11,6 +11,10 @@ services:
         ports:
             - target: 8080
               published: 8080
+        volumes:
+            - type: bind
+              source: /spark-defaults.conf
+              target: /opt/bitnami/spark/conf/spark-defaults.conf
         environment:
             SPARK_MODE: "master"
             SPARK_RPC_AUTHENTICATION_ENABLED: "no"
