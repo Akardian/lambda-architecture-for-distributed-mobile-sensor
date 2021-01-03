@@ -13,7 +13,7 @@ services:
               published: 8080
         volumes:
             - type: bind
-              source: /spark-defaults.conf
+              source: ./spark-defaults.conf
               target: /opt/bitnami/spark/conf/spark-defaults.conf
         environment:
             SPARK_MODE: "master"
