@@ -23,8 +23,6 @@ echo Submit jar file to Spark
 # Run on a Spark standalone cluster in cluster deploy mode
 docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
     --class SparkAvroConsumer \
-    --master spark://master:7077 \
     --deploy-mode cluster \
-    --executor-memory 3G \
-    --total-executor-cores 4 \
+    --total-executor-cores 1 \
     hdfs://namenode:9000/user/haw/spark-jars/SparkAvroConsumer-all.jar
