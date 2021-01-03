@@ -72,7 +72,6 @@ object SparkFind3 {
             .selectExpr("CAST(timestamp AS STRING) as timestamp", "to_json(struct(*)) AS value")
             .writeStream
             .format("kafka")
-            .trigger(Trigger.ProcessingTime("2 seconds"))
             .outputMode("update")
             .option("kafka.bootstrap.servers", BOOTSTRAP_SERVERS)
             .option("topic", TOPICS_OUTPUT)

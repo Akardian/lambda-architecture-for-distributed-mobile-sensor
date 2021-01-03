@@ -13,12 +13,12 @@ object Config {
     val GROUP_ID = "Spark-Find3"
     val CONTEXT_NAME = "Find3-Consumer"
 
-    val BOOTSTRAP_SERVERS = "kafka01:9092";
+    val BOOTSTRAP_SERVERS = "kafka01:9092"
     val TOPICS_INPUT = NAME + "-input"
     val TOPICS_OUTPUT = NAME + "-output"
     
     //Avro Schema
-    val SCHEMA_PATH = "avro/FIND3Data.avsc"
+    val SCHEMA_PATH = "avro/FINDData.avsc"
 
     //Spark timewindows
     val WATERMARK_SIZE = 5.seconds

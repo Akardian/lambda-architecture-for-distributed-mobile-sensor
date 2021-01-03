@@ -41,11 +41,12 @@ services:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
             SPARK_WORKER_MEMORY: "8G"
-            SPARK_WORKER_CORES: "1"
+            SPARK_WORKER_CORES: "2"
             SPARK_RPC_AUTHENTICATION_ENABLED: "no"
             SPARK_RPC_ENCRYPTION_ENABLED: "no"
             SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
             SPARK_SSL_ENABLED: "no"
+            SPARK_WORKER_WEBUI_PORT: 8081
             SPARK_PUBLIC_DNS: ${HOST_IP:?err} # Docker host IP
         deploy:
             mode: replicated
@@ -58,17 +59,18 @@ services:
         networks:
             - lambda-network
         ports:
-            - target: 8081
+            - target: 8082
               published: 8082
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
             SPARK_WORKER_MEMORY: "8G"
-            SPARK_WORKER_CORES: "1"
+            SPARK_WORKER_CORES: "2"
             SPARK_RPC_AUTHENTICATION_ENABLED: "no"
             SPARK_RPC_ENCRYPTION_ENABLED: "no"
             SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
             SPARK_SSL_ENABLED: "no"
+            SPARK_WORKER_WEBUI_PORT: 8082
             SPARK_PUBLIC_DNS: ${HOST_IP:?err} # Docker host IP
         deploy:
             mode: replicated
@@ -81,17 +83,18 @@ services:
         networks:
             - lambda-network
         ports:
-            - target: 8081
+            - target: 8083
               published: 8083
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
             SPARK_WORKER_MEMORY: "8G"
-            SPARK_WORKER_CORES: "1"
+            SPARK_WORKER_CORES: "2"
             SPARK_RPC_AUTHENTICATION_ENABLED: "no"
             SPARK_RPC_ENCRYPTION_ENABLED: "no"
             SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
             SPARK_SSL_ENABLED: "no"
+            SPARK_WORKER_WEBUI_PORT: 8083
             SPARK_PUBLIC_DNS: ${HOST_IP:?err} # Docker host IP
         deploy:
             mode: replicated
@@ -104,17 +107,18 @@ services:
         networks:
             - lambda-network
         ports:
-            - target: 8081
+            - target: 8084
               published: 8084
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
             SPARK_WORKER_MEMORY: "8G"
-            SPARK_WORKER_CORES: "1"
+            SPARK_WORKER_CORES: "2"
             SPARK_RPC_AUTHENTICATION_ENABLED: "no"
             SPARK_RPC_ENCRYPTION_ENABLED: "no"
             SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
             SPARK_SSL_ENABLED: "no"
+            SPARK_WORKER_WEBUI_PORT: 8084
             SPARK_PUBLIC_DNS: ${HOST_IP:?err} # Docker host IP
         deploy:
             mode: replicated
