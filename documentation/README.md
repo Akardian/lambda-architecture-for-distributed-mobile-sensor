@@ -6,23 +6,28 @@ Introduction and Goals
 In "Internet of Things" setups large amounts of data are generate from sensors and communication. The large amount of data results in a high complexity which makes the data hard to handle and complex to analyse. Nathan Marz developed the lambda architecture to reduce the rising complexity. The lambda architecture duplicates the incoming data onto 2 path. The Batch layer and speed layer, this reduces the complexity of each path. The architecture is scalable and distributed which makes a good messenger important. We compared the wide spread Apache Kafka with new Apache Pulsar to find the differences between the messengers. 
 (TODO: Redo)
 
-Requirements Overview
----------------------
-    - Design and build a Lambda architecture
-        - Batch layer
-        - Speed layer
-        - Serving layer
+Requirements Overview  
+--------------------
 
-Quality Goals
--------------
-- working Lambda architecture
+- Communication
+    - Kafka
+- Batch layer
+    - HDFS      
+    - Spark
+- Speed layer
+    - Spark Streaming
+    - Apache Druid
+- Serving layer
+    - Apache Druid
+- Dashboard
+    - SuperSet
 
 Stakeholders
 ------------
 
-| Role/Name       | Description                         |
-|-----------------|-------------------------------------|
-| Mike Wüstenberg | Documentation, Research, Programing |
+| Role/Name | Description                         |
+|-----------|-------------------------------------|
+| Mike W.   | Documentation, Research, Programing |
 
 <sub>Table 1. Stakeholder</sub>
 
@@ -53,12 +58,12 @@ Business Context
 
 <sub>Table 3. Business Context</sub>
 
-Technical Context
------------------
+   Technical Context    
+-----------------------
+  
 ![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/2-1TechnicalContext.png)
 
 <sub>Figure 2. Technical Context</sub>
-TODO: Output Data from Serving Layer
 
 | Component           | Input                                    | Output                               |
 |---------------------|------------------------------------------|--------------------------------------|
