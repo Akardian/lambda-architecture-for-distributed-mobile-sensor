@@ -18,7 +18,7 @@ object Config {
     val TOPICS_OUTPUT = NAME + "-output"
     
     //Avro Schema
-    val SCHEMA_PATH = "avro/FIND3Data.avsc"
+    val SCHEMA_PATH = "avro/FINDData.avsc"
 
     //Spark timewindows
     val WATERMARK_SIZE = 5.seconds
