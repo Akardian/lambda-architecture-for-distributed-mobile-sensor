@@ -11,7 +11,7 @@ object Config {
 
     //Kafka Settings
     val GROUP_ID = "Spark-Find3"
-    val CONTEXT_NAME = "Find3-Consumer"
+    val CONTEXT_NAME = NAME + "executer"
 
     val BOOTSTRAP_SERVERS = "kafka01:9092";
     val TOPICS_INPUT = NAME + "-input"

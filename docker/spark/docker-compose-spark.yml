@@ -11,8 +11,7 @@ services:
         ports:
             - target: 8080
               published: 8080
-            - target: 4040
-              published: 4040       
+            - "4040-4060       
             - target: 18080
               published: 18080
         volumes:
@@ -41,6 +40,7 @@ services:
         ports:
             - target: 8081
               published: 8081
+            - "4140-4160"
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
@@ -51,6 +51,7 @@ services:
             SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
             SPARK_SSL_ENABLED: "no"
             SPARK_WORKER_WEBUI_PORT: 8081
+            SPARK-UI_PORT: 4140
             SPARK_PUBLIC_DNS: ${HOST_IP:?err} # Docker host IP
         deploy:
             mode: replicated
@@ -65,6 +66,7 @@ services:
         ports:
             - target: 8082
               published: 8082
+            - "4240-4260"
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
@@ -75,6 +77,7 @@ services:
             SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
             SPARK_SSL_ENABLED: "no"
             SPARK_WORKER_WEBUI_PORT: 8082
+            SPARK-UI_PORT: 4240
             SPARK_PUBLIC_DNS: ${HOST_IP:?err} # Docker host IP
         deploy:
             mode: replicated
@@ -89,6 +92,7 @@ services:
         ports:
             - target: 8083
               published: 8083
+            - "4340-4360"
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
@@ -99,6 +103,7 @@ services:
             SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
             SPARK_SSL_ENABLED: "no"
             SPARK_WORKER_WEBUI_PORT: 8083
+            SPARK-UI_PORT: 4340
             SPARK_PUBLIC_DNS: ${HOST_IP:?err} # Docker host IP
         deploy:
             mode: replicated
@@ -113,6 +118,7 @@ services:
         ports:
             - target: 8084
               published: 8084
+            - "4440-4460"
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
@@ -123,6 +129,7 @@ services:
             SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
             SPARK_SSL_ENABLED: "no"
             SPARK_WORKER_WEBUI_PORT: 8084
+            SPARK-UI_PORT: 4440
             SPARK_PUBLIC_DNS: ${HOST_IP:?err} # Docker host IP
         deploy:
             mode: replicated
