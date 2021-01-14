@@ -41,6 +41,8 @@ services:
         ports:
             - target: 9093
               published: 9093
+           - target: 9094
+             published: 9094
         networks:
             - lambda-network
         volumes:
