@@ -4,6 +4,8 @@
   "namespace": "app.model.avro.generated",
   "fields": [
     {"name": "senderName", "type": "string", "doc": "Name of the sender"},
+    {"name": "location", "type": "string", "doc": "Sender Location"},
+    {"name": "findTimestamp", "type": "int", "doc": "Timestampt recorded on the device"},
     {"name": "gpsCoordinate", "type": {
     "type": "record",
     "name": "AvroGpsCoordinate",

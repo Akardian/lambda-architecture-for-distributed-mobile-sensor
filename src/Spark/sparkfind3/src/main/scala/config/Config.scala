@@ -11,11 +11,11 @@ object Config {
 
     //Kafka Settings
     val GROUP_ID = "Spark-Find3"
-    val CONTEXT_NAME = NAME + "executer"
+    val CONTEXT_NAME = NAME + "-consumer"
 
     val BOOTSTRAP_SERVERS = "kafka01:9092";
-    val TOPICS_INPUT = NAME + "-input"
-    val TOPICS_OUTPUT = NAME + "-output"
+    val TOPICS_INPUT = "avro.t"
+    val TOPICS_OUTPUT = NAME + "-stream"
     
     //Avro Schema
     val SCHEMA_PATH = "avro/FINDData.avsc"
