@@ -55,3 +55,8 @@ project/plugins/project/
 .history
 .cache
 .lib/
+
+metals.sbt
+FAILURE
+generate-avro.bat
+

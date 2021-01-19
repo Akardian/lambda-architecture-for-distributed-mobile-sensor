@@ -1,1 +1,0 @@
-java -jar F:\avro-tools-1.10.0.jar compile schema F:\GIT\lambda-architecture-for-distributed-mobile-sensor\src\KafkaAvroProducer\src\resources\avro\TestData.avsc F:\GIT\lambda-architecture-for-distributed-mobile-sensor\src\KafkaAvroProducer\src\main\java\

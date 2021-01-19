@@ -1,0 +1,29 @@
+{
+  "type": "record",
+  "name": "AvroFIND3Data",
+  "namespace": "app.model.avro.generated",
+  "fields": [
+    {"name": "senderName", "type": "string", "doc": "Name of the sender"},
+    {"name": "location", "type": "string", "doc": "Sender Location"},
+    {"name": "findTimestamp", "type": "string", "doc": "Timestampt recorded on the device"},
+    {"name": "gpsCoordinate", "type": {
+    "type": "record",
+    "name": "AvroGpsCoordinate",
+    "fields": [
+      {"name": "lat", "type": "string", "default": ""},
+      {"name": "lon", "type": "string", "default": ""},
+      {"name": "alt", "type": "string", "default": ""}
+    ]
+    }},
+    {"name": "wifiData",
+      "type": {
+        "type": "record",
+        "name": "AvroWifiData",
+        "fields": [
+          {"name": "wifiData", "type": {"type": "map", "values": "int"}, "default": {}}
+      ]
+    },
+    "default": {}
+    }
+  ]
+}
