@@ -6,7 +6,7 @@ services:
         hostname: redis
         restart: unless-stopped
         networks:
-            - dashboard-network
+            - lambda-network
         volumes:
             - type: volume
               source: redis
@@ -17,7 +17,7 @@ services:
         hostname: postgres
         restart: unless-stopped
         networks:
-            - dashboard-network
+            - lambda-network
         environment:
             POSTGRES_DB: superset
             POSTGRES_PASSWORD: superset
@@ -33,7 +33,7 @@ services:
         hostname: superset
         restart: unless-stopped
         networks:
-            - dashboard-network
+            - lambda-network
         depends_on:
             - postgres
             - redis
@@ -65,4 +65,4 @@ volumes:
 
 networks:
     dashboard-network:
-        name: dashboard-network
+        name: lambda-network
