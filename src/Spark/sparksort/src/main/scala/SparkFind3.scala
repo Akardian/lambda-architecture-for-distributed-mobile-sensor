@@ -61,8 +61,13 @@ object SparkFind3 {
         val wifiData = hdfsDataFrame.select($"wifiData")
         wifiData.printSchema();
 
+        val query = wifiData.writeStream //Print to consle for Debug
+            .outputMode("complete")
+            .format("console")
+        .   start()    
+
         //Write Data to Kafka
-        val query = hdfsDataFrame
+        /*val query = hdfsDataFrame
             .selectExpr("CAST(timestamp AS STRING) as timestamp", "to_json(struct(*)) AS value")
             .writeStream
             .format("kafka")
@@ -70,7 +75,7 @@ object SparkFind3 {
             .option("kafka.bootstrap.servers", BOOTSTRAP_SERVERS)
             .option("topic", TOPICS_OUTPUT)
             .option("checkpointLocation", CHECKPOINT_KAFKA)
-            .start() 
+            .start() */
         
         spark.streams.awaitAnyTermination()
     }
