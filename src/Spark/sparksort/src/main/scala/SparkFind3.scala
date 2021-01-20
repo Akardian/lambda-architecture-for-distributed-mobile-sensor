@@ -61,10 +61,10 @@ object SparkFind3 {
         val wifiData = hdfsDataFrame.select($"wifiData")
         wifiData.printSchema();
 
-        val query = wifiData.writeStream //Print to consle for Debug
+        val query = wifiData.writeStream //Print to console for Debug
             .outputMode("complete")
             .format("console")
-        .   start()    
+            .start()    
 
         //Write Data to Kafka
         /*val query = hdfsDataFrame

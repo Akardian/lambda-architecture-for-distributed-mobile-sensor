@@ -14,7 +14,7 @@ object Config {
     val CONTEXT_NAME = NAME + "-consumer"
 
     val BOOTSTRAP_SERVERS = "kafka01:9092";
-    val TOPICS_INPUT = "avro.t"
+    val TOPICS_INPUT = NAME +"-input"
     val TOPICS_OUTPUT = NAME + "-stream"
     
     //Avro Schema

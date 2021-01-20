@@ -66,6 +66,8 @@ object SparkFind3 {
             .option("path", HDFS_PATH)
             .option("checkpointLocation", CHECKPOINT_HDFS)
             .start()
+
+        //stream layer
         
         //Write Data to Kafka
         val query = hdfsDataFrame
