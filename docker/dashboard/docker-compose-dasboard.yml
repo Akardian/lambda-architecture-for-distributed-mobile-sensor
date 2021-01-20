@@ -64,5 +64,5 @@ volumes:
     superset-etc:
 
 networks:
-    dashboard-network:
+    lambda-network:
         name: lambda-network
