@@ -62,7 +62,7 @@ object SparkFind3 {
         //Write RAW data to HDFS
         hdfsDataFrame.writeStream  
             .format("json")
-            .outputMode("update")
+            .outputMode("append")
             .partitionBy("time")
             .option("path", HDFS_PATH)
             .option("checkpointLocation", CHECKPOINT_HDFS)
