@@ -71,10 +71,13 @@ object SparkFind3 {
 
         //stream layer
         val flatData = hdfsDataFrame
-            .select($"find3.wifiData.wifiData").as[(Map[String, Integer])]
-            .flatMap(identity)
+            .select($"timestamp", $"find3.wifiData.wifiData")
+            .as[(Timestamp, Map[String, Integer])]
+            .flatMap(f => f._2)
             .printSchema()
 
+
+            
         //Write Data to Kafka
         val query = hdfsDataFrame
             .selectExpr("CAST(timestamp AS STRING) as timestamp", "to_json(struct(*)) AS value")
