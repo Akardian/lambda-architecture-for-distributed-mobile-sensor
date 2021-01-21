@@ -15,6 +15,8 @@ services:
             - type: volume
               source: grafana-storage
               target: /var/lib/grafana
+        environment:
+            GF_INSTALL_PLUGINS: "https://github.com/grafadruid/druid-grafana/releases/download/v1.0.0/grafadruid-druid-datasource-1.0.0.zip;druid-plugin"
 
 volumes:
     grafana-storage:
