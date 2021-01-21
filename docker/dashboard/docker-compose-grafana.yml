@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+    grafana:
+        image: grafana/grafana:7.3.7
+        hostname: grafana
+        restart: unless-stopped
+        networks:
+            - lambda-network
+        ports:
+            - target: 3000
+              published: 3000
+        volumes:
+            - type: volume
+              source: grafana-storage
+              target: /var/lib/grafana
+
+volumes:
+    grafana-storage:
+
+networks:
+    lambda-network:
+        name: lambda-network
