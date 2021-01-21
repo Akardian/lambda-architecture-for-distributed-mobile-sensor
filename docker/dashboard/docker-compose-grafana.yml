@@ -10,7 +10,7 @@ services:
         ports:
             - target: 3000
               published: 3000
-        user: "1"
+        user: "root"
         volumes:
             - type: volume
               source: grafana-storage
