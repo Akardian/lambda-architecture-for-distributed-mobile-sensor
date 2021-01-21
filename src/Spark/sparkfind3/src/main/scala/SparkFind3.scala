@@ -73,7 +73,8 @@ object SparkFind3 {
         val flatData = hdfsDataFrame
             .select($"timestamp", $"find3.wifiData.wifiData")
             .as[(Timestamp, Map[String, Integer])]
-            .flatMap(f => f._2)
+            .flatMap(f => f._2  //Flatten the wifidata map
+            .map(y => (f._1, y))) //combine with timestamp
             .toDF("timestamp", "wifidata")
             .printSchema()
 
