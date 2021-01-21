@@ -12,6 +12,7 @@ import org.apache.commons.net.ntp.TimeStamp
 import org.apache.spark.sql.streaming.Trigger
 import org.apache.spark.sql.SaveMode
 import org.apache.spark.sql.streaming.OutputMode
+import java.util.HashMap
 
 object SparkFind3 {
 
@@ -68,7 +69,10 @@ object SparkFind3 {
             .start()
 
         //stream layer
-        
+        val flatData = hdfsDataFrame
+            .select($"wifiData")
+            .printSchema()
+
         //Write Data to Kafka
         val query = hdfsDataFrame
             .selectExpr("CAST(timestamp AS STRING) as timestamp", "to_json(struct(*)) AS value")
