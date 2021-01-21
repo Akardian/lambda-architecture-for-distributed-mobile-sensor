@@ -74,6 +74,7 @@ object SparkFind3 {
             .select($"timestamp", $"find3.wifiData.wifiData")
             .as[(Timestamp, Map[String, Integer])]
             .flatMap(f => f._2)
+            .toDF("timestamp", "wifidata")
             .printSchema()
 
 
