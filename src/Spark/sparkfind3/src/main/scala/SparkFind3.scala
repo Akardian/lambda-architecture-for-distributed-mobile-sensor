@@ -71,7 +71,7 @@ object SparkFind3 {
 
         //stream layer
         val flatData = hdfsDataFrame
-            .select($"find3.wifiData")
+            .select($"find3.wifiData.wifiData")
             .printSchema()
 
         //Write Data to Kafka
