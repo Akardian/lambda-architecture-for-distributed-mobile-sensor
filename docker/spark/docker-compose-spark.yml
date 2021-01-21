@@ -10,8 +10,7 @@ services:
             - lambda-network
         ports:
             - target: 8080
-              published: 8080
-            - "4040-4060"       
+              published: 8080    
             - target: 18080
               published: 18080
         volumes:
