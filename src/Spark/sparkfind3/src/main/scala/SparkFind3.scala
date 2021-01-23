@@ -58,7 +58,7 @@ object SparkFind3 {
         
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
         val hdfsDataFrame = avroDataFrame
-            .withColumn("timestamp-hdfs", date_format(date_trunc("hour", $"timestamp-Kafka-in"), "yyyy-MM-dd HH-mm"))
+            .withColumn("timestamp-hdfs", date_format(date_trunc("hour", $"timestamp-kafka-in"), "yyyy-MM-dd HH-mm"))
 
         //Write RAW data to HDFS
         hdfsDataFrame.writeStream  
@@ -83,7 +83,7 @@ object SparkFind3 {
             
         //Write Data to Kafka
         val query = hdfsDataFrame
-            .selectExpr("CAST(timestamp AS STRING) as timestamp-Kafka-in", "to_json(struct(*)) AS value")
+            .selectExpr("CAST(timestamp AS STRING) as timestamp-kafka-in", "to_json(struct(*)) AS value")
             .writeStream
             .format("kafka")
             .outputMode("update")
