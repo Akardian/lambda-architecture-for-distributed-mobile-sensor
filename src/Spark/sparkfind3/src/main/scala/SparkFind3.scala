@@ -52,36 +52,37 @@ object SparkFind3 {
             .select(
                 $"timestamp", //Keep Kafka Timestamp
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
+            .withColumnRenamed("timestamp", "timestamp-kafka-in")
         log.debug(DEBUG_MSG + "find3Data")
         avroDataFrame.printSchema()
         
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
         val hdfsDataFrame = avroDataFrame
-            .withColumn("hdfsTimestamp", date_format(date_trunc("hour", $"timestamp"), "yyyy-MM-dd HH-mm"))
+            .withColumn("timestamp-hdfs", date_format(date_trunc("hour", $"timestamp-KafkaIn"), "yyyy-MM-dd HH-mm"))
 
         //Write RAW data to HDFS
         hdfsDataFrame.writeStream  
             .format("json")
             .outputMode("append")
-            .partitionBy("hdfsTimestamp")
+            .partitionBy("timestamp-HDFS")
             .option("path", HDFS_PATH)
             .option("checkpointLocation", CHECKPOINT_HDFS)
             .start()
         hdfsDataFrame.printSchema()
 
         //stream layer
-        val flatData = hdfsDataFrame
+        /*val flatData = hdfsDataFrame
             .select($"timestamp", $"find3.wifiData.wifiData")
             .as[(Timestamp, Map[String, Integer])]
-            .flatMap(f => f._2  //Flatten the wifidata map
-            .map(y => (f._1, y))) //combine with timestamp
+            .flatMap(f => f._2
+            .map(y => (f._1,)))
             .toDF("timestamp", "wifidata")
-        flatData.printSchema()
-
+            .printSchema()
+        */
 
             
         //Write Data to Kafka
-        val query = flatData
+        val query = hdfsDataFrame
             .selectExpr("CAST(timestamp AS STRING) as timestamp", "to_json(struct(*)) AS value")
             .writeStream
             .format("kafka")
