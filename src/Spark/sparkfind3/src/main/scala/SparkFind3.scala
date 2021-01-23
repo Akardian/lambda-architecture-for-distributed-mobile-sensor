@@ -76,7 +76,7 @@ object SparkFind3 {
             .flatMap(f => f._2  //Flatten the wifidata map
             .map(y => (f._1, y))) //combine with timestamp
             .toDF("timestamp", "wifidata")
-            .printSchema()
+        flatData.printSchema()
 
 
             
