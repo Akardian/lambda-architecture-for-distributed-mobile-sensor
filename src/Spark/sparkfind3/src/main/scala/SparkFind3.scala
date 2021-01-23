@@ -81,7 +81,7 @@ object SparkFind3 {
 
             
         //Write Data to Kafka
-        val query = hdfsDataFrame
+        val query = flatData
             .selectExpr("CAST(timestamp AS STRING) as timestamp", "to_json(struct(*)) AS value")
             .writeStream
             .format("kafka")
