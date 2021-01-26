@@ -23,7 +23,7 @@ object SparkSort {
         val log = LogManager.getRootLogger
         log.setLevel(LOG_LEVEL)
         log.info("###############################") 
-        log.info("############ Find3 ############") 
+        log.info("####### Worst Case Sort #######") 
         log.info("###############################")
 
         //BUild Spark Session
@@ -63,8 +63,7 @@ object SparkSort {
             .map(row => {
                 (row, 1) //log.debug("" + row.toString())
             })
-                //.as[Map<String,Integer>]  
-        wifiMap.show()
+                //.as[Map<String,Integer>]  )
 /*
         val avarage = avroDataFrame
             .withColumn(
