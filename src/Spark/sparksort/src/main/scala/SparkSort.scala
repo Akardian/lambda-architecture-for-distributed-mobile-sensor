@@ -34,6 +34,9 @@ object SparkSort {
         import spark.implicits._
         log.debug(DEBUG_MSG + "Building Spark Session")
 
+        log.info("######### Sark Context Config #########")
+        log.info(spark.sparkContext.getConf.toDebugString)
+
         //Read Avro Schema from Resource and convert it to a String
         val source = Source.fromResource(SCHEMA_PATH)
         log.debug(DEBUG_MSG + "Source is empty=" + source.isEmpty)
@@ -77,9 +80,9 @@ object SparkSort {
         sortTimestamp.printSchema();*/
 
         
-        val collect = wifiMap.collect()
+        val out = wifiMap
 
-        val query = collect.writeStream //Print to console for Debug
+        val query = out.writeStream //Print to console for Debug
             .outputMode("complete")
             .format("console")
             .start()    
