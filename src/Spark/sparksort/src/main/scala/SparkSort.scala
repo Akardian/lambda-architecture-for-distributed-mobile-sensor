@@ -56,7 +56,7 @@ object SparkSort {
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
         avroDataFrame.printSchema()
 
-        val wifiMap = avroDataFrame.select($"timestamp", $"find3.wifiData.wifiData")
+        val wifiMap = avroDataFrame//.select($"timestamp", $"find3.wifiData.wifiData")
         wifiMap.printSchema()
         
         val out = wifiMap
