@@ -1,4 +1,4 @@
-echo "Load Sparkfind3 config"
+echo "Load SparkSort config"
 HDFS_CONTAINER=$(docker ps -q -n 1 -f name=hdfs_datanode*)
 SPARK_CONTAINER=$(docker ps -q -n 1 -f name=spark_master*)
 

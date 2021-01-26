@@ -30,7 +30,6 @@ object SparkSort {
         val spark = SparkSession
             .builder()
             .appName(CONTEXT_NAME)
-            .config("spark.executor.id", NAME + "-driver")
             .getOrCreate()       
         import spark.implicits._
         log.debug(DEBUG_MSG + "Building Spark Session")
@@ -65,6 +64,7 @@ object SparkSort {
         val query = wifiMap.writeStream //Print to console for Debug
             .outputMode("update")
             .format("console")
+            .option("checkpointLocation", CHECKPOINT_KAFKA)
             .start()    
 
         //Write Data to Kafka
