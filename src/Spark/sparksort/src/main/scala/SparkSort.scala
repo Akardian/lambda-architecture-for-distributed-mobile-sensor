@@ -61,14 +61,8 @@ object SparkSort {
         
         val out = wifiMap
 
-        val query = wifiMap.writeStream //Print to console for Debug
-            .outputMode("update")
-            .format("console")
-            .option("checkpointLocation", CHECKPOINT_KAFKA)
-            .start()    
-
         //Write Data to Kafka
-        /*val query = hdfsDataFrame
+        val query = wifiMap
             .selectExpr("CAST(timestamp AS STRING) as timestamp", "to_json(struct(*)) AS value")
             .writeStream
             .format("kafka")
@@ -76,7 +70,7 @@ object SparkSort {
             .option("kafka.bootstrap.servers", BOOTSTRAP_SERVERS)
             .option("topic", TOPICS_OUTPUT)
             .option("checkpointLocation", CHECKPOINT_KAFKA)
-            .start() */
+            .start()
         
         spark.streams.awaitAnyTermination()
     }
