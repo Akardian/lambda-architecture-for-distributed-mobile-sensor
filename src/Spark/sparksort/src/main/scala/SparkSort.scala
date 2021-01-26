@@ -55,31 +55,14 @@ object SparkSort {
             .select(
                 $"timestamp", //Keep Kafka Timestamp
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
-        log.debug(DEBUG_MSG + "find3Data")
         avroDataFrame.printSchema()
-        
-        //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
-        //val hdfsDataFrame = avroDataFrame
-        //    .withColumn("time", date_format(date_trunc("hour", $"timestamp"), "yyyy-MM-dd HH-mm"))
 
         val wifiMap = avroDataFrame.select($"find3.wifiData.wifiData")
         wifiMap.printSchema()
-                //.as[Map<String,Integer>]  )
-/*
-        val avarage = avroDataFrame
-            .withColumn(
-                "avarage",
-                
-            )
-
-        val sortTimestamp = avroDataFrame
-            .sort("timestamp")
-        sortTimestamp.printSchema();*/
-
         
         val out = wifiMap
 
-        val query = out.writeStream //Print to console for Debug
+        val query = wifiMap.writeStream //Print to console for Debug
             .outputMode("update")
             .format("console")
             .start()    
