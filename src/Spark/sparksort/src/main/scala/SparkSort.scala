@@ -63,10 +63,6 @@ object SparkSort {
         //    .withColumn("time", date_format(date_trunc("hour", $"timestamp"), "yyyy-MM-dd HH-mm"))
 
         val wifiMap = avroDataFrame.select($"find3.wifiData.wifiData")
-            .as[Map[String, Int]]
-            .map(row => {
-                (row, 1) //log.debug("" + row.toString())
-            })
         wifiMap.printSchema()
                 //.as[Map<String,Integer>]  )
 /*
