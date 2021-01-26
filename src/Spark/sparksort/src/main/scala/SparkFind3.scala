@@ -1,5 +1,8 @@
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming._
+import org.apache.spark.sql._
+import org.apache.spark.sql.types._
 
 import org.apache.log4j.{Level, LogManager, PropertyConfigurator}
 import org.apache.spark.sql.avro.functions._
@@ -9,9 +12,6 @@ import java.nio.file.Paths
 import java.nio.file.Files
 import scala.io.Source
 import org.apache.commons.net.ntp.TimeStamp
-import org.apache.spark.sql.streaming.Trigger
-import org.apache.spark.sql.SaveMode
-import org.apache.spark.sql.streaming.OutputMode
 
 object SparkFind3 {
 
@@ -55,13 +55,30 @@ object SparkFind3 {
         avroDataFrame.printSchema()
         
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
-        val hdfsDataFrame = avroDataFrame
-            .withColumn("time", date_format(date_trunc("hour", $"timestamp"), "yyyy-MM-dd HH-mm"))
+        //val hdfsDataFrame = avroDataFrame
+        //    .withColumn("time", date_format(date_trunc("hour", $"timestamp"), "yyyy-MM-dd HH-mm"))
 
-        val wifiData = hdfsDataFrame.select($"wifiData")
-        wifiData.printSchema();
+        val wifiMap = avroDataFrame.select($"find3.wifiData.wifiData")
+            .as[Map[String, Int]]
+            .map(row => {
+                (row, 1) //log.debug("" + row.toString())
+            })
+                //.as[Map<String,Integer>]  
+        wifiMap.show()
+/*
+        val avarage = avroDataFrame
+            .withColumn(
+                "avarage",
+                
+            )*/
 
-        val query = wifiData.writeStream //Print to console for Debug
+        val sortTimestamp = avroDataFrame
+            .sort("timestamp")
+        sortTimestamp.printSchema();
+
+        
+
+        val query = sortTimestamp.writeStream //Print to console for Debug
             .outputMode("complete")
             .format("console")
             .start()    
