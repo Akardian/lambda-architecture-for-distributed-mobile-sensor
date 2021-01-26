@@ -30,6 +30,7 @@ object SparkSort {
         val spark = SparkSession
             .builder()
             .appName(CONTEXT_NAME)
+            .config("spark.executor.id", NAME + "-driver")
             .getOrCreate()       
         import spark.implicits._
         log.debug(DEBUG_MSG + "Building Spark Session")
@@ -83,7 +84,7 @@ object SparkSort {
         val out = wifiMap
 
         val query = out.writeStream //Print to console for Debug
-            .outputMode("complete")
+            .outputMode("update")
             .format("console")
             .start()    
 
