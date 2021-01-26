@@ -63,21 +63,23 @@ object SparkSort {
             .map(row => {
                 (row, 1) //log.debug("" + row.toString())
             })
+        wifiMap.printSchema()
                 //.as[Map<String,Integer>]  )
 /*
         val avarage = avroDataFrame
             .withColumn(
                 "avarage",
                 
-            )*/
+            )
 
         val sortTimestamp = avroDataFrame
             .sort("timestamp")
-        sortTimestamp.printSchema();
+        sortTimestamp.printSchema();*/
 
         
+        val collect = wifiMap.collect()
 
-        val query = sortTimestamp.writeStream //Print to console for Debug
+        val query = collect.writeStream //Print to console for Debug
             .outputMode("complete")
             .format("console")
             .start()    
