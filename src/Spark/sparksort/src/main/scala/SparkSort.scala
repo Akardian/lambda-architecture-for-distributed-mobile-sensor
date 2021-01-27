@@ -57,10 +57,16 @@ object SparkSort {
         avroDataFrame.printSchema()
 
         val wifiMap = avroDataFrame//.select($"timestamp", $"find3.wifiData.wifiData")
+
         wifiMap.printSchema()
         
         val out = wifiMap
 
+        val query = out.writeStream
+            .outputMode("update")
+            .format("console")
+            .start()
+/*
         //Write Data to Kafka
         val query = wifiMap
             .selectExpr("CAST(timestamp AS STRING) as timestamp", "to_json(struct(*)) AS value")
@@ -70,7 +76,7 @@ object SparkSort {
             .option("kafka.bootstrap.servers", BOOTSTRAP_SERVERS)
             .option("topic", TOPICS_OUTPUT)
             .option("checkpointLocation", CHECKPOINT_KAFKA)
-            .start()
+            .start()*/
         
         spark.streams.awaitAnyTermination()
     }
