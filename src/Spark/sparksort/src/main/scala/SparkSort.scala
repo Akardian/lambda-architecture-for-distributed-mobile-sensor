@@ -57,7 +57,7 @@ object SparkSort {
         avroDataFrame.printSchema()
 
         val wifiMap = avroDataFrame//.select($"timestamp", $"find3.wifiData.wifiData")
-            .select(map_values(col("find3.wifiData.wifiData"))).as("values")
+            .withColumn("avarage", aggregate($"find3.wifiData.wifiData", lit(0), (x, y) => (x + y)))
             
 
         wifiMap.printSchema()
