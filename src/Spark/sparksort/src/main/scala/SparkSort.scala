@@ -65,9 +65,10 @@ object SparkSort {
             )
         avgWifiData.printSchema()
 
-        val byTimestamp = Window.partitionBy('timeStamp)
+        val byTimestamp = Window
+            .rangeBetween(Window.unboundedPreceding, Window.unboundedFollowing)
         val totalAvg = avgWifiData
-            .withColumn("totalAvg", avg("avgWifiData") over byTimestamp)
+            .withColumn("totalAvg", avg("avgWifiData"))
         totalAvg.printSchema()
             
         /*
