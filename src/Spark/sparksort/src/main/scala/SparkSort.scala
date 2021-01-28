@@ -59,9 +59,19 @@ object SparkSort {
         val wifiMap = avroDataFrame//.select($"timestamp", $"find3.wifiData.wifiData")
             .withColumn("avarage", aggregate(
                 map_values(col("find3.wifiData.wifiData")), 
-                lit(0), (X, Y) => ((X + Y) / size(col("find3.wifiData.wifiData")))
-            ))
+                lit(0), 
+                (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col("find3.wifiData.wifiData"))
             
+        /*
+        sed by: org.apache.spark.sql.AnalysisException: cannot resolve 
+    '   aggregate(
+            map_values(`find3`.`wifiData`.`wifiData`), 
+            0, 
+            lambdafunction((CAST((namedlambdavariable() + namedlambdavariable()) AS DOUBLE) / 
+            CAST(size(`find3`.`wifiData`.`wifiData`) AS DOUBLE)), 
+            
+            namedlambdavariable(), namedlambdavariable()), lambdafunction(namedlambdavariable(), namedlambdavariable()))' due to data type mismatch: argument 3 requires int type, however, 'lambdafunction((CAST((namedlambdavariable() + namedlambdavariable()) AS DOUBLE) / CAST(size(`find3`.`wifiData`.`wifiData`) AS DOUBLE)), namedlambdavariable(), namedlambdavariable())' is of double type.;;
+        */
 
         wifiMap.printSchema()
         
