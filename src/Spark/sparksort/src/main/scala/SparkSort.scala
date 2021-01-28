@@ -12,6 +12,7 @@ import java.nio.file.Paths
 import java.nio.file.Files
 import scala.io.Source
 import org.apache.commons.net.ntp.TimeStamp
+import org.apache.spark.sql.expressions.Window
 
 object SparkSort {
 
@@ -64,8 +65,9 @@ object SparkSort {
             )
         avgWifiData.printSchema()
 
+        val byTimestamp = Window.partitionBy('timeStamp)
         val totalAvg = avgWifiData
-            .withColumn("totalAvg", avg("avgWifiData"))
+            .withColumn("totalAvg", avg("avgWifiData") over byTimestamp)
         totalAvg.printSchema()
             
         /*
