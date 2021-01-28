@@ -61,6 +61,7 @@ object SparkSort {
                 map_values(col("find3.wifiData.wifiData")), 
                 lit(0), 
                 (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col("find3.wifiData.wifiData"))
+            )
             
         /*
         sed by: org.apache.spark.sql.AnalysisException: cannot resolve 
