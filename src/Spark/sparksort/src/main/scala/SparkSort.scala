@@ -65,24 +65,18 @@ object SparkSort {
             )
         avgWifiData.printSchema()
 
-        val totalAvgWindow = Window
-            .rangeBetween(Window.unboundedPreceding, Window.unboundedFollowing)
+        /*
+        window($"timestamp", "10 seconds", "10 seconds")
         val totalAvg = avgWifiData
             .withColumn("totalAvg", avg("avgWifiData").over(totalAvgWindow)) 
         totalAvg.printSchema()
-            
-        /*
-        sed by: org.apache.spark.sql.AnalysisException: cannot resolve 
-    '   aggregate(
-            map_values(`find3`.`wifiData`.`wifiData`), 
-            0, 
-            lambdafunction((CAST((namedlambdavariable() + namedlambdavariable()) AS DOUBLE) / 
-            CAST(size(`find3`.`wifiData`.`wifiData`) AS DOUBLE)), 
-            
-            namedlambdavariable(), namedlambdavariable()), lambdafunction(namedlambdavariable(), namedlambdavariable()))' due to data type mismatch: argument 3 requires int type, however, 'lambdafunction((CAST((namedlambdavariable() + namedlambdavariable()) AS DOUBLE) / CAST(size(`find3`.`wifiData`.`wifiData`) AS DOUBLE)), namedlambdavariable(), namedlambdavariable())' is of double type.;;
         */
 
-        val query = totalAvg.writeStream
+        val sortTimestamp = avgWifiData.sort($"timestamp")
+
+        val sortWifiData = sortTimestamp.sort($"avgWifiData")
+
+        val query = sortWifiData.writeStream
             .outputMode("update")
             .format("console")
             .start()
