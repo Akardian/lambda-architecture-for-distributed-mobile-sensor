@@ -65,7 +65,7 @@ object SparkSort {
         avgWifiData.printSchema()
 
         val totalAvg = avgWifiData
-            .withColumn("totalAvg", avg("find3.wifiData.wifiData"))
+            .withColumn("totalAvg", avg("avgWifiData"))
         totalAvg.printSchema()
             
         /*
