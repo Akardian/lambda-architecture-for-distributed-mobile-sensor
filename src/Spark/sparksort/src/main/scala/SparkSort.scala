@@ -56,12 +56,17 @@ object SparkSort {
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
         avroDataFrame.printSchema()
 
-        val wifiMap = avroDataFrame//.select($"timestamp", $"find3.wifiData.wifiData")
-            .withColumn("avarage", aggregate(
+        val avgWifiData = avroDataFrame//.select($"timestamp", $"find3.wifiData.wifiData")
+            .withColumn("avgWifiData", aggregate(
                 map_values(col("find3.wifiData.wifiData")), 
                 lit(0), 
                 (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col("find3.wifiData.wifiData"))
             )
+        avgWifiData.printSchema()
+
+        val totalAvg = avgWifiData
+            .withColumn("totalAvg", avg("find3.wifiData.wifiData"))
+        totalAvg.printSchema()
             
         /*
         sed by: org.apache.spark.sql.AnalysisException: cannot resolve 
@@ -74,11 +79,7 @@ object SparkSort {
             namedlambdavariable(), namedlambdavariable()), lambdafunction(namedlambdavariable(), namedlambdavariable()))' due to data type mismatch: argument 3 requires int type, however, 'lambdafunction((CAST((namedlambdavariable() + namedlambdavariable()) AS DOUBLE) / CAST(size(`find3`.`wifiData`.`wifiData`) AS DOUBLE)), namedlambdavariable(), namedlambdavariable())' is of double type.;;
         */
 
-        wifiMap.printSchema()
-        
-        val out = wifiMap
-
-        val query = out.writeStream
+        val query = totalAvg.writeStream
             .outputMode("update")
             .format("console")
             .start()
