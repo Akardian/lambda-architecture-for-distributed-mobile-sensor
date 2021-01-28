@@ -79,7 +79,7 @@ object SparkSort {
         val out = wifiMap
 
         val query = out.writeStream
-            .outputMode("complete")
+            .outputMode("update")
             .format("console")
             .start()
 /*
