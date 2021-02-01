@@ -61,7 +61,7 @@ object SparkSort {
                 col("find3.location").as("location"),
                 col("find3.findTImestamp").as("findTimestamp"),
                 col("find3.gpsCoordinate").as("gpsCoordinate"),
-                col("find3.wifiData.wifiData").as("wifiData")
+                col("find3.wifiData").as("wifiData")
             )
         avroDataFrame.printSchema()
 
