@@ -74,8 +74,7 @@ object SparkSort {
         avgWifiData.printSchema()
 
         val avgRoom = avgWifiData
-            .groupBy("kafkaInputTimestamp", "senderName", "location", "findTimestamp", "gpsCoordinate", "avgWifi")
-            .agg(sum("avgWifi"))
+            .select($"kafkaInputTimestamp", $"senderName", $"location", $"findTimestamp", $"gpsCoordinate", $"avgWifi", sum("avgWifi"))
         avgRoom.printSchema()
 
         //val avgWindow = avgWifiData
