@@ -80,9 +80,8 @@ object SparkSort {
         avgRoom.printSchema()
 
         val avgWindow = avgWifiData
-            .withColumn("wifiTotal", avgRoom.col("avgRoom"))
-        //    .withColumn("avgRoom", col("avgWifi").over(Window.partitionBy("location")))
-        //avgWindow.printSchema()
+            .withColumn("wifiTotal", avgRoom.col("wifiTotal"))
+        avgWindow.printSchema()
 
         /*
         window($"timestamp", "10 seconds", "10 seconds"
