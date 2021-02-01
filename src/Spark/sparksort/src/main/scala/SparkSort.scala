@@ -65,6 +65,10 @@ object SparkSort {
             )
         avgWifiData.printSchema()
 
+        val avgRoom = avgWifiData
+            .withColumn("avgTotal", sum("avgWifiData"))
+        avgRoom.printSchema()
+
         /*
         window($"timestamp", "10 seconds", "10 seconds")
         val totalAvg = avgWifiData
