@@ -7,7 +7,7 @@ object Config {
     val NAME = "sort"
     //Logger Settings
     val DEBUG_MSG = "Sort: "
-    val LOG_LEVEL = Level.INFO
+    val LOG_LEVEL = Level.ERROR
 
     //Kafka Settings
     val GROUP_ID = "Spark-" + NAME

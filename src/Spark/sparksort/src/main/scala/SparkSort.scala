@@ -55,20 +55,30 @@ object SparkSort {
             .select(
                 $"timestamp", //Keep Kafka Timestamp
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
+            .select(
+                "timestamp",
+                "find3.sendername as senderName",
+                "find3.location as location",
+                "find3.findTImestamp as findTimestamp",
+                "find3.gpsCoordinate as gpsCoordinate",
+                "find3.wifiData.wifiData as wifiData"
+            )
         avroDataFrame.printSchema()
 
         val avgWifiData = avroDataFrame//.select($"timestamp", $"find3.wifiData.wifiData")
-            .withColumn("avgWifiData", aggregate(
-                map_values(col("find3.wifiData.wifiData")), 
+            .withColumn("avgWifi", aggregate(
+                map_values(col("wifiData")), 
                 lit(0), 
-                (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col("find3.wifiData.wifiData"))
+                (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col("wifiData"))
             )
         avgWifiData.printSchema()
 
         val avgRoom = avgWifiData
             .groupBy("timestamp")
-            .sum("avgWifiData")
+            .sum("avgWifi")         
         avgRoom.printSchema()
+
+
 
         /*
         window($"timestamp", "10 seconds", "10 seconds")
@@ -77,11 +87,11 @@ object SparkSort {
         totalAvg.printSchema()
         */
 
-        val sortTimestamp = avgWifiData.sort($"timestamp")
+        //val sortTimestamp = avgWifiData.sort($"timestamp")
 
-        val sortWifiData = sortTimestamp.sort($"avgWifiData")
+        //val sortWifiData = sortTimestamp.sort($"avgWifiData")
 
-        val query = sortWifiData.writeStream
+        val query = avgRoom.writeStream
             .outputMode("update")
             .format("console")
             .start()
