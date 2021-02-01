@@ -57,7 +57,7 @@ object SparkSort {
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
             .select(
                 "timestamp",
-                "find3.sendername as senderName",
+                "find3.senderName as senderName",
                 "find3.location as location",
                 "find3.findTImestamp as findTimestamp",
                 "find3.gpsCoordinate as gpsCoordinate",
