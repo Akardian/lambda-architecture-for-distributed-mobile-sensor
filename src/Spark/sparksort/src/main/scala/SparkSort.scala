@@ -74,12 +74,13 @@ object SparkSort {
         avgWifiData.printSchema()
 
         val avgRoom = avgWifiData
+            .select("kafkaInputTimestamp", "senderName", "location", "findTimestamp", "gpsCoordinate", "wifiData")
             .groupBy()
             .sum("wifiAvg")
-            .collect()(0)(0)
+        avgRoom.printSchema()
 
         val avgWindow = avgWifiData
-            .withColumn("wifiTotal", lit(avgRoom))
+            .withColumn("wifiTotal", lit(0))
         avgWindow.printSchema()
 
         /*
@@ -93,7 +94,7 @@ object SparkSort {
 
         //val sortWifiData = sortTimestamp.sort($"avgWifiData")
 
-        val query = avgWindow.writeStream
+        val query = avgRoom.writeStream
             .outputMode("complete")
             .format("console")
             .start()
