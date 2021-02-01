@@ -1,5 +1,7 @@
 package config;
 
+import java.lang.reflect.Array;
+
 public interface Config {
     //Kafka Configuration
     public final static String TOPIC = "find3Generator-input";
@@ -14,4 +16,13 @@ public interface Config {
     public final static int SET_REPEATS = 1;
 
     public final static int SLEEP_SECONDS = 2;
+
+    public final static String[] ACCESPOINTS = {
+        "bc:26:c7:40:90:ee", "bc:26:c7:40:90:ec", "bc:26:c7:7c:cd:23",
+        "bc:26:c7:40:90:ed", "bc:26:c7:7c:cd:22", "bc:26:c7:7c:cd:21",
+        "14:59:c0:20:39:80", "bc:26:c7:7c:cd:2e", "bc:26:c7:7c:cd:2d",
+        "bc:26:c7:40:90:e3", "bc:26:c7:7c:cd:2c", "bc:26:c7:7c:cd:4e",
+        "bc:26:c7:7c:cd:4d", "bc:26:c7:40:90:e1", "bc:26:c7:40:90:e2",
+        "cc:ce:1e:ae:39:be", "cc:ce:1e:ae:39:bf", "a0:cf:5b:69:6b:f0"
+    };
 }

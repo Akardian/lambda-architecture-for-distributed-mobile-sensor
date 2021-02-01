@@ -2,6 +2,7 @@ package producer;
 
 import java.sql.Timestamp;
 import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -84,29 +85,14 @@ public class ProducerFIND3 implements Config {
             .setAlt("62.60000228881836")
             .build();
 
-            
+
+		HashMap<String, Integer> wifiDataMap = new HashMap<String,Integer>();
+		for(int i = 0; i < ACCESPOINTS.length; i++) {
+			wifiDataMap.put(ACCESPOINTS[i], 0 - (rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET));
+		}
+
         AvroWifiData wifi = AvroWifiData.newBuilder()
-            .setWifiData(Map.ofEntries(
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:40:90:ee", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:40:90:ec", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:7c:cd:23", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:40:90:ed", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:7c:cd:22", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:7c:cd:21", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("14:59:c0:20:39:80", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:7c:cd:2e", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:7c:cd:2d", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:40:90:e3", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:7c:cd:2c", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:7c:cd:4e", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:7c:cd:4d", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:40:90:e1", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("bc:26:c7:40:90:e2", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("cc:ce:1e:ae:39:be", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("cc:ce:1e:ae:39:bf", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET),
-                    new AbstractMap.SimpleEntry<String, Integer>("a0:cf:5b:69:6b:f0", -rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET)
-                )                   
-            )
+            .setWifiData(wifiDataMap)
             .build();
 
         AvroFIND3Data testData = AvroFIND3Data.newBuilder() //Create message to be send
