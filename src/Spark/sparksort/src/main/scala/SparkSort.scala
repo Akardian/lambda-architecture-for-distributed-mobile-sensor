@@ -78,7 +78,7 @@ object SparkSort {
             .sum("avgWifi")
 
         val avgWindow = avgWifiData
-            .withColumn("avgRoom", col("avgWifiData").over(Window.partitionBy("location")))
+            .withColumn("avgRoom", col("avgWifi").over(Window.partitionBy("location")))
         avgWindow.printSchema()
 
         /*
