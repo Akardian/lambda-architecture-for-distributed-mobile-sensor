@@ -55,7 +55,7 @@ object SparkSort {
             .select(
                 $"timestamp", //Keep Kafka Timestamp
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
-            .select(
+            .select( //Flatten data structure
                 col("timestamp").as("kafkaInputTimestamp"),
                 col("find3.senderName").as("senderName"),
                 col("find3.location").as("location"),
@@ -67,9 +67,9 @@ object SparkSort {
 
         val avgWifiData = avroDataFrame//.select($"timestamp", $"find3.wifiData.wifiData")
             .withColumn("avgWifi", aggregate(
-                map_values(col("wifiData")), 
-                lit(0), 
-                (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col("wifiData"))
+                map_values(col("wifiData.wifiData")), 
+                lit(0), //set default value to 0
+                (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col("wifiData.wifiData")) //Calculate Average
             )
         avgWifiData.printSchema()
 
