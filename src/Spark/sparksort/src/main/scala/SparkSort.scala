@@ -107,7 +107,7 @@ object SparkSort {
         //val sortWifiData = sortTimestamp.sort($"avgWifiData")
 
         wifiTotal.writeStream
-            .outputMode("complete")
+            .outputMode("update")
             .format("console")
             .start()
 /*
