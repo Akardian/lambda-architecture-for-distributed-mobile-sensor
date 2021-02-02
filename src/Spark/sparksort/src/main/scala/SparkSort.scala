@@ -95,7 +95,7 @@ object SparkSort {
             .sum("wifiAvg")*/
 
         val wifiTotal = avgWifiData
-            .withColumn("wifiTotal", sum("wifiAvg").getItem(0))
+            .withColumn("wifiTotal", sum("wifiAvg"))
             //.join(test, $"kafkaInputTimestamp" === $"max(kafkaInputTimestamp)")
         wifiTotal.printSchema()
         //$"kafkaInputTimestamp", $"senderName", $"location", $"findTimestamp", $"gpsCoordinate", $"wifiData", $"wifiAvg", 
