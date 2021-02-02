@@ -56,10 +56,10 @@ object SparkSort {
                 $"timestamp", //Keep Kafka Timestamp
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
             .select( //Flatten data structure
-                col("timestamp").as("kafkaInputTimestamp"),
+                col("timestamp").as("timestampKakfaIn"),
+                col("find3.findTImestamp").as("timestampFind"),
                 col("find3.senderName").as("senderName"),
                 col("find3.location").as("location"),
-                col("find3.findTImestamp").as("findTimestamp"),
                 col("find3.gpsCoordinate").as("gpsCoordinate"),
                 col("find3.wifiData.wifiData").as("wifiData")
             )
@@ -75,7 +75,8 @@ object SparkSort {
 
         val test = avgWifiData
             .groupBy()
-            .agg(max("kafkaInputTimestamp"), sum("wifiAvg"))
+            .agg(sum("wifiAvg"))
+            .select("timestampKakfaIn", "sum(wifiAvg)")
         test.printSchema()
 
         test.writeStream
@@ -92,7 +93,7 @@ object SparkSort {
             .sum("wifiAvg")*/
 
         val wifiTotal = avgWifiData
-            .join(test, $"kafkaInputTimestamp" === $"max(kafkaInputTimestamp)")
+            //.join(test, $"kafkaInputTimestamp" === $"max(kafkaInputTimestamp)")
         wifiTotal.printSchema()
         //$"kafkaInputTimestamp", $"senderName", $"location", $"findTimestamp", $"gpsCoordinate", $"wifiData", $"wifiAvg", 
         /*
