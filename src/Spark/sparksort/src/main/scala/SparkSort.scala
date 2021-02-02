@@ -74,8 +74,8 @@ object SparkSort {
         avgWifiData.printSchema()
 
         val test = avgWifiData
-            .groupBy("kafkaInputTimestamp")
-            .sum("wifiAvg")
+            .groupBy()
+            .agg(max("kafkaInputTimestamp"), sum("wifiAvg"))
         test.printSchema()
 
         test.writeStream
