@@ -83,8 +83,9 @@ object SparkSort {
             .format("console")
             .start()
 
+        val avgWindow = Window.rangeBetween(Window.unboundedPreceding, Window.currentRow)
         val avgRoom = avgWifiData
-            .withColumn("wifiTotalAvg", sum("wifiAvg"))
+            .withColumn("wifiTotalAvg", sum("wifiAvg") over avgWindow)
         avgRoom.printSchema()
         //$"kafkaInputTimestamp", $"senderName", $"location", $"findTimestamp", $"gpsCoordinate", $"wifiData", $"wifiAvg", 
         /*
