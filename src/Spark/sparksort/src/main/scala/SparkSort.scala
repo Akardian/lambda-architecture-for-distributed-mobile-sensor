@@ -13,6 +13,7 @@ import java.nio.file.Files
 import scala.io.Source
 import org.apache.commons.net.ntp.TimeStamp
 import org.apache.spark.sql.expressions.Window
+import java.sql.Date
 
 object SparkSort {
 
@@ -95,8 +96,23 @@ object SparkSort {
             .sum("wifiAvg")*/
 
         val wifiTotal = avgWifiData
-            .withColumn("wifiTotal", sum("wifiAvg"))
-            //.join(test, $"kafkaInputTimestamp" === $"max(kafkaInputTimestamp)")
+            .map(row => {
+                val curentTimestamp = row.getTimestamp(0)
+                val firstTimestamp = avgWifiData
+                    .groupBy("timestampKakfaIn")
+                    .min("timestampKakfaIn")
+                    .first()
+                    .getTimestamp(0)
+
+                val sumTotal = avgWifiData
+                    .groupBy()
+                    .sum("avgWifi")
+                    .where(
+                        unix_timestamp($"timestampKakfaIn").between(firstTimestamp, curentTimestamp))
+                    .first()
+                    .getDouble(0)
+                (sumTotal)
+            })
         wifiTotal.printSchema()
         //$"kafkaInputTimestamp", $"senderName", $"location", $"findTimestamp", $"gpsCoordinate", $"wifiData", $"wifiAvg", 
         /*
