@@ -95,7 +95,16 @@ object SparkSort {
             .groupBy(window(col("kafkaInputTimestamp"), "10 seconds", "10 seconds"))
             .sum("wifiAvg")*/
 
-        val wifiTotal = avgWifiData/*
+
+        /*
+        Caused by: org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 5.0 
+        failed 4 times, most recent failure: Lost task 0.3 in stage 5.0 (TID 8, 172.21.0.8, executor 0): 
+        org.apache.spark.SparkException: Dataset transformations and actions can only be invoked by the driver, 
+        not inside of other Dataset transformations; for example, dataset1.map(x => dataset2.values.count() * x) is 
+        invalid because the values transformation and count action cannot be performed inside of the dataset1.map transformation.
+         For more information, see SPARK-28702.
+
+        val wifiTotal = avgWifiData
             .map(row => {
                 val curentTimestamp = row.getTimestamp(0)
                 val firstTimestamp = avgWifiData
@@ -114,7 +123,7 @@ object SparkSort {
                 (sumTotal)
             })*/
 
-            avgWifiData
+        val wifiTotal = avgWifiData
                 .withColumn("",
                     lit(
                     avgWifiData
