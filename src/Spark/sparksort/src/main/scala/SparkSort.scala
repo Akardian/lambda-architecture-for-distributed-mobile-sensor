@@ -71,7 +71,7 @@ object SparkSort {
             .start()
 
         val avgWifiData = avroDataFrame//.select($"timestamp", $"find3.wifiData.wifiData")
-            .withColumn(N_AVG_WIFI, aggregate(
+            .withColumn("avgWifi", aggregate(
                 map_values(col("wifiData")), 
                 lit(0), //set default value to 0
                 (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col("wifiData")) //Calculate Average
@@ -80,7 +80,7 @@ object SparkSort {
 
         val test = avgWifiData
             .groupBy()
-            .agg(sum(N_AVG_WIFI))
+            .agg(sum("avgWifi"))
         test.printSchema()
 
         test.writeStream
