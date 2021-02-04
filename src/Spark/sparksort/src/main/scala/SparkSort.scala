@@ -139,7 +139,7 @@ object SparkSort {
                 )
         */
         
-        val avgWindow = window($"timestampKafkaIn", "1 month")
+        //val avgWindow = window($"timestampKafkaIn", "1 month")
             //.orderBy("timestampKakfaIn")
 
         /*
