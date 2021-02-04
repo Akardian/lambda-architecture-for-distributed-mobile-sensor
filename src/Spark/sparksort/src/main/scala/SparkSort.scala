@@ -113,11 +113,14 @@ object SparkSort {
                     .getDouble(0)
                 (sumTotal)
             })*/
+
+        /*
         val firstTimestamp = avgWifiData
             .groupBy("timestampKakfaIn")
             .agg(min($"timestampKakfaIn"))
             .first()
             .getTimestamp(0)
+        */
 
         /*
         val wifiTotal = avgWifiData
