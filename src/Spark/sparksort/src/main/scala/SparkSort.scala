@@ -71,7 +71,7 @@ object SparkSort {
             .start()
 
         val avgWifiData = avroDataFrame//.select($"timestamp", $"find3.wifiData.wifiData")
-            .withColumn(SPARK_AVG_WIFI, aggregate(
+            .withColumn(N_AVG_WIFI, aggregate(
                 map_values(col("wifiData")), 
                 lit(0), //set default value to 0
                 (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col("wifiData")) //Calculate Average
@@ -80,7 +80,7 @@ object SparkSort {
 
         val test = avgWifiData
             .groupBy()
-            .agg(sum(SPARK_AVG_WIFI))
+            .agg(sum(N_AVG_WIFI))
         test.printSchema()
 
         test.writeStream
@@ -139,12 +139,17 @@ object SparkSort {
                 )
         */
         
-        val avgWindow = Window.orderBy("timestampKakfaIn")
-        val sumTotal = sum(SPARK_AVG_WIFI)
-            .over(avgWindow)
-            .as(SPARK_SUM_TOTAL)
+        val avgWindow = window($"timestampKafkaIn", "1 month")
+            //.orderBy("timestampKakfaIn")
+
+        /*
+        val sumTotal =
+            avgWifiData
+            .groupBy()
+            .sum(N_AVG_WIFI)
+            .as(N_SUM_TOTAL)
         val wifiTotal = avgWifiData.select($"*", sumTotal)
-        
+        /*
 
         wifiTotal.printSchema()
         //$"kafkaInputTimestamp", $"senderName", $"location", $"findTimestamp", $"gpsCoordinate", $"wifiData", $"wifiAvg", 

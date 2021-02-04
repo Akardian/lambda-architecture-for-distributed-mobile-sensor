@@ -33,6 +33,9 @@ object Config {
     val HDFS_PATH = "hdfs://namenode:9000/user/haw/" + NAME + "/new-data"
 
     //Spark column names
-    val SPARK_AVG_WIFI = "wifiAvg"
-    val SPARK_SUM_TOTAL = "wifiSum"
+    val N_AVG_WIFI = "wifiAvg"
+    val N_SUM_TOTAL = "wifiSum"
+
+    val N_TIME_KAFKA_IN = "timestampKafkaIn"
+    val N_TIME_KAFKA_OUT = "timestampKafkaOut"
 }
