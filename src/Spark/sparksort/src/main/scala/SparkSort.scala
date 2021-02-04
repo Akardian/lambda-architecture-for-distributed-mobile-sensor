@@ -149,9 +149,9 @@ object SparkSort {
             .sum(N_AVG_WIFI)
             .as(N_SUM_TOTAL)
         val wifiTotal = avgWifiData.select($"*", sumTotal)
-        /*
+        
 
-        wifiTotal.printSchema()
+        wifiTotal.printSchema()*/
         //$"kafkaInputTimestamp", $"senderName", $"location", $"findTimestamp", $"gpsCoordinate", $"wifiData", $"wifiAvg", 
         /*
         window($"timestamp", "10 seconds", "10 seconds"
@@ -163,11 +163,11 @@ object SparkSort {
         //val sortTimestamp = avgWifiData.sort($"timestamp")
 
         //val sortWifiData = sortTimestamp.sort($"avgWifiData")
-
+/*
         wifiTotal.writeStream
             .outputMode("update")
             .format("console")
-            .start()
+            .start()*/
 /*
         //Write Data to Kafka
         val query = wifiMap
