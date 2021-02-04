@@ -122,6 +122,11 @@ object SparkSort {
                     .getDouble(0)
                 (sumTotal)
             })*/
+        val firstTimestamp = avgWifiData
+            .groupBy("timestampKakfaIn")
+            .agg(min($"timestampKakfaIn"))
+            .first()
+            .getTimestamp(0)
 
         val wifiTotal = avgWifiData
                 .withColumn("",
@@ -130,10 +135,11 @@ object SparkSort {
                         .groupBy()
                         .sum("wifiAvg")
                         .where(
-                            unix_timestamp($"timestampKakfaIn").between(
-                                avgWifiData.groupBy("timestampKakfaIn").agg(min($"timestampKakfaIn")).first().getTimestamp(0),
-                                $"timestampKakfaIn"))
+                            unix_timestamp($"timestampKakfaIn")
+                                .between(firstTimestamp, $"timestampKakfaIn")
+                            )
                         .first()
+                        .getDouble(0)
                     )
                 )
         wifiTotal.printSchema()
