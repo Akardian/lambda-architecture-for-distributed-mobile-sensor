@@ -131,7 +131,7 @@ object SparkSort {
                         .sum("wifiAvg")
                         .where(
                             unix_timestamp($"timestampKakfaIn").between(
-                                avgWifiData.groupBy("timestampKakfaIn").agg(min($"timestampKakfaIn").first().getTimestamp(0),
+                                avgWifiData.groupBy("timestampKakfaIn").agg(min($"timestampKakfaIn")).first().getTimestamp(0),
                                 $"timestampKakfaIn"))
                         .first()
                     )
