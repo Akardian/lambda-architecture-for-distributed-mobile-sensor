@@ -57,7 +57,7 @@ object SparkSort {
                 $"timestamp", //Keep Kafka Timestamp
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
             .select( //Flatten data structure
-                col("timestamp").as("timestampKakfaIn"),
+                col("timestamp").as("timestampKafkaIn"),
                 col("find3.findTImestamp").as("timestampFind"),
                 col("find3.senderName").as("senderName"),
                 col("find3.location").as("location"),
