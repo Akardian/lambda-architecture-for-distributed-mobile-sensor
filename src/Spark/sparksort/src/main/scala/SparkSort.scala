@@ -87,15 +87,6 @@ object SparkSort {
             .outputMode("complete")
             .format("console")
             .start()
-
-        val avgWindow = window($"timestampKakfaIn", "10 minutes")
-            //.rangeBetween(Window.unboundedPreceding, Window.currentRow)
-        /*val avgRoom = avgWifiData
-            .withWatermark("kafkaInputTimestamp", "2 seconds")
-            .groupBy(window(col("kafkaInputTimestamp"), "10 seconds", "10 seconds"))
-            .sum("wifiAvg")*/
-
-
         /*
         Caused by: org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 5.0 
         failed 4 times, most recent failure: Lost task 0.3 in stage 5.0 (TID 8, 172.21.0.8, executor 0): 
@@ -128,6 +119,7 @@ object SparkSort {
             .first()
             .getTimestamp(0)
 
+        /*
         val wifiTotal = avgWifiData
                 .withColumn("",
                     lit(
@@ -142,6 +134,15 @@ object SparkSort {
                         .getDouble(0)
                     )
                 )
+        */
+        
+        val avgWindow = Window.orderBy("timestampKakfaIn")
+        val sumTotal = sum("avgWifi")
+            .over(avgWindow)
+            .as("sumWifi")
+        val wifiTotal = avgWifiData.select($"*", sumTotal)
+        
+
         wifiTotal.printSchema()
         //$"kafkaInputTimestamp", $"senderName", $"location", $"findTimestamp", $"gpsCoordinate", $"wifiData", $"wifiAvg", 
         /*
