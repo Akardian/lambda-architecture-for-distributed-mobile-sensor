@@ -95,7 +95,7 @@ object SparkSort {
             .groupBy(window(col("kafkaInputTimestamp"), "10 seconds", "10 seconds"))
             .sum("wifiAvg")*/
 
-        val wifiTotal = avgWifiData
+        val wifiTotal = avgWifiData/*
             .map(row => {
                 val curentTimestamp = row.getTimestamp(0)
                 val firstTimestamp = avgWifiData
@@ -112,7 +112,21 @@ object SparkSort {
                     .first()
                     .getDouble(0)
                 (sumTotal)
-            })
+            })*/
+
+            avgWifiData
+                .withColumn("",
+                    lit(
+                    avgWifiData
+                        .groupBy()
+                        .sum("wifiAvg")
+                        .where(
+                            unix_timestamp($"timestampKakfaIn").between(
+                                avgWifiData.groupBy("timestampKakfaIn").min("timestampKakfaIn").first().getTimestamp(0),
+                                $"timestampKakfaIn"))
+                        .first()
+                    )
+                )
         wifiTotal.printSchema()
         //$"kafkaInputTimestamp", $"senderName", $"location", $"findTimestamp", $"gpsCoordinate", $"wifiData", $"wifiAvg", 
         /*
