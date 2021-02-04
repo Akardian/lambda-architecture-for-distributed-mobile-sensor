@@ -89,10 +89,11 @@ object SparkSort {
             .start()
 
         val count = avgWifiData
-            .select("timestampKafkaIn")
+            .select("timestampKafkaIn" + "avgWifi")
+
 
         count.writeStream
-            .outputMode("complete")
+            .outputMode("update")
             .format("console")
             .start()
         /*
