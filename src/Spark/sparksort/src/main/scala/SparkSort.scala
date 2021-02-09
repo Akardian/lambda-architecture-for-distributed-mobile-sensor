@@ -14,6 +14,9 @@ import scala.io.Source
 import org.apache.commons.net.ntp.TimeStamp
 import org.apache.spark.sql.expressions.Window
 import java.sql.Date
+import org.apache.hadoop.yarn.webapp.hamlet.HamletSpec.Q
+
+case class 
 
 object SparkSort {
 
@@ -57,12 +60,12 @@ object SparkSort {
                 $"timestamp", //Keep Kafka Timestamp
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
             .select( //Flatten data structure
-                col("timestamp").as("timestampKafkaIn"),
-                col("find3.findTImestamp").as("timestampFind"),
-                col("find3.senderName").as("senderName"),
-                col("find3.location").as("location"),
-                col("find3.gpsCoordinate").as("gpsCoordinate"),
-                col("find3.wifiData.wifiData").as("wifiData")
+                col("timestamp").as(N_TIMESTAMP_KAFKA_IN),
+                col("find3.findTImestamp").as(N_TIMESTAMP_FIND),
+                col("find3.senderName").as(N_SENDERNAME),
+                col("find3.location").as(N_LOCATION),
+                col("find3.gpsCoordinate").as(N_GPS),
+                col("find3.wifiData.wifiData").as(N_WIFI)
             )
         avroDataFrame.printSchema()
         avroDataFrame.writeStream
@@ -71,10 +74,10 @@ object SparkSort {
             .start()
 
         val avgWifiData = avroDataFrame//.select($"timestamp", $"find3.wifiData.wifiData")
-            .withColumn("avgWifi", aggregate(
-                map_values(col("wifiData")), 
+            .withColumn(N_AVG_WIFI, aggregate(
+                map_values(col(N_WIFI)), 
                 lit(0), //set default value to 0
-                (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col("wifiData")) //Calculate Average
+                (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col(N_WIFI)) //Calculate Average
             )
         avgWifiData.printSchema()
 
@@ -87,15 +90,7 @@ object SparkSort {
             .outputMode("complete")
             .format("console")
             .start()
-
-        val count = avgWifiData
-            .select($"timestampKafkaIn", $"avgWifi")
- 
-
-        count.writeStream
-            .outputMode("update")
-            .format("console")
-            .start()
+            
         /*
         Caused by: org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 5.0 
         failed 4 times, most recent failure: Lost task 0.3 in stage 5.0 (TID 8, 172.21.0.8, executor 0): 
@@ -123,14 +118,27 @@ object SparkSort {
                 (sumTotal)
             })*/
 
-        /*
+        
         val firstTimestamp = avgWifiData
             .groupBy("timestampKakfaIn")
-            .agg(min($"timestampKakfaIn"))
-            .first()
-            .getTimestamp(0)
-        */
+            .min("timestampKakfaIn")
 
+        firstTimestamp.writeStream
+            .outputMode("complete")
+            .format("console")
+            .start()
+        
+        val runningAvg = MyRollingAvg
+            .toColumn
+            .name("runningAvg")
+        /*
+        avgWifiData
+            .groupBy("timestampKafkaIn", "avgWifi")
+            .sum("avgWifi")
+            .where(
+                unix_timestamp($"timestampKakfaIn").between(firstTimestamp, $"timestampKakfaIn")
+                )
+        */
         /*
         val wifiTotal = avgWifiData
                 .withColumn("",
