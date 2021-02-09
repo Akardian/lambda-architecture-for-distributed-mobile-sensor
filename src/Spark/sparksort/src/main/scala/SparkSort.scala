@@ -79,17 +79,8 @@ object SparkSort {
             )
         avgWifiData.printSchema()
 
-        val test = avgWifiData
-            .groupBy()
-            .agg(sum("avgWifi"))
-        test.printSchema()
-
-        test.writeStream
-            .outputMode("complete")
-            .format("console")
-            .start()
-
         val rollingAvg = avgWifiData.select(N_TIMESTAMP_KAFKA_IN, N_AVG_WIFI).as[WifiData]
+        rollingAvg.printSchema()
 
         // Convert the function to a `TypedColumn` and give it a name
         val averageSalary = MyRollingAvg.toColumn.name("rollingAvg")
