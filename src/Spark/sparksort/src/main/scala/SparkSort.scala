@@ -16,8 +16,6 @@ import org.apache.spark.sql.expressions.Window
 import java.sql.Date
 import org.apache.hadoop.yarn.webapp.hamlet.HamletSpec.Q
 
-case class 
-
 object SparkSort {
 
     def main(args: Array[String]) {
@@ -90,7 +88,19 @@ object SparkSort {
             .outputMode("complete")
             .format("console")
             .start()
+
+        val rollingAvg = avgWifiData.select(N_TIMESTAMP_KAFKA_IN, N_AVG_WIFI).as[WifiData]
+
+        // Convert the function to a `TypedColumn` and give it a name
+        val averageSalary = MyRollingAvg.toColumn.name("rollingAvg")
+        val result = rollingAvg.select(averageSalary)
+        result.printSchema()
             
+        result.writeStream
+            .outputMode("update")
+            .format("console")
+            .start()
+
         /*
         Caused by: org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 5.0 
         failed 4 times, most recent failure: Lost task 0.3 in stage 5.0 (TID 8, 172.21.0.8, executor 0): 
@@ -119,6 +129,7 @@ object SparkSort {
             })*/
 
         
+        /*
         val firstTimestamp = avgWifiData
             .groupBy("timestampKakfaIn")
             .min("timestampKakfaIn")
@@ -127,10 +138,13 @@ object SparkSort {
             .outputMode("complete")
             .format("console")
             .start()
-        
-        val runningAvg = MyRollingAvg
-            .toColumn
-            .name("runningAvg")
+
+        avgWifiData.withColumn("avg", aggregate(
+            col(N_AVG_WIFI), 
+            lit(0),
+            (acc, x) => ()
+        ))*/
+
         /*
         avgWifiData
             .groupBy("timestampKafkaIn", "avgWifi")
@@ -168,19 +182,7 @@ object SparkSort {
         val wifiTotal = avgWifiData.select($"*", sumTotal)
         
 
-        wifiTotal.printSchema()*/
-        //$"kafkaInputTimestamp", $"senderName", $"location", $"findTimestamp", $"gpsCoordinate", $"wifiData", $"wifiAvg", 
-        /*
-        window($"timestamp", "10 seconds", "10 seconds"
-        val totalAvg = avgWifiData
-            .withColumn("totalAvg", avg("avgWifiData").over(totalAvgWindow)) 
-        totalAvg.printSchema()
-        */
 
-        //val sortTimestamp = avgWifiData.sort($"timestamp")
-
-        //val sortWifiData = sortTimestamp.sort($"avgWifiData")
-/*
         wifiTotal.writeStream
             .outputMode("update")
             .format("console")

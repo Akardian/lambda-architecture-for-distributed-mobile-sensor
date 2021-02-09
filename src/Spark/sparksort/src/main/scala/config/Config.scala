@@ -2,6 +2,7 @@ package config
 
 import scala.concurrent.duration._
 import org.apache.log4j.Level
+import java.sql.Timestamp
 
 object Config {
     val NAME = "sort"
@@ -43,4 +44,9 @@ object Config {
     val N_WIFI = "wifiData"
     val N_AVG_WIFI = "wifiAvg"
     val N_SUM_TOTAL = "wifiSum"
+
+    //Case class section
+    case class WifiData(var timestamp: Timestamp, var wifiAvg: Double)
+    case class Average(var map: Map[Timestamp, Entry])
+    case class Entry(var sum: Double, var count: Int)
 }

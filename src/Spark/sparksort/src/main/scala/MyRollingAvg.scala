@@ -1,37 +1,65 @@
 import org.apache.spark.sql.expressions.Aggregator
 import org.apache.spark.sql.{Encoder, Encoders, SparkSession}
-import java.security.Timestamp
+import java.sql.Timestamp
 
-case class WifiData(avgList: List[Double])
-case class Average(var sum: Double, var count: Double)
+import  config.Config._
 
-object  MyRollingAvg extends Aggregator[WifiData, Average, Double] {
+object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
 
     //Initial value of the intermediate results
-    def zero: Average = Average(0D, 0D)
+    def zero: Average = Average(map = Map[Timestamp, Entry]())
 
     //aggegrate input value "wifiData" into current intermediate value "buffer"
     def reduce(buffer: Average, wifiData: WifiData): Average = {
-        wifiData.avgList.foreach { elem =>
-            buffer.sum += elem
-            buffer.count += 1
+        //Add wifiData to all already existing timestamps with smaller timestamp
+        var newMap = Map[Timestamp, Entry]()
+        buffer.map.foreach( elem => 
+            if(elem._1.getTime() > wifiData.timestamp.getTime()) {
+                newMap += (elem._1 -> Entry( //Update Entry in map
+                    elem._2.sum + wifiData.wifiAvg,
+                    elem._2.count + 1
+                ))
+            } else {
+                newMap += elem //Add unchanged entry to map
+            }
+        )
+
+        //Add new entry to map
+        if(!buffer.map.contains(wifiData.timestamp)){
+            val updateEntry = Entry(wifiData.wifiAvg, 1)
+            buffer.map += (wifiData.timestamp -> updateEntry)      
         }
+        //Update map in buffer
+        buffer.map = newMap
         buffer
     }
 
     //Merge two intermediate value
     override def merge(buffer1: Average, buffer2: Average): Average = {
-        buffer1.sum += buffer2.sum
-        buffer1.count += buffer2.count
+        var newMap = buffer1.map
+
+        buffer2.map.foreach(elem => 
+            if(buffer1.map.contains(elem._1)) {
+                val updateEntry = Entry(
+                    buffer1.map(elem._1).sum + elem._2.sum, 
+                    buffer1.map(elem._1).count + elem._2.count)
+                newMap += (elem._1 -> updateEntry)      
+            } else {
+                val updateEntry = Entry(
+                    elem._2.sum, 
+                    elem._2.count)
+                newMap += (elem._1 -> updateEntry)      
+            }
+        )
+        buffer1.map = newMap
         buffer1
     }
 
-    //Transorfs the output of the reduction
-    def finish(reduction: Average): Double = {
-        val result = reduction.sum / reduction.count
-        result
+    //Transforms the output of the reduction
+    def finish(reduction: Average): Average = {
+        reduction
     }
 
     def bufferEncoder: Encoder[Average] = Encoders.product
-    def outputEncoder: Encoder[Double] = Encoders.scalaDouble
+    def outputEncoder: Encoder[Average] = Encoders.product
 }
