@@ -27,7 +27,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         //Add new entry to map
         if(!buffer.map.contains(wifiData.timestamp)){
             val updateEntry = Entry(wifiData.wifiAvg, 1)
-            buffer.map += (wifiData.timestamp -> updateEntry)      
+            newMap += (wifiData.timestamp -> updateEntry)      
         }
         //Update map in buffer
         buffer.map = newMap
