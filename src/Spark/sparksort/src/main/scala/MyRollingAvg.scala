@@ -7,14 +7,21 @@ import  config.Config._
 object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
 
     //Initial value of the intermediate results
-    def zero: Average = Average(map = Map[Timestamp, Entry]())
+    def zero: Average = Average(size = 0, map = Map[Timestamp, Entry]())
 
     //aggegrate input value "wifiData" into current intermediate value "buffer"
     def reduce(buffer: Average, wifiData: WifiData): Average = {
-        //Add wifiData to all already existing timestamps with smaller timestamp
+        //Add new entry to map
+        if(!buffer.map.contains(wifiData.timestamp)){
+            val updateEntry = Entry(wifiData.wifiAvg, 1)
+            buffer.map += (wifiData.timestamp -> updateEntry)
+            buffer.size += 1     
+        }
+
         var newMap = Map[Timestamp, Entry]()
+        //Add wifiData to all already existing timestamps with smaller timestamp
         buffer.map.foreach( bufferMap => 
-            if(bufferMap._1.getTime() < wifiData.timestamp.getTime()) {
+            if(bufferMap._1.getTime() > wifiData.timestamp.getTime()) { //Not new timestamp
                 newMap += (bufferMap._1 -> Entry( //Update Entry in map
                     (bufferMap._2.sum + wifiData.wifiAvg),
                     (bufferMap._2.count + 1)
@@ -23,12 +30,6 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
                 newMap += bufferMap //Add unchanged entry to map
             }
         )
-
-        //Add new entry to map
-        if(!buffer.map.contains(wifiData.timestamp)){
-            val updateEntry = Entry(wifiData.wifiAvg, 1)
-            newMap += (wifiData.timestamp -> updateEntry)      
-        }
         //Update map in buffer
         buffer.map = newMap
         buffer

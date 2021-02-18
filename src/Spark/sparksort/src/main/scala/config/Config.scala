@@ -47,6 +47,7 @@ object Config {
 
     //Case class section
     case class WifiData(var timestamp: Timestamp, var wifiAvg: Double)
-    case class Average(var map: Map[Timestamp, Entry])
+    case class AvgWifiData(var timestamp: Timestamp, var wifiAvg: Double, var runingAverage: Double)
+    case class Average(var size: Long, var map: Map[Timestamp, Entry])
     case class Entry(var sum: Double, var count: Int)
 }
