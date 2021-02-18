@@ -13,14 +13,14 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
     def reduce(buffer: Average, wifiData: WifiData): Average = {
         //Add wifiData to all already existing timestamps with smaller timestamp
         var newMap = Map[Timestamp, Entry]()
-        buffer.map.foreach( elem => 
-            if(elem._1.getTime() > wifiData.timestamp.getTime()) {
-                newMap += (elem._1 -> Entry( //Update Entry in map
-                    elem._2.sum + wifiData.wifiAvg,
-                    elem._2.count + 1
+        buffer.map.foreach( bufferMap => 
+            if(bufferMap._1.getTime() < wifiData.timestamp.getTime()) {
+                newMap += (bufferMap._1 -> Entry( //Update Entry in map
+                    (bufferMap._2.sum + wifiData.wifiAvg),
+                    (bufferMap._2.count + 1)
                 ))
             } else {
-                newMap += elem //Add unchanged entry to map
+                newMap += bufferMap //Add unchanged entry to map
             }
         )
 
@@ -38,17 +38,17 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
     override def merge(buffer1: Average, buffer2: Average): Average = {
         var newMap = buffer1.map
 
-        buffer2.map.foreach(elem => 
-            if(buffer1.map.contains(elem._1)) {
+        buffer2.map.foreach(bufferMap => 
+            if(buffer1.map.contains(bufferMap._1)) {
                 val updateEntry = Entry(
-                    buffer1.map(elem._1).sum + elem._2.sum, 
-                    buffer1.map(elem._1).count + elem._2.count)
-                newMap += (elem._1 -> updateEntry)      
+                    buffer1.map(bufferMap._1).sum + bufferMap._2.sum, 
+                    buffer1.map(bufferMap._1).count + bufferMap._2.count)
+                newMap += (bufferMap._1 -> updateEntry)      
             } else {
                 val updateEntry = Entry(
-                    elem._2.sum, 
-                    elem._2.count)
-                newMap += (elem._1 -> updateEntry)      
+                    bufferMap._2.sum, 
+                    bufferMap._2.count)
+                newMap += (bufferMap._1 -> updateEntry)      
             }
         )
         buffer1.map = newMap
