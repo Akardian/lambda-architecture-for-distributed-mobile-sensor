@@ -52,19 +52,22 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         var newMap = buffer1.map
 
         buffer2.map.foreach(bufferMap => 
-            if(buffer1.map.contains(bufferMap._1)) {
+            if(newMap.contains(bufferMap._1)) {
                 val updateEntry = Entry(
-                    buffer1.map(bufferMap._1).sum + bufferMap._2.sum, 
-                    buffer1.map(bufferMap._1).count + bufferMap._2.count)
+                    (newMap(bufferMap._1).sum + bufferMap._2.sum), 
+                    (newMap(bufferMap._1).count + bufferMap._2.count)
+                )
                 newMap += (bufferMap._1 -> updateEntry)      
             } else {
                 val updateEntry = Entry(
                     bufferMap._2.sum, 
-                    bufferMap._2.count)
+                    bufferMap._2.count
+                )
                 newMap += (bufferMap._1 -> updateEntry)      
             }
         )
         buffer1.map = newMap
+        buffer1.size += buffer2.size
         buffer1
     }
 

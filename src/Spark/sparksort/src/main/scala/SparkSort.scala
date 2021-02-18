@@ -87,7 +87,7 @@ object SparkSort {
         val result = rollingAvg.select(averageSalary)
         result.printSchema()
             
-        val exMap = result.select(explode($"map"))
+        val exMap = result.select($"size", explode($"map"))
         exMap.printSchema()
 
         exMap.writeStream
