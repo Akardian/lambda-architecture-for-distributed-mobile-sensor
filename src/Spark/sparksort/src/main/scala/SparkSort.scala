@@ -95,6 +95,19 @@ object SparkSort {
             .format("console")
             .start()
 
+        val sum = avgWifiData
+            .groupBy()
+            .sum("wifiAvg")
+            .col("sum(wifiAvg)")
+
+
+        val sumData = avgWifiData.withColumn("sum", sum)
+
+        sumData.writeStream
+            .outputMode("update")
+            .format("console")
+            .start()
+
         /*
         Caused by: org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 5.0 
         failed 4 times, most recent failure: Lost task 0.3 in stage 5.0 (TID 8, 172.21.0.8, executor 0): 
