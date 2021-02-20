@@ -16,14 +16,12 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
             //Count and Sum all already existing entrys
             var sum = 0D
             var count = 0
-            buffer.map.foreach(bufferMap => 
+            buffer.map.foreach{ case (key,value) => 
                    
-                    sum = sum + bufferMap._2.sum
-                    
-                    //count += bufferMap._2.count
-                    //log.info(DEBUG_MSG + "Sum: " + sum + " Count: " + count)
-
-            )
+                    sum += value.sum
+                    count += value.count
+                    log.info(DEBUG_MSG + "Sum: " + sum + " Count: " + count)
+            }
             //Add Sum of new Entry to old ones and add +1 to count
             val updateEntry = Entry(sum + wifiData.wifiAvg, count + 1)
 
