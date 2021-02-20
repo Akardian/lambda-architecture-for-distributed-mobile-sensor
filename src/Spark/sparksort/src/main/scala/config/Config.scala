@@ -3,6 +3,7 @@ package config
 import scala.concurrent.duration._
 import org.apache.log4j.Level
 import java.sql.Timestamp
+import org.apache.log4j.LogManager
 
 object Config {
     val NAME = "sort"
