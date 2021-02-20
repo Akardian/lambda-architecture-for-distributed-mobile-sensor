@@ -24,9 +24,9 @@ object SparkSort {
         
         // Config Logs
         log.setLevel(LOG_LEVEL)
-        log.info("###############################") 
-        log.info("####### Worst Case Sort #######") 
-        log.info("###############################")
+        log.error("###############################") 
+        log.error("####### Worst Case Sort #######") 
+        log.error("###############################")
 
         //BUild Spark Session
         val spark = SparkSession

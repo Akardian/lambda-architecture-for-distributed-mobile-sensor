@@ -20,7 +20,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
                    
                     sum += value.sum
                     count += value.count
-                    log.info(DEBUG_MSG + "Sum: " + sum + " Count: " + count)
+                    log.error(DEBUG_MSG + "Sum: " + sum + " Count: " + count)
             }
             //Add new entry to buffer
         val out = Average(buffer.size + 1, buffer.map + (wifiData.timestamp -> Entry(sum, count)))
