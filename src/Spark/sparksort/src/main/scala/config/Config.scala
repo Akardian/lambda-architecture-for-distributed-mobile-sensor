@@ -10,7 +10,7 @@ object Config {
     //Logger Settings
     val DEBUG_MSG = "Sort: "
     val DEBUG_MSG_AVG = "Rolling-Avg-" + DEBUG_MSG
-    val LOG_LEVEL = Level.ERROR
+    val LOG_LEVEL = Level.WARN
     val log = LogManager.getRootLogger
 
     //Kafka Settings
