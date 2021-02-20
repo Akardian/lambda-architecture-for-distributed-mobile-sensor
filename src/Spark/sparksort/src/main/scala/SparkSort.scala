@@ -24,9 +24,9 @@ object SparkSort {
         
         // Config Logs
         log.setLevel(LOG_LEVEL)
-        log.error("###############################") 
-        log.error("####### Worst Case Sort #######") 
-        log.error("###############################")
+        log.debug("###############################") 
+        log.debug("####### Worst Case Sort #######") 
+        log.debug("###############################")
 
         //BUild Spark Session
         val spark = SparkSession
@@ -36,8 +36,8 @@ object SparkSort {
         import spark.implicits._
         log.debug(DEBUG_MSG + "Building Spark Session")
 
-        log.info("######### Sark Context Config #########")
-        log.info(spark.sparkContext.getConf.toDebugString)
+        log.debug("######### Sark Context Config #########")
+        log.debug(spark.sparkContext.getConf.toDebugString)
 
         //Read Avro Schema from Resource and convert it to a String
         val source = Source.fromResource(SCHEMA_PATH)

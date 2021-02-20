@@ -20,7 +20,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
                    
                     sum += value.sum
                     count += value.count
-                    log.error(DEBUG_MSG + "Sum: " + sum + " Count: " + count)
+                    log.debug(DEBUG_MSG_AVG + "Sum: " + sum + " Count: " + count)
             }
             //Add new entry to buffer
         val out = Average(buffer.size + 1, buffer.map + (wifiData.timestamp -> Entry(sum, count)))
@@ -48,6 +48,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
 
     //Transforms the output of the reduction
     def finish(reduction: Average): Average = {
+        log.debug(DEBUG_MSG_AVG + "Finish ")
         reduction
     }
 
