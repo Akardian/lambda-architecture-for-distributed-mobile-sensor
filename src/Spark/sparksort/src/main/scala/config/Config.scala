@@ -9,7 +9,7 @@ object Config {
     val NAME = "sort"
     //Logger Settings
     val DEBUG_MSG = "Sort: "
-    val LOG_LEVEL = Level.ERROR
+    val LOG_LEVEL = Level.INFO
     val log = LogManager.getRootLogger
 
     //Kafka Settings

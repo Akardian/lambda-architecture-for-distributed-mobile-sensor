@@ -14,19 +14,16 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         //Add new entry to map
         //if(!buffer.map.contains(wifiData.timestamp)){
             //Count and Sum all already existing entrys
-            var sum = 0D
-            var count = 0
+            var sum = wifiData.wifiAvg
+            var count = 1
             buffer.map.foreach{ case (key,value) => 
                    
                     sum += value.sum
                     count += value.count
                     log.info(DEBUG_MSG + "Sum: " + sum + " Count: " + count)
             }
-            //Add Sum of new Entry to old ones and add +1 to count
-            val updateEntry = Entry(sum + wifiData.wifiAvg, count + 1)
-
             //Add new entry to buffer
-            buffer.map += (wifiData.timestamp -> updateEntry)
+            buffer.map += (wifiData.timestamp -> Entry(sum, count))
             buffer.size += 1 //Map Size
         //}
 /*
@@ -51,21 +48,16 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
     override def merge(buffer1: Average, buffer2: Average): Average = {
         var newMap = buffer1.map
 
-        buffer2.map.foreach(bufferMap => 
-            if(newMap.contains(bufferMap._1)) {
-                val updateEntry = Entry(
-                    (newMap(bufferMap._1).sum + bufferMap._2.sum), 
-                    (newMap(bufferMap._1).count + bufferMap._2.count)
-                )
-                newMap += (bufferMap._1 -> updateEntry)      
+        buffer2.map.foreach{ case (key,value) => 
+            if(newMap.contains(key)) {
+                newMap += (key -> Entry(
+                    newMap(key).sum + value.sum, 
+                    newMap(key).count + value.count
+                ))      
             } else {
-                val updateEntry = Entry(
-                    bufferMap._2.sum, 
-                    bufferMap._2.count
-                )
-                newMap += (bufferMap._1 -> updateEntry)      
+                newMap += (key -> Entry(value.sum, value.count))      
             }
-        )
+        }
         buffer1.map = newMap
         buffer1.size += buffer2.size
         buffer1
