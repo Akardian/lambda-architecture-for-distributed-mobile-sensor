@@ -23,7 +23,6 @@ object SparkSort {
         import config.Config._
         
         // Config Logs
-        val log = LogManager.getRootLogger
         log.setLevel(LOG_LEVEL)
         log.info("###############################") 
         log.info("####### Worst Case Sort #######") 

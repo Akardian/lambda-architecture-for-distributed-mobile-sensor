@@ -9,6 +9,7 @@ object Config {
     //Logger Settings
     val DEBUG_MSG = "Sort: "
     val LOG_LEVEL = Level.ERROR
+    val log = LogManager.getRootLogger
 
     //Kafka Settings
     val GROUP_ID = "Spark-" + NAME
