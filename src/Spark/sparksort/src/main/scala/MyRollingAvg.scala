@@ -25,14 +25,19 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
                     count += value.count
                     log.warn(DEBUG_MSG_AVG + "Sum: " + sum + " Count: " + count)
             }
+        log.warn(DEBUG_MSG_AVG + "Sum:" + sum)
+        log.warn(DEBUG_MSG_AVG + "Count:" + count)
             //Add new entry to buffer
         val out = Average(buffer.size + 1, buffer.map + (wifiData.timestamp -> Entry(sum, count)))
+        log.warn(DEBUG_MSG_AVG + "Out Buffer:" + out.toString())
         out
     }
 
     //Merge two intermediate value
     override def merge(buffer1: Average, buffer2: Average): Average = {
         log.warn(DEBUG_MSG_AVG + "merge")
+        log.warn(DEBUG_MSG_AVG + "Buffer1:" + buffer1.toString())
+        log.warn(DEBUG_MSG_AVG + "Buffer2:" + buffer2.toString())
         var newMap = buffer1.map
 
         buffer2.map.foreach{ case (key,value) => 
