@@ -11,6 +11,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
 
     //aggegrate input value "wifiData" into current intermediate value "buffer"
     def reduce(buffer: Average, wifiData: WifiData): Average = {
+        log.error(DEBUG_MSG_AVG + "reduce")
         //Add new entry to map
         //if(!buffer.map.contains(wifiData.timestamp)){
             //Count and Sum all already existing entrys
@@ -20,7 +21,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
                    
                     sum += value.sum
                     count += value.count
-                    log.debug(DEBUG_MSG_AVG + "Sum: " + sum + " Count: " + count)
+                    log.error(DEBUG_MSG_AVG + "Sum: " + sum + " Count: " + count)
             }
             //Add new entry to buffer
         val out = Average(buffer.size + 1, buffer.map + (wifiData.timestamp -> Entry(sum, count)))
@@ -29,6 +30,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
 
     //Merge two intermediate value
     override def merge(buffer1: Average, buffer2: Average): Average = {
+        log.error(DEBUG_MSG_AVG + "nerge")
         var newMap = buffer1.map
 
         buffer2.map.foreach{ case (key,value) => 
@@ -48,7 +50,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
 
     //Transforms the output of the reduction
     def finish(reduction: Average): Average = {
-        log.debug(DEBUG_MSG_AVG + "Finish ")
+        log.error(DEBUG_MSG_AVG + "finish")
         reduction
     }
 

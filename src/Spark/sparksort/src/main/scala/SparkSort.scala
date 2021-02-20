@@ -24,9 +24,9 @@ object SparkSort {
         
         // Config Logs
         log.setLevel(LOG_LEVEL)
-        log.debug("###############################") 
-        log.debug("####### Worst Case Sort #######") 
-        log.debug("###############################")
+        log.error("###############################") 
+        log.error("####### Worst Case Sort #######") 
+        log.error("###############################")
 
         //BUild Spark Session
         val spark = SparkSession
@@ -34,19 +34,19 @@ object SparkSort {
             .appName(CONTEXT_NAME)
             .getOrCreate()       
         import spark.implicits._
-        log.debug(DEBUG_MSG + "Building Spark Session")
+        log.error(DEBUG_MSG + "Building Spark Session")
 
-        log.debug("######### Sark Context Config #########")
-        log.debug(spark.sparkContext.getConf.toDebugString)
+        log.error("######### Sark Context Config #########")
+        log.error(spark.sparkContext.getConf.toDebugString)
 
         //Read Avro Schema from Resource and convert it to a String
         val source = Source.fromResource(SCHEMA_PATH)
-        log.debug(DEBUG_MSG + "Source is empty=" + source.isEmpty)
+        log.error(DEBUG_MSG + "Source is empty=" + source.isEmpty)
         val jsonFormatSchema = source.mkString
-        log.debug(DEBUG_MSG + "Json Schema Format\n" + jsonFormatSchema)
+        log.error(DEBUG_MSG + "Json Schema Format\n" + jsonFormatSchema)
 
         // Subscribe to Kafka topic
-        log.debug(DEBUG_MSG + "Read stream from Kafka")
+        log.error(DEBUG_MSG + "Read stream from Kafka")
         val avroDataFrame = spark
             .readStream
             .format("kafka")
