@@ -14,44 +14,54 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         log.warn(DEBUG_MSG_AVG + "reduce")
         log.warn(DEBUG_MSG_AVG + "WifiData:" + wifiData.toString())
         log.warn(DEBUG_MSG_AVG + "Buffer:" + buffer.toString())
-        //Add new entry to map
-        //if(!buffer.map.contains(wifiData.timestamp)){
-            //Count and Sum all already existing entrys
-            var sum = wifiData.wifiAvg
-            var count = 1
-            buffer.map.foreach{ case (key,value) => 
-                   
-                    sum += value.sum
-                    count += value.count
-                    log.warn(DEBUG_MSG_AVG + "Sum: " + sum + " Count: " + count)
+        
+        //Count and Sum all already existing entrys
+        var sum = wifiData.wifiAvg
+        var count = 1
+        buffer.entryMap.foreach{ case (key,value) => 
+            if(key.getTime() < wifiData.timestamp.getTime()) {
+                sum += value.sum
+                count += value.count
+                log.warn(DEBUG_MSG_AVG + "Sum: " + sum + " Count: " + count)
             }
+        }
+    
         log.warn(DEBUG_MSG_AVG + "Sum:" + sum)
         log.warn(DEBUG_MSG_AVG + "Count:" + count)
             //Add new entry to buffer
-        val out = Average(buffer.size + 1, buffer.map + (wifiData.timestamp -> Entry(sum, count)))
+        val out = Average(buffer.size + 1, buffer.entryMap + (wifiData.timestamp -> Entry(sum, count)))
         log.warn(DEBUG_MSG_AVG + "Out Buffer:" + out.toString())
         out
     }
 
     //Merge two intermediate value
-    override def merge(buffer1: Average, buffer2: Average): Average = {
+    def merge(buffer1: Average, buffer2: Average): Average = {
         log.warn(DEBUG_MSG_AVG + "merge")
         log.warn(DEBUG_MSG_AVG + "Buffer1:" + buffer1.toString())
         log.warn(DEBUG_MSG_AVG + "Buffer2:" + buffer2.toString())
-        var newMap = buffer1.map
+        
+        var mergedMap = buffer1.entryMap ++ buffer2.entryMap.map{
+            case (key,value) => 
+            key -> (Entry(
+                value.sum + buffer1.entryMap.getOrElse[Entry](key,Entry(0, 0)).sum, 
+                value.count + buffer1.entryMap.getOrElse[Entry](key,Entry(0, 0)).count
+                )
+            )
+        }
+        log.warn(DEBUG_MSG_AVG + "MergedMap:" + mergedMap.toString())
 
-        buffer2.map.foreach{ case (key,value) => 
-            if(newMap.contains(key)) {
-                newMap += (key -> Entry(
-                    newMap(key).sum + value.sum, 
-                    newMap(key).count + value.count
-                ))      
-            } else {
-                newMap += (key -> Entry(value.sum, value.count))      
+        mergedMap.foreach{ case (key,value) =>
+            mergedMap.foreach{ case (timestamp, entry) =>
+                if(timestamp.getTime() < key.getTime()) {
+                    key -> (Entry(
+                        value.sum + entry.sum,
+                        value.count + entry.count
+                    ))
+                }
             }
         }
-
-        val out = Average(buffer1.size + buffer2.size, newMap)
+        log.warn(DEBUG_MSG_AVG + "SumMap:" + mergedMap.toString())
+        val out = Average(buffer1.size + buffer2.size, mergedMap)
         out
     }
 
