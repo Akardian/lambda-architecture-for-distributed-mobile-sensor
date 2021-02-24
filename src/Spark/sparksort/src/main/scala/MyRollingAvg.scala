@@ -7,7 +7,7 @@ import  config.Config._
 object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
 
     //Initial value of the intermediate results
-    def zero: Average = Average(size = 0, map = Map[Timestamp, Entry]())
+    def zero: Average = Average(size = 0, entryMap = Map[Timestamp, Entry]())
 
     //aggegrate input value "wifiData" into current intermediate value "buffer"
     def reduce(buffer: Average, wifiData: WifiData): Average = {
