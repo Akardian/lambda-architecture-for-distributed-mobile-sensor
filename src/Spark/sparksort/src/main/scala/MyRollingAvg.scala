@@ -52,7 +52,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         }
         log.warn(DEBUG_MSG_AVG + "MergedMap:" + mergedMap.toString())*/
 
-        val newMap = mergedMap.map{ case (key,value) =>
+        val sumMap = mergedMap.map{ case (key,value) =>
             log.warn(DEBUG_MSG_AVG + "CurrentEntry:" + key + ", " + value)
 
             var sum = value.sum
@@ -66,10 +66,10 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
             log.warn(DEBUG_MSG_AVG + "Sum:" + sum)
             log.warn(DEBUG_MSG_AVG + "Count:" + count)
 
-            Entry(sum, count)
+            (key, Entry(sum, count))
         }
-        log.warn(DEBUG_MSG_AVG + "SumMap:" + mergedMap.toString())
-        val out = Average(buffer1.size + buffer2.size, mergedMap)
+        log.warn(DEBUG_MSG_AVG + "SumMap:" + sumMap.toString())
+        val out = Average(buffer1.size + buffer2.size, sumMap)
         out
     }
 
