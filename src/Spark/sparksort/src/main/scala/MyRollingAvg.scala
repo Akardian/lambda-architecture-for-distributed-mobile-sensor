@@ -36,11 +36,8 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
 
     //Merge two intermediate value
     def merge(buffer1: Average, buffer2: Average): Average = {
-        log.warn(DEBUG_MSG_AVG + "merge")
-        log.warn(DEBUG_MSG_AVG + "Buffer1:" + buffer1.entryMap.size)
-        log.warn(DEBUG_MSG_AVG + "Buffer2:" + buffer2.entryMap.size)
-        
-        val mergedMap = buffer1.entryMap ++ buffer2.entryMap
+        log.warn(DEBUG_MSG_AVG + "##### merge #####")
+        log.warn(DEBUG_MSG_AVG + "Size: B1[" + buffer1.entryMap.size + "] B2[" + buffer2.entryMap.size + "]")
         /*
         var mergedMap = buffer1.entryMap ++ buffer2.entryMap.map{
             case (key,value) => 
@@ -50,8 +47,8 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
                 )
             )
         }
-        log.warn(DEBUG_MSG_AVG + "MergedMap:" + mergedMap.toString())*/
-
+        //log.warn(DEBUG_MSG_AVG + "MergedMap:" + mergedMap.toString())
+        
         val sumMap = mergedMap.map{ case (key,value) =>
             log.warn(DEBUG_MSG_AVG + "CurrentEntry:" + key + ", " + value)
 
@@ -67,7 +64,21 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
             log.warn(DEBUG_MSG_AVG + "Count:" + count)
 
             (key, Entry(sum, count))
+        }*/
+
+        var sumMap = buffer1.entryMap
+        buffer2.entryMap.foreach{ case(key, value) =>
+            log.warn(DEBUG_MSG_AVG + "CurrentEntry:" + key + ", " + value)
+
+            if(sumMap.contains(key)) {
+                sumMap += (key -> Entry(sumMap(key).sum + value.sum, sumMap(key).count + value.count)) 
+            }else {
+                sumMap += (key -> value)
+            }
+            log.warn(DEBUG_MSG_AVG + "Sum:" + sumMap(key).sum)
+            log.warn(DEBUG_MSG_AVG + "Count:" + sumMap(key).count)
         }
+
         log.warn(DEBUG_MSG_AVG + "SumMap:" + sumMap.toString())
         val out = Average(buffer1.size + buffer2.size, sumMap)
         out
@@ -75,7 +86,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
 
     //Transforms the output of the reduction
     def finish(reduction: Average): Average = {
-        log.warn(DEBUG_MSG_AVG + "finish")
+        log.warn(DEBUG_MSG_AVG + "##### finish #####")
         reduction
     }
 
