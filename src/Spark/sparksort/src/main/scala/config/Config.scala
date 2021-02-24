@@ -49,8 +49,9 @@ object Config {
     val N_SUM_TOTAL = "wifiSum"
 
     //Case class section
-    case class WifiData(var timestamp: Timestamp, var wifiAvg: Double)
     case class AvgWifiData(var timestamp: Timestamp, var wifiAvg: Double, var runingAverage: Double)
+    case class WifiData(var timestamp: Timestamp, var wifiAvg: Double)
+
     case class Average(var size: Long, var entryMap: Map[Timestamp, Entry])
-    case class Entry(var sum: Double, var count: Int)
+    case class Entry(var wifiDB: Double, var sum: Double, var count: Int)
 }
