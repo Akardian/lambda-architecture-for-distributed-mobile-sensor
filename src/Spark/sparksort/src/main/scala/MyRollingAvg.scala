@@ -37,9 +37,11 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
     //Merge two intermediate value
     def merge(buffer1: Average, buffer2: Average): Average = {
         log.warn(DEBUG_MSG_AVG + "merge")
-        log.warn(DEBUG_MSG_AVG + "Buffer1:" + buffer1.toString())
-        log.warn(DEBUG_MSG_AVG + "Buffer2:" + buffer2.toString())
+        log.warn(DEBUG_MSG_AVG + "Buffer1:" + buffer1.entryMap.size)
+        log.warn(DEBUG_MSG_AVG + "Buffer2:" + buffer2.entryMap.size)
         
+        val mergedMap = buffer1.entryMap ++ buffer2.entryMap
+        /*
         var mergedMap = buffer1.entryMap ++ buffer2.entryMap.map{
             case (key,value) => 
             key -> (Entry(
@@ -48,17 +50,23 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
                 )
             )
         }
-        log.warn(DEBUG_MSG_AVG + "MergedMap:" + mergedMap.toString())
+        log.warn(DEBUG_MSG_AVG + "MergedMap:" + mergedMap.toString())*/
 
-        mergedMap.foreach{ case (key,value) =>
+        val newMap = mergedMap.map{ case (key,value) =>
+            log.warn(DEBUG_MSG_AVG + "CurrentEntry:" + key + ", " + value)
+
+            var sum = value.sum
+            var count = value.count
             mergedMap.foreach{ case (timestamp, entry) =>
                 if(timestamp.getTime() < key.getTime()) {
-                    key -> (Entry(
-                        value.sum + entry.sum,
-                        value.count + entry.count
-                    ))
+                    sum += entry.sum
+                    count += entry.count
                 }
             }
+            log.warn(DEBUG_MSG_AVG + "Sum:" + sum)
+            log.warn(DEBUG_MSG_AVG + "Count:" + count)
+
+            Entry(sum, count)
         }
         log.warn(DEBUG_MSG_AVG + "SumMap:" + mergedMap.toString())
         val out = Average(buffer1.size + buffer2.size, mergedMap)
