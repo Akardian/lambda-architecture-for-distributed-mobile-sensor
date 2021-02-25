@@ -22,10 +22,12 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
 
         var sum = wifiData.wifiAvg
         var count = 1
+        var size = 1
         buffer.entryMap.foreach{ case (key,value) => 
             if(key.getTime() < wifiData.timestamp.getTime()) {
                 sum += value.sum
                 count += value.count
+                size += 1
                 log.warn(DEBUG_MSG_AVG + "Sum: " + sum + " Count: " + count)
             }
         }
@@ -34,7 +36,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         log.warn(DEBUG_MSG_AVG + "Count:" + count)
 
         buffer.entryMap += (wifiData.timestamp -> Entry(wifiData.wifiAvg, sum, count))
-        buffer.size + 1
+        buffer.size + size
 
         log.warn(DEBUG_MSG_AVG + "Out Buffer:" + buffer.toString())
         buffer
@@ -49,7 +51,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
                 }
             }
         }
-        map2
+        map1
     }
 
     //Merge two intermediate value
@@ -57,7 +59,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         log.warn(DEBUG_MSG_AVG + "##### merge #####")
         log.warn(DEBUG_MSG_AVG + "Size: B1[" + buffer1.entryMap.size + "] B2[" + buffer2.entryMap.size + "]")
         
-        
+        //Add Both maps to each and Sum values
         val newMap = mapRollingSum(buffer2.entryMap, buffer1.entryMap) ++ mapRollingSum(buffer1.entryMap, buffer2.entryMap)
         
         log.warn(DEBUG_MSG_AVG + "SumMap:" + newMap.toString())
