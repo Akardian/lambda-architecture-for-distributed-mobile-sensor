@@ -7,7 +7,7 @@ object Config {
     val NAME = "find3"
     //Logger Settings
     val DEBUG_MSG = "Find3: "
-    val LOG_LEVEL = Level.INFO
+    val LOG_LEVEL = Level.WARN
 
     //Kafka Settings
     val GROUP_ID = "Spark-Find3"
@@ -31,4 +31,16 @@ object Config {
 
     //HDFS Settings
     val HDFS_PATH = "hdfs://namenode:9000/user/haw/" + NAME + "/new-data"
+
+    //Schama/column names
+    val N_TIMESTAMP_KAFKA_IN = "timestampKafkaIn"
+    
+    val N_TIMESTAMP_FIND = "timestampFind"
+
+    val N_SENDERNAME = "senderName"
+    val N_LOCATION = "location"
+    val N_ODEM_DATA = "odomData"
+    val N_WIFI = "wifiData"
+    val N_AVG_WIFI = "wifiAvg"
+    val N_SUM_TOTAL = "wifiSum"
 }

@@ -13,6 +13,7 @@ import org.apache.spark.sql.streaming.Trigger
 import org.apache.spark.sql.SaveMode
 import org.apache.spark.sql.streaming.OutputMode
 import java.util.HashMap
+import org.apache.spark.sql.types.DoubleType
 
 object SparkFind3 {
 
@@ -23,9 +24,9 @@ object SparkFind3 {
         // Config Logs
         val log = LogManager.getRootLogger
         log.setLevel(LOG_LEVEL)
-        log.info("###############################") 
-        log.info("############ Find3 ############") 
-        log.info("###############################")
+        log.warn("###############################") 
+        log.warn("############ Find3 ############") 
+        log.warn("###############################")
 
         //BUild Spark Session
         val spark = SparkSession
@@ -33,16 +34,16 @@ object SparkFind3 {
             .appName(CONTEXT_NAME)
             .getOrCreate()       
         import spark.implicits._
-        log.debug(DEBUG_MSG + "Building Spark Session")
+        log.warn(DEBUG_MSG + "Building Spark Session")
 
         //Read Avro Schema from Resource and convert it to a String
         val source = Source.fromResource(SCHEMA_PATH)
-        log.debug(DEBUG_MSG + "Source is empty=" + source.isEmpty)
+        log.warn(DEBUG_MSG + "Source is empty=" + source.isEmpty)
         val jsonFormatSchema = source.mkString
-        log.debug(DEBUG_MSG + "Json Schema Format\n" + jsonFormatSchema)
+        log.warn(DEBUG_MSG + "Json Schema Format\n" + jsonFormatSchema)
 
         // Subscribe to Kafka topic
-        log.debug(DEBUG_MSG + "Read stream from Kafka")
+        log.warn(DEBUG_MSG + "Read stream from Kafka")
         val avroDataFrame = spark
             .readStream
             .format("kafka")
@@ -52,12 +53,29 @@ object SparkFind3 {
             .select(
                 $"timestamp", //Keep Kafka Timestamp
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
-        log.debug(DEBUG_MSG + "find3Data")
+            .select( //Flatten data structure
+                col("timestamp").as(N_TIMESTAMP_KAFKA_IN),
+                col("find3.senderName").as(N_SENDERNAME),
+                col("find3.location").as(N_LOCATION),
+                col("find3.findTimestamp").as(N_TIMESTAMP_FIND),
+                col("find3.odomData").as(N_ODEM_DATA),
+                col("find3.wifiData").as(N_WIFI)
+            )
+            log.warn(DEBUG_MSG + "find3Data")
         avroDataFrame.printSchema()
         
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
         val hdfsDataFrame = avroDataFrame
             .withColumn("timestamp-hdfs", date_format(date_trunc("hour", $"timestamp"), "yyyy-MM-dd HH-mm"))
+
+        //Calcutlate Average of wifiData
+        val avgWifiData = avroDataFrame
+            .withColumn(N_AVG_WIFI, aggregate(
+                map_values(col(N_WIFI)), 
+                lit(0), //set default value to 0
+                (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col(N_WIFI)) //Calculate Average
+            )
+        avgWifiData.printSchema()
 
         //Write RAW data to HDFS
         hdfsDataFrame.writeStream  
@@ -68,16 +86,6 @@ object SparkFind3 {
             .option("checkpointLocation", CHECKPOINT_HDFS)
             .start()
         hdfsDataFrame.printSchema()
-
-        //stream layer
-        /*val flatData = hdfsDataFrame
-            .select($"timestamp", $"find3.wifiData.wifiData")
-            .as[(Timestamp, Map[String, Integer])]
-            .flatMap(f => f._2
-            .map(y => (f._1,)))
-            .toDF("timestamp", "wifidata")
-            .printSchema()
-        */
 
         //Write Data to Kafka
         val query = hdfsDataFrame
