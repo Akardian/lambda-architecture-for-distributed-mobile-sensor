@@ -68,6 +68,7 @@ object SparkFind3 {
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
         val hdfsDataFrame = avroDataFrame
             .withColumn("timestamp-hdfs", date_format(date_trunc("hour", $"timestampKafkaIn"), "yyyy-MM-dd HH-mm"))
+            .withColumn(N_TIMESTAMP_KAFKA_IN, from_unixtime(col(N_TIMESTAMP_FIND),"MM-dd-yyyy HH:mm:ss"))
 
         //Calcutlate Average of wifiData
         val avgWifiData = avroDataFrame
