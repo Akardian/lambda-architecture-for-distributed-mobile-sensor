@@ -1,7 +1,5 @@
 package config;
 
-import java.lang.reflect.Array;
-
 public interface Config {
     //Kafka Configuration
     public final static String TOPIC = "find3Generator-input";

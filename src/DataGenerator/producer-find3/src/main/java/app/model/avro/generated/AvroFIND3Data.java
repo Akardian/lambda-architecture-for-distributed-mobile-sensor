@@ -14,8 +14,8 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -1652831270627928134L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"AvroFIND3Data\",\"namespace\":\"app.model.avro.generated\",\"fields\":[{\"name\":\"senderName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Name of the sender\"},{\"name\":\"location\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Sender Location\"},{\"name\":\"findTimestamp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Timestampt recorded on the device\"},{\"name\":\"gpsCoordinate\",\"type\":{\"type\":\"record\",\"name\":\"AvroGpsCoordinate\",\"fields\":[{\"name\":\"lat\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"default\":\"\"},{\"name\":\"lon\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"default\":\"\"},{\"name\":\"alt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"default\":\"\"}]}},{\"name\":\"wifiData\",\"type\":{\"type\":\"record\",\"name\":\"AvroWifiData\",\"fields\":[{\"name\":\"wifiData\",\"type\":{\"type\":\"map\",\"values\":\"int\",\"avro.java.string\":\"String\"},\"default\":{}}]},\"default\":{}}]}");
+  private static final long serialVersionUID = -2744603450280475312L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"AvroFIND3Data\",\"namespace\":\"app.model.avro.generated\",\"fields\":[{\"name\":\"senderName\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Name of the sender\"},{\"name\":\"location\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Location of the device based on wifi data\"},{\"name\":\"findTimestamp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"Timestamp of data entry\"},{\"name\":\"odomData\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},\"default\":[]},{\"name\":\"wifiData\",\"type\":{\"type\":\"map\",\"values\":\"int\",\"avro.java.string\":\"String\"},\"default\":{}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -73,12 +73,12 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
   /** Name of the sender */
   @Deprecated public java.lang.String senderName;
-  /** Sender Location */
+  /** Location of the device based on wifi data */
   @Deprecated public java.lang.String location;
-  /** Timestampt recorded on the device */
+  /** Timestamp of data entry */
   @Deprecated public java.lang.String findTimestamp;
-  @Deprecated public app.model.avro.generated.AvroGpsCoordinate gpsCoordinate;
-  @Deprecated public app.model.avro.generated.AvroWifiData wifiData;
+  @Deprecated public java.util.List<java.lang.String> odomData;
+  @Deprecated public java.util.Map<java.lang.String,java.lang.Integer> wifiData;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -90,16 +90,16 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
   /**
    * All-args constructor.
    * @param senderName Name of the sender
-   * @param location Sender Location
-   * @param findTimestamp Timestampt recorded on the device
-   * @param gpsCoordinate The new value for gpsCoordinate
+   * @param location Location of the device based on wifi data
+   * @param findTimestamp Timestamp of data entry
+   * @param odomData The new value for odomData
    * @param wifiData The new value for wifiData
    */
-  public AvroFIND3Data(java.lang.String senderName, java.lang.String location, java.lang.String findTimestamp, app.model.avro.generated.AvroGpsCoordinate gpsCoordinate, app.model.avro.generated.AvroWifiData wifiData) {
+  public AvroFIND3Data(java.lang.String senderName, java.lang.String location, java.lang.String findTimestamp, java.util.List<java.lang.String> odomData, java.util.Map<java.lang.String,java.lang.Integer> wifiData) {
     this.senderName = senderName;
     this.location = location;
     this.findTimestamp = findTimestamp;
-    this.gpsCoordinate = gpsCoordinate;
+    this.odomData = odomData;
     this.wifiData = wifiData;
   }
 
@@ -111,7 +111,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
     case 0: return senderName;
     case 1: return location;
     case 2: return findTimestamp;
-    case 3: return gpsCoordinate;
+    case 3: return odomData;
     case 4: return wifiData;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
@@ -124,8 +124,8 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
     case 0: senderName = value$ != null ? value$.toString() : null; break;
     case 1: location = value$ != null ? value$.toString() : null; break;
     case 2: findTimestamp = value$ != null ? value$.toString() : null; break;
-    case 3: gpsCoordinate = (app.model.avro.generated.AvroGpsCoordinate)value$; break;
-    case 4: wifiData = (app.model.avro.generated.AvroWifiData)value$; break;
+    case 3: odomData = (java.util.List<java.lang.String>)value$; break;
+    case 4: wifiData = (java.util.Map<java.lang.String,java.lang.Integer>)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -150,7 +150,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
   /**
    * Gets the value of the 'location' field.
-   * @return Sender Location
+   * @return Location of the device based on wifi data
    */
   public java.lang.String getLocation() {
     return location;
@@ -159,7 +159,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
   /**
    * Sets the value of the 'location' field.
-   * Sender Location
+   * Location of the device based on wifi data
    * @param value the value to set.
    */
   public void setLocation(java.lang.String value) {
@@ -168,7 +168,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
   /**
    * Gets the value of the 'findTimestamp' field.
-   * @return Timestampt recorded on the device
+   * @return Timestamp of data entry
    */
   public java.lang.String getFindTimestamp() {
     return findTimestamp;
@@ -177,7 +177,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
   /**
    * Sets the value of the 'findTimestamp' field.
-   * Timestampt recorded on the device
+   * Timestamp of data entry
    * @param value the value to set.
    */
   public void setFindTimestamp(java.lang.String value) {
@@ -185,27 +185,27 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
   }
 
   /**
-   * Gets the value of the 'gpsCoordinate' field.
-   * @return The value of the 'gpsCoordinate' field.
+   * Gets the value of the 'odomData' field.
+   * @return The value of the 'odomData' field.
    */
-  public app.model.avro.generated.AvroGpsCoordinate getGpsCoordinate() {
-    return gpsCoordinate;
+  public java.util.List<java.lang.String> getOdomData() {
+    return odomData;
   }
 
 
   /**
-   * Sets the value of the 'gpsCoordinate' field.
+   * Sets the value of the 'odomData' field.
    * @param value the value to set.
    */
-  public void setGpsCoordinate(app.model.avro.generated.AvroGpsCoordinate value) {
-    this.gpsCoordinate = value;
+  public void setOdomData(java.util.List<java.lang.String> value) {
+    this.odomData = value;
   }
 
   /**
    * Gets the value of the 'wifiData' field.
    * @return The value of the 'wifiData' field.
    */
-  public app.model.avro.generated.AvroWifiData getWifiData() {
+  public java.util.Map<java.lang.String,java.lang.Integer> getWifiData() {
     return wifiData;
   }
 
@@ -214,7 +214,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
    * Sets the value of the 'wifiData' field.
    * @param value the value to set.
    */
-  public void setWifiData(app.model.avro.generated.AvroWifiData value) {
+  public void setWifiData(java.util.Map<java.lang.String,java.lang.Integer> value) {
     this.wifiData = value;
   }
 
@@ -261,14 +261,12 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
     /** Name of the sender */
     private java.lang.String senderName;
-    /** Sender Location */
+    /** Location of the device based on wifi data */
     private java.lang.String location;
-    /** Timestampt recorded on the device */
+    /** Timestamp of data entry */
     private java.lang.String findTimestamp;
-    private app.model.avro.generated.AvroGpsCoordinate gpsCoordinate;
-    private app.model.avro.generated.AvroGpsCoordinate.Builder gpsCoordinateBuilder;
-    private app.model.avro.generated.AvroWifiData wifiData;
-    private app.model.avro.generated.AvroWifiData.Builder wifiDataBuilder;
+    private java.util.List<java.lang.String> odomData;
+    private java.util.Map<java.lang.String,java.lang.Integer> wifiData;
 
     /** Creates a new Builder */
     private Builder() {
@@ -293,19 +291,13 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
         this.findTimestamp = data().deepCopy(fields()[2].schema(), other.findTimestamp);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
-      if (isValidValue(fields()[3], other.gpsCoordinate)) {
-        this.gpsCoordinate = data().deepCopy(fields()[3].schema(), other.gpsCoordinate);
+      if (isValidValue(fields()[3], other.odomData)) {
+        this.odomData = data().deepCopy(fields()[3].schema(), other.odomData);
         fieldSetFlags()[3] = other.fieldSetFlags()[3];
-      }
-      if (other.hasGpsCoordinateBuilder()) {
-        this.gpsCoordinateBuilder = app.model.avro.generated.AvroGpsCoordinate.newBuilder(other.getGpsCoordinateBuilder());
       }
       if (isValidValue(fields()[4], other.wifiData)) {
         this.wifiData = data().deepCopy(fields()[4].schema(), other.wifiData);
         fieldSetFlags()[4] = other.fieldSetFlags()[4];
-      }
-      if (other.hasWifiDataBuilder()) {
-        this.wifiDataBuilder = app.model.avro.generated.AvroWifiData.newBuilder(other.getWifiDataBuilder());
       }
     }
 
@@ -327,16 +319,14 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
         this.findTimestamp = data().deepCopy(fields()[2].schema(), other.findTimestamp);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.gpsCoordinate)) {
-        this.gpsCoordinate = data().deepCopy(fields()[3].schema(), other.gpsCoordinate);
+      if (isValidValue(fields()[3], other.odomData)) {
+        this.odomData = data().deepCopy(fields()[3].schema(), other.odomData);
         fieldSetFlags()[3] = true;
       }
-      this.gpsCoordinateBuilder = null;
       if (isValidValue(fields()[4], other.wifiData)) {
         this.wifiData = data().deepCopy(fields()[4].schema(), other.wifiData);
         fieldSetFlags()[4] = true;
       }
-      this.wifiDataBuilder = null;
     }
 
     /**
@@ -385,7 +375,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
     /**
       * Gets the value of the 'location' field.
-      * Sender Location
+      * Location of the device based on wifi data
       * @return The value.
       */
     public java.lang.String getLocation() {
@@ -395,7 +385,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
     /**
       * Sets the value of the 'location' field.
-      * Sender Location
+      * Location of the device based on wifi data
       * @param value The value of 'location'.
       * @return This builder.
       */
@@ -408,7 +398,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
     /**
       * Checks whether the 'location' field has been set.
-      * Sender Location
+      * Location of the device based on wifi data
       * @return True if the 'location' field has been set, false otherwise.
       */
     public boolean hasLocation() {
@@ -418,7 +408,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
     /**
       * Clears the value of the 'location' field.
-      * Sender Location
+      * Location of the device based on wifi data
       * @return This builder.
       */
     public app.model.avro.generated.AvroFIND3Data.Builder clearLocation() {
@@ -429,7 +419,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
     /**
       * Gets the value of the 'findTimestamp' field.
-      * Timestampt recorded on the device
+      * Timestamp of data entry
       * @return The value.
       */
     public java.lang.String getFindTimestamp() {
@@ -439,7 +429,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
     /**
       * Sets the value of the 'findTimestamp' field.
-      * Timestampt recorded on the device
+      * Timestamp of data entry
       * @param value The value of 'findTimestamp'.
       * @return This builder.
       */
@@ -452,7 +442,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
     /**
       * Checks whether the 'findTimestamp' field has been set.
-      * Timestampt recorded on the device
+      * Timestamp of data entry
       * @return True if the 'findTimestamp' field has been set, false otherwise.
       */
     public boolean hasFindTimestamp() {
@@ -462,7 +452,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
     /**
       * Clears the value of the 'findTimestamp' field.
-      * Timestampt recorded on the device
+      * Timestamp of data entry
       * @return This builder.
       */
     public app.model.avro.generated.AvroFIND3Data.Builder clearFindTimestamp() {
@@ -472,77 +462,41 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
     }
 
     /**
-      * Gets the value of the 'gpsCoordinate' field.
+      * Gets the value of the 'odomData' field.
       * @return The value.
       */
-    public app.model.avro.generated.AvroGpsCoordinate getGpsCoordinate() {
-      return gpsCoordinate;
+    public java.util.List<java.lang.String> getOdomData() {
+      return odomData;
     }
 
 
     /**
-      * Sets the value of the 'gpsCoordinate' field.
-      * @param value The value of 'gpsCoordinate'.
+      * Sets the value of the 'odomData' field.
+      * @param value The value of 'odomData'.
       * @return This builder.
       */
-    public app.model.avro.generated.AvroFIND3Data.Builder setGpsCoordinate(app.model.avro.generated.AvroGpsCoordinate value) {
+    public app.model.avro.generated.AvroFIND3Data.Builder setOdomData(java.util.List<java.lang.String> value) {
       validate(fields()[3], value);
-      this.gpsCoordinateBuilder = null;
-      this.gpsCoordinate = value;
+      this.odomData = value;
       fieldSetFlags()[3] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'gpsCoordinate' field has been set.
-      * @return True if the 'gpsCoordinate' field has been set, false otherwise.
+      * Checks whether the 'odomData' field has been set.
+      * @return True if the 'odomData' field has been set, false otherwise.
       */
-    public boolean hasGpsCoordinate() {
+    public boolean hasOdomData() {
       return fieldSetFlags()[3];
     }
 
-    /**
-     * Gets the Builder instance for the 'gpsCoordinate' field and creates one if it doesn't exist yet.
-     * @return This builder.
-     */
-    public app.model.avro.generated.AvroGpsCoordinate.Builder getGpsCoordinateBuilder() {
-      if (gpsCoordinateBuilder == null) {
-        if (hasGpsCoordinate()) {
-          setGpsCoordinateBuilder(app.model.avro.generated.AvroGpsCoordinate.newBuilder(gpsCoordinate));
-        } else {
-          setGpsCoordinateBuilder(app.model.avro.generated.AvroGpsCoordinate.newBuilder());
-        }
-      }
-      return gpsCoordinateBuilder;
-    }
 
     /**
-     * Sets the Builder instance for the 'gpsCoordinate' field
-     * @param value The builder instance that must be set.
-     * @return This builder.
-     */
-
-    public app.model.avro.generated.AvroFIND3Data.Builder setGpsCoordinateBuilder(app.model.avro.generated.AvroGpsCoordinate.Builder value) {
-      clearGpsCoordinate();
-      gpsCoordinateBuilder = value;
-      return this;
-    }
-
-    /**
-     * Checks whether the 'gpsCoordinate' field has an active Builder instance
-     * @return True if the 'gpsCoordinate' field has an active Builder instance
-     */
-    public boolean hasGpsCoordinateBuilder() {
-      return gpsCoordinateBuilder != null;
-    }
-
-    /**
-      * Clears the value of the 'gpsCoordinate' field.
+      * Clears the value of the 'odomData' field.
       * @return This builder.
       */
-    public app.model.avro.generated.AvroFIND3Data.Builder clearGpsCoordinate() {
-      gpsCoordinate = null;
-      gpsCoordinateBuilder = null;
+    public app.model.avro.generated.AvroFIND3Data.Builder clearOdomData() {
+      odomData = null;
       fieldSetFlags()[3] = false;
       return this;
     }
@@ -551,7 +505,7 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
       * Gets the value of the 'wifiData' field.
       * @return The value.
       */
-    public app.model.avro.generated.AvroWifiData getWifiData() {
+    public java.util.Map<java.lang.String,java.lang.Integer> getWifiData() {
       return wifiData;
     }
 
@@ -561,9 +515,8 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
       * @param value The value of 'wifiData'.
       * @return This builder.
       */
-    public app.model.avro.generated.AvroFIND3Data.Builder setWifiData(app.model.avro.generated.AvroWifiData value) {
+    public app.model.avro.generated.AvroFIND3Data.Builder setWifiData(java.util.Map<java.lang.String,java.lang.Integer> value) {
       validate(fields()[4], value);
-      this.wifiDataBuilder = null;
       this.wifiData = value;
       fieldSetFlags()[4] = true;
       return this;
@@ -577,40 +530,6 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
       return fieldSetFlags()[4];
     }
 
-    /**
-     * Gets the Builder instance for the 'wifiData' field and creates one if it doesn't exist yet.
-     * @return This builder.
-     */
-    public app.model.avro.generated.AvroWifiData.Builder getWifiDataBuilder() {
-      if (wifiDataBuilder == null) {
-        if (hasWifiData()) {
-          setWifiDataBuilder(app.model.avro.generated.AvroWifiData.newBuilder(wifiData));
-        } else {
-          setWifiDataBuilder(app.model.avro.generated.AvroWifiData.newBuilder());
-        }
-      }
-      return wifiDataBuilder;
-    }
-
-    /**
-     * Sets the Builder instance for the 'wifiData' field
-     * @param value The builder instance that must be set.
-     * @return This builder.
-     */
-
-    public app.model.avro.generated.AvroFIND3Data.Builder setWifiDataBuilder(app.model.avro.generated.AvroWifiData.Builder value) {
-      clearWifiData();
-      wifiDataBuilder = value;
-      return this;
-    }
-
-    /**
-     * Checks whether the 'wifiData' field has an active Builder instance
-     * @return True if the 'wifiData' field has an active Builder instance
-     */
-    public boolean hasWifiDataBuilder() {
-      return wifiDataBuilder != null;
-    }
 
     /**
       * Clears the value of the 'wifiData' field.
@@ -618,7 +537,6 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
       */
     public app.model.avro.generated.AvroFIND3Data.Builder clearWifiData() {
       wifiData = null;
-      wifiDataBuilder = null;
       fieldSetFlags()[4] = false;
       return this;
     }
@@ -631,26 +549,8 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
         record.senderName = fieldSetFlags()[0] ? this.senderName : (java.lang.String) defaultValue(fields()[0]);
         record.location = fieldSetFlags()[1] ? this.location : (java.lang.String) defaultValue(fields()[1]);
         record.findTimestamp = fieldSetFlags()[2] ? this.findTimestamp : (java.lang.String) defaultValue(fields()[2]);
-        if (gpsCoordinateBuilder != null) {
-          try {
-            record.gpsCoordinate = this.gpsCoordinateBuilder.build();
-          } catch (org.apache.avro.AvroMissingFieldException e) {
-            e.addParentField(record.getSchema().getField("gpsCoordinate"));
-            throw e;
-          }
-        } else {
-          record.gpsCoordinate = fieldSetFlags()[3] ? this.gpsCoordinate : (app.model.avro.generated.AvroGpsCoordinate) defaultValue(fields()[3]);
-        }
-        if (wifiDataBuilder != null) {
-          try {
-            record.wifiData = this.wifiDataBuilder.build();
-          } catch (org.apache.avro.AvroMissingFieldException e) {
-            e.addParentField(record.getSchema().getField("wifiData"));
-            throw e;
-          }
-        } else {
-          record.wifiData = fieldSetFlags()[4] ? this.wifiData : (app.model.avro.generated.AvroWifiData) defaultValue(fields()[4]);
-        }
+        record.odomData = fieldSetFlags()[3] ? this.odomData : (java.util.List<java.lang.String>) defaultValue(fields()[3]);
+        record.wifiData = fieldSetFlags()[4] ? this.wifiData : (java.util.Map<java.lang.String,java.lang.Integer>) defaultValue(fields()[4]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -689,9 +589,33 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
     out.writeString(this.findTimestamp);
 
-    this.gpsCoordinate.customEncode(out);
+    long size0 = this.odomData.size();
+    out.writeArrayStart();
+    out.setItemCount(size0);
+    long actualSize0 = 0;
+    for (java.lang.String e0: this.odomData) {
+      actualSize0++;
+      out.startItem();
+      out.writeString(e0);
+    }
+    out.writeArrayEnd();
+    if (actualSize0 != size0)
+      throw new java.util.ConcurrentModificationException("Array-size written was " + size0 + ", but element count was " + actualSize0 + ".");
 
-    this.wifiData.customEncode(out);
+    long size1 = this.wifiData.size();
+    out.writeMapStart();
+    out.setItemCount(size1);
+    long actualSize1 = 0;
+    for (java.util.Map.Entry<java.lang.String, java.lang.Integer> e1: this.wifiData.entrySet()) {
+      actualSize1++;
+      out.startItem();
+      out.writeString(e1.getKey());
+      java.lang.Integer v1 = e1.getValue();
+      out.writeInt(v1);
+    }
+    out.writeMapEnd();
+    if (actualSize1 != size1)
+      throw new java.util.ConcurrentModificationException("Map-size written was " + size1 + ", but element count was " + actualSize1 + ".");
 
   }
 
@@ -706,15 +630,36 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
 
       this.findTimestamp = in.readString();
 
-      if (this.gpsCoordinate == null) {
-        this.gpsCoordinate = new app.model.avro.generated.AvroGpsCoordinate();
+      long size0 = in.readArrayStart();
+      java.util.List<java.lang.String> a0 = this.odomData;
+      if (a0 == null) {
+        a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("odomData").schema());
+        this.odomData = a0;
+      } else a0.clear();
+      SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);
+      for ( ; 0 < size0; size0 = in.arrayNext()) {
+        for ( ; size0 != 0; size0--) {
+          java.lang.String e0 = (ga0 != null ? ga0.peek() : null);
+          e0 = in.readString();
+          a0.add(e0);
+        }
       }
-      this.gpsCoordinate.customDecode(in);
 
-      if (this.wifiData == null) {
-        this.wifiData = new app.model.avro.generated.AvroWifiData();
+      long size1 = in.readMapStart();
+      java.util.Map<java.lang.String,java.lang.Integer> m1 = this.wifiData; // Need fresh name due to limitation of macro system
+      if (m1 == null) {
+        m1 = new java.util.HashMap<java.lang.String,java.lang.Integer>((int)size1);
+        this.wifiData = m1;
+      } else m1.clear();
+      for ( ; 0 < size1; size1 = in.mapNext()) {
+        for ( ; size1 != 0; size1--) {
+          java.lang.String k1 = null;
+          k1 = in.readString();
+          java.lang.Integer v1 = null;
+          v1 = in.readInt();
+          m1.put(k1, v1);
+        }
       }
-      this.wifiData.customDecode(in);
 
     } else {
       for (int i = 0; i < 5; i++) {
@@ -732,17 +677,38 @@ public class AvroFIND3Data extends org.apache.avro.specific.SpecificRecordBase i
           break;
 
         case 3:
-          if (this.gpsCoordinate == null) {
-            this.gpsCoordinate = new app.model.avro.generated.AvroGpsCoordinate();
+          long size0 = in.readArrayStart();
+          java.util.List<java.lang.String> a0 = this.odomData;
+          if (a0 == null) {
+            a0 = new SpecificData.Array<java.lang.String>((int)size0, SCHEMA$.getField("odomData").schema());
+            this.odomData = a0;
+          } else a0.clear();
+          SpecificData.Array<java.lang.String> ga0 = (a0 instanceof SpecificData.Array ? (SpecificData.Array<java.lang.String>)a0 : null);
+          for ( ; 0 < size0; size0 = in.arrayNext()) {
+            for ( ; size0 != 0; size0--) {
+              java.lang.String e0 = (ga0 != null ? ga0.peek() : null);
+              e0 = in.readString();
+              a0.add(e0);
+            }
           }
-          this.gpsCoordinate.customDecode(in);
           break;
 
         case 4:
-          if (this.wifiData == null) {
-            this.wifiData = new app.model.avro.generated.AvroWifiData();
+          long size1 = in.readMapStart();
+          java.util.Map<java.lang.String,java.lang.Integer> m1 = this.wifiData; // Need fresh name due to limitation of macro system
+          if (m1 == null) {
+            m1 = new java.util.HashMap<java.lang.String,java.lang.Integer>((int)size1);
+            this.wifiData = m1;
+          } else m1.clear();
+          for ( ; 0 < size1; size1 = in.mapNext()) {
+            for ( ; size1 != 0; size1--) {
+              java.lang.String k1 = null;
+              k1 = in.readString();
+              java.lang.Integer v1 = null;
+              v1 = in.readInt();
+              m1.put(k1, v1);
+            }
           }
-          this.wifiData.customDecode(in);
           break;
 
         default:

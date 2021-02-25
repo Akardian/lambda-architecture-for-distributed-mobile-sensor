@@ -99,8 +99,8 @@ public class ProducerFIND3 implements Config {
             .setSenderName(senderName)
             .setLocation(location)
             .setFindTimestamp(timeStamp)
-            .setGpsCoordinate(gps)
-            .setWifiData(wifi)
+            .setOdomData(null)
+            .setWifiData(wifiDataMap)
             .build();
 
         return testData;
