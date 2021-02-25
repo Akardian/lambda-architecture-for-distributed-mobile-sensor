@@ -58,7 +58,7 @@ object SparkFind3 {
                 col("timestamp").as(N_TIMESTAMP_KAFKA_IN),
                 col("find3.senderName").as(N_SENDERNAME),
                 col("find3.location").as(N_LOCATION),
-                col("find3.findTimestamp").cast(TimestampType).as(N_TIMESTAMP_FIND),
+                col("find3.findTimestamp").cast("timestamp").as(N_TIMESTAMP_FIND),
                 col("find3.odomData").as(N_ODEM_DATA),
                 col("find3.wifiData").as(N_WIFI)
             )
