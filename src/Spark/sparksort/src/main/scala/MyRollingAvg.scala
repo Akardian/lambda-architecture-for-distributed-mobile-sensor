@@ -46,9 +46,10 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         map2.foreach{ case (key2, value2) =>
             map1.map{ case (key1, value1) =>
                 if(key1.getTime() > key2.getTime()) {
-                    value1.sum += value2.sum
-                    value1.count += value2.count
+                    value1.sum += value2.wifiDB
+                    value1.count += 1
                 }
+                log.warn(DEBUG_MSG_AVG + "SUM[" + value1.sum + "] COUNT[" + value1.count + "]")        
             }
         }
         map1
