@@ -45,6 +45,19 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         log.warn(DEBUG_MSG_AVG + "##### merge #####")
         log.warn(DEBUG_MSG_AVG + "Size: B1[" + buffer1.entryMap.size + "] B2[" + buffer2.entryMap.size + "]")
         
+        buffer2.entryMap.foreach{ case (key2, value2) =>
+            buffer1.entryMap.map{ case (key1, value1) =>
+                if(key1.getTime() > key2.getTime()) {
+                    value1.sum += value2.sum
+                    value1.count += value2.count
+                }
+            }
+        }
+        
+        val out = Average(buffer1.size + buffer2.size, buffer1.entryMap ++ buffer2.entryMap)
+        out
+
+        /*
         var mergedMap = buffer1.entryMap ++ buffer2.entryMap.map{
             case (key,value) => 
             key -> (Entry(
@@ -54,7 +67,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
                 )
             )
         }
-        /*
+        
         //log.warn(DEBUG_MSG_AVG + "MergedMap:" + mergedMap.toString())
         
         val sumMap = mergedMap.map{ case (key,value) =>
@@ -87,11 +100,12 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
             }
             log.warn(DEBUG_MSG_AVG + "Sum:" + sumMap(key).sum)
             log.warn(DEBUG_MSG_AVG + "Count:" + sumMap(key).count)
-        }*/
+        }
 
         log.warn(DEBUG_MSG_AVG + "SumMap:" + mergedMap.toString())
         val out = Average(buffer1.size + buffer2.size, mergedMap)
         out
+        */
     }
 
     //Transforms the output of the reduction
