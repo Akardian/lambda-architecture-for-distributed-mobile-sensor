@@ -67,6 +67,7 @@ object SparkSort {
         avroDataFrame.printSchema()
         avroDataFrame.writeStream
             .outputMode("update")
+            .option("truncate", "false")
             .format("console")
             .start()
 
@@ -91,6 +92,7 @@ object SparkSort {
 
         exMap.writeStream
             .outputMode("update")
+            .option("truncate", "false")
             .format("console")
             .start()
 
