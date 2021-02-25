@@ -9,14 +9,14 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
     //Initial value of the intermediate results
     def zero: Average = {
         log.warn(DEBUG_MSG_AVG + "##### zero #####")
-        Average(size = 0, entryMap = Map[Timestamp, Entry]())
+        Average(entryMap = Map[Timestamp, Entry]())
     }
 
     //aggegrate input value "wifiData" into current intermediate value "buffer"
     def reduce(buffer: Average, wifiData: WifiData): Average = {
         log.warn(DEBUG_MSG_AVG + "##### reduce #####")
         log.warn(DEBUG_MSG_AVG + "WifiData: " + wifiData.toString())
-        log.warn(DEBUG_MSG_AVG + "Buffer: [" + buffer.size + "]")
+        log.warn(DEBUG_MSG_AVG + "Buffer: [" + buffer.entryMap.size + "]")
         
         //Count and Sum all already existing entrys
 
@@ -28,15 +28,12 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
                 sum += value.sum
                 count += value.count
                 size += 1
-                log.warn(DEBUG_MSG_AVG + "Sum: " + sum + " Count: " + count)
             }
         }
     
-        log.warn(DEBUG_MSG_AVG + "Sum:" + sum)
-        log.warn(DEBUG_MSG_AVG + "Count:" + count)
+        log.warn(DEBUG_MSG_AVG + "Sum[" + sum + "] Count[" + count + "]")
 
         buffer.entryMap += (wifiData.timestamp -> Entry(wifiData.wifiAvg, sum, count))
-        buffer.size + size
 
         log.warn(DEBUG_MSG_AVG + "Out Buffer:" + buffer.toString())
         buffer
@@ -63,59 +60,9 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         //Add Both maps to each and Sum values
         val newMap = mapRollingSum(buffer2.entryMap, buffer1.entryMap) ++ mapRollingSum(buffer1.entryMap, buffer2.entryMap)
         
-        log.warn(DEBUG_MSG_AVG + "SumMap:" + newMap.toString())
-        val out = Average(buffer1.size + buffer2.size, newMap)
+        log.warn(DEBUG_MSG_AVG + "SumMap:" + newMap.values.toString())
+        val out = Average(newMap)
         out
-
-        /*
-        var mergedMap = buffer1.entryMap ++ buffer2.entryMap.map{
-            case (key,value) => 
-            key -> (Entry(
-                value.wifiDB,
-                value.sum + buffer1.entryMap.getOrElse[Entry](key,Entry(0, 0, 0)).sum, 
-                value.count + buffer1.entryMap.getOrElse[Entry](key,Entry(0, 0, 0)).count
-                )
-            )
-        }
-        
-        //log.warn(DEBUG_MSG_AVG + "MergedMap:" + mergedMap.toString())
-        
-        val sumMap = mergedMap.map{ case (key,value) =>
-            log.warn(DEBUG_MSG_AVG + "CurrentEntry:" + key + ", " + value)
-
-            var sum = value.sum
-            var count = value.count
-            mergedMap.foreach{ case (timestamp, entry) =>
-                if(timestamp.getTime() < key.getTime()) {
-                    sum += entry.sum
-                    count += entry.count
-                }
-            }
-            log.warn(DEBUG_MSG_AVG + "Sum:" + sum)
-            log.warn(DEBUG_MSG_AVG + "Count:" + count)
-
-            (key, Entry(sum, count))
-        }
-
-        var sumMap = buffer1.entryMap
-        buffer2.entryMap.foreach{ case(key, value) =>
-            log.warn(DEBUG_MSG_AVG + "Current: [" + key + ", " + value.sum + ", " + value.count + "]")
-
-            if(sumMap.contains(key)) {
-                log.warn(DEBUG_MSG_AVG + "sumKey:" + sumMap(key).sum)
-                log.warn(DEBUG_MSG_AVG + "sumVal:" + value.sum)
-                sumMap += (key -> Entry(sumMap(key).sum + value.sum, sumMap(key).count + value.count)) 
-            }else {
-                sumMap += (key -> value)
-            }
-            log.warn(DEBUG_MSG_AVG + "Sum:" + sumMap(key).sum)
-            log.warn(DEBUG_MSG_AVG + "Count:" + sumMap(key).count)
-        }
-
-        log.warn(DEBUG_MSG_AVG + "SumMap:" + mergedMap.toString())
-        val out = Average(buffer1.size + buffer2.size, mergedMap)
-        out
-        */
     }
 
     //Transforms the output of the reduction
