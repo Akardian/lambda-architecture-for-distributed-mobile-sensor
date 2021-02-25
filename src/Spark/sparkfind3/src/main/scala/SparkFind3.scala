@@ -14,6 +14,7 @@ import org.apache.spark.sql.SaveMode
 import org.apache.spark.sql.streaming.OutputMode
 import java.util.HashMap
 import org.apache.spark.sql.types.DoubleType
+import org.apache.spark.sql.types.TimestampType
 
 object SparkFind3 {
 
@@ -57,7 +58,7 @@ object SparkFind3 {
                 col("timestamp").as(N_TIMESTAMP_KAFKA_IN),
                 col("find3.senderName").as(N_SENDERNAME),
                 col("find3.location").as(N_LOCATION),
-                col("find3.findTimestamp").as(N_TIMESTAMP_FIND),
+                col("find3.findTimestamp").cast(TimestampType).as(N_TIMESTAMP_FIND),
                 col("find3.odomData").as(N_ODEM_DATA),
                 col("find3.wifiData").as(N_WIFI)
             )

@@ -1,17 +1,14 @@
 package producer;
 
 import java.sql.Timestamp;
-import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.kafka.clients.producer.Producer;
 
 import app.model.avro.generated.AvroFIND3Data;
-import app.model.avro.generated.AvroGpsCoordinate;
-import app.model.avro.generated.AvroWifiData;
 import config.Config;
 
 public class ProducerFIND3 implements Config {
@@ -79,27 +76,18 @@ public class ProducerFIND3 implements Config {
 	}
     
     private static AvroFIND3Data buildMessage(String senderName, String location, String timeStamp, Random rand){
-        AvroGpsCoordinate gps = AvroGpsCoordinate.newBuilder()
-            .setLat("53.557857990317935")
-            .setLon("10.023013328928275")
-            .setAlt("62.60000228881836")
-            .build();
-
-
 		HashMap<String, Integer> wifiDataMap = new HashMap<String,Integer>();
 		for(int i = 0; i < ACCESPOINTS.length; i++) {
 			wifiDataMap.put(ACCESPOINTS[i], 0 - (rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET));
 		}
 
-        AvroWifiData wifi = AvroWifiData.newBuilder()
-            .setWifiData(wifiDataMap)
-            .build();
+		ArrayList<String> odomDataList = new ArrayList<String>();
 
         AvroFIND3Data testData = AvroFIND3Data.newBuilder() //Create message to be send
             .setSenderName(senderName)
             .setLocation(location)
             .setFindTimestamp(timeStamp)
-            .setOdomData(null)
+            .setOdomData(odomDataList)
             .setWifiData(wifiDataMap)
             .build();
 
