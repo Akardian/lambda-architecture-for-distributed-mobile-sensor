@@ -6,7 +6,7 @@ import java.sql.Timestamp
 import org.apache.log4j.LogManager
 
 object Config {
-    val NAME = "sort"
+    val NAME = "find3Generator"
     //Logger Settings
     val DEBUG_MSG = "Sort: "
     val DEBUG_MSG_AVG = "Rolling-Avg-" + DEBUG_MSG
@@ -18,7 +18,7 @@ object Config {
     val CONTEXT_NAME = NAME + "-consumer"
 
     val BOOTSTRAP_SERVERS = "kafka01:9092";
-    val TOPICS_INPUT = "find3Generator-input"
+    val TOPICS_INPUT = NAME + "-input"
     val TOPICS_OUTPUT = NAME + "-stream"
     
     //Avro Schema
@@ -38,12 +38,15 @@ object Config {
 
     //Schama/column names
     val N_TIMESTAMP_KAFKA_IN = "timestampKafkaIn"
-    
+
     val N_TIMESTAMP_FIND = "timestampFind"
+    val N_TIMESTAMP_FIND_EPOCH = "timestampFindEpoch"
+
+    val N_TIMESTAMP_HDFS = "timestampHDFS"
 
     val N_SENDERNAME = "senderName"
     val N_LOCATION = "location"
-    val N_GPS = "gpsCoordinate"
+    val N_ODEM_DATA = "odomData"
     val N_WIFI = "wifiData"
     val N_AVG_WIFI = "wifiAvg"
     val N_SUM_TOTAL = "wifiSum"
