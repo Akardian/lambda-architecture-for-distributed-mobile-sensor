@@ -111,7 +111,7 @@ object SparkSort {
         
 
         val b = rollingAvg
-            .groupBy()
+            .groupBy("timestamp", "wifiAvg")
             .agg(averageSalary)
 
         b.writeStream
