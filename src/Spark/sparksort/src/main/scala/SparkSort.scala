@@ -68,10 +68,8 @@ object SparkSort {
         
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS) and change format of the find timestamp
         val hdfsDataFrame = avroDataFrame
-            //.withColumn(N_TIMESTAMP_HDFS, date_format(date_trunc("hour", col(N_TIMESTAMP_KAFKA_IN)), "MM-dd-yyyy HH:mm"))
-            //.withColumn(N_TIMESTAMP_KAFKA_IN, from_unixtime(col(N_TIMESTAMP_FIND), "MM-dd-yyyy HH:mm:ss"))
             .withColumn(N_TIMESTAMP_HDFS, to_timestamp(date_trunc("hour", col(N_TIMESTAMP_KAFKA_IN)), "MM-dd-yyyy HH:mm"))
-            .withColumn(N_TIMESTAMP_FIND, to_timestamp(from_unixtime(col(N_TIMESTAMP_FIND), "MM-dd-yyyy HH:mm:ss"), "MM-dd-yyyy HH:mm:ss"))
+            .withColumn(N_TIMESTAMP_FIND, to_timestamp(from_unixtime(col(N_TIMESTAMP_FIND)), "MM-dd-yyyy HH:mm:ss"))
 
         //Here would be the save to the HDFS
         hdfsDataFrame.writeStream
@@ -94,13 +92,27 @@ object SparkSort {
 
         // Convert the function to a `TypedColumn` and give it a name
         val averageSalary = MyRollingAvg.toColumn.name("rollingAvg")
-        val result = rollingAvg.select(averageSalary)
-        result.printSchema()
-            
-        val exMap = result.select(explode($"entryMap"))
+        val exMap = rollingAvg
+            .select(explode($"entryMap")) 
         exMap.printSchema()
 
         exMap.writeStream
+            .outputMode("update")
+            .option("truncate", "false")
+            .format("console")
+            .start()  
+
+
+        val v = avgWifiData
+            .withColumn("sum", lit(
+                avgWifiData
+                    .groupBy()
+                    .sum(N_AVG_WIFI)
+                    .first()
+                    .get(0)
+            ))
+
+        v.writeStream
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
