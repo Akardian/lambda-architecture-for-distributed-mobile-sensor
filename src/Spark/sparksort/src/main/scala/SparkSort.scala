@@ -104,7 +104,7 @@ object SparkSort {
 
         val v = avgWifiData
             .groupBy()
-            .agg(MyRollingAvg.toColumn.name("rollingAvg"))
+            .agg(averageSalary)
 
         v.writeStream
             .outputMode("update")
