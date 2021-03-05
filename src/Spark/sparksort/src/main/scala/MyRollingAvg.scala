@@ -72,5 +72,5 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Double] {
     }
 
     def bufferEncoder: Encoder[Average] = Encoders.product
-    def outputEncoder: Encoder[Double] = Encoders.DOUBLE
+    def outputEncoder: Encoder[Double] = Encoders.scalaDouble
 }
