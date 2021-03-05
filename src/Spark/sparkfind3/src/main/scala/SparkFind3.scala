@@ -56,35 +56,30 @@ object SparkFind3 {
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
             .select( //Flatten data structure
                 col("timestamp").as(N_TIMESTAMP_KAFKA_IN),
-                col("find3.findTimestamp").as(N_TIMESTAMP_FIND_EPOCH),
+                col("find3.findTimestamp").as(N_TIMESTAMP_FIND),
                 col("find3.senderName").as(N_SENDERNAME),
                 col("find3.location").as(N_LOCATION),
                 col("find3.odomData").as(N_ODEM_DATA),
                 col("find3.wifiData").as(N_WIFI)
             )
             log.warn(DEBUG_MSG + "find3Data")
-        avroDataFrame.printSchema()
         
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
         val hdfsDataFrame = avroDataFrame
-            .withColumn("timestamp-hdfs", date_format(date_trunc("hour", $"timestampKafkaIn"), "yyyy-MM-dd HH-mm"))
-
+            .withColumn(N_TIMESTAMP_HDFS, to_timestamp(date_trunc("hour", col(N_TIMESTAMP_KAFKA_IN)), "MM-dd-yyyy HH:mm"))
+            .withColumn(N_TIMESTAMP_FIND, to_timestamp(from_unixtime(col(N_TIMESTAMP_FIND)), "MM-dd-yyyy HH:mm:ss"))
 
         //Write RAW data to HDFS
         hdfsDataFrame.writeStream  
             .format("json")
             .outputMode("append")
-            .partitionBy("timestamp-HDFS")
+            .partitionBy(N_TIMESTAMP_HDFS)
             .option("path", HDFS_PATH)
             .option("checkpointLocation", CHECKPOINT_HDFS)
             .start()
-        hdfsDataFrame.printSchema()
-
-
-        val convertDate = hdfsDataFrame.withColumn(N_TIMESTAMP_FIND, from_unixtime(col(N_TIMESTAMP_FIND_EPOCH)))
 
         //Calcutlate Average of wifiData
-        val avgWifiData = convertDate
+        val avgWifiData = hdfsDataFrame
             .withColumn(N_AVG_WIFI, aggregate(
                 map_values(col(N_WIFI)), 
                 lit(0), //set default value to 0
@@ -92,11 +87,10 @@ object SparkFind3 {
             )
         avgWifiData.printSchema()
 
-
         val out = avgWifiData.select(
                 col(N_TIMESTAMP_KAFKA_IN),
                 col(N_TIMESTAMP_FIND),
-                col("timestamp-hdfs"),
+                col(N_TIMESTAMP_HDFS),
                 col(N_SENDERNAME),
                 col(N_LOCATION),
                 col(N_ODEM_DATA),
