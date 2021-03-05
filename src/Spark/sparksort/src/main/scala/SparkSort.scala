@@ -103,11 +103,18 @@ object SparkSort {
             .format("console")
             .start()  */
 
-        /*val v = avgWifiData
-            .groupBy()
-            .agg(averageSalary)*/
-
         v.writeStream
+            .outputMode("update")
+            .option("truncate", "false")
+            .format("console")
+            .start() 
+        
+
+        val b = rollingAvg
+            .groupBy()
+            .agg(averageSalary)
+
+        b.writeStream
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
