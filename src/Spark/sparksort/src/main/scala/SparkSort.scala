@@ -103,13 +103,8 @@ object SparkSort {
             .start()  
 
         val v = avgWifiData
-            .withColumn("sum", lit(
-                avgWifiData
-                    .groupBy()
-                    .sum(N_AVG_WIFI)
-                    .first()
-                    .get(0)
-            ))
+            .groupBy()
+            .agg(sum(N_AVG_WIFI))
 
         v.writeStream
             .outputMode("update")
