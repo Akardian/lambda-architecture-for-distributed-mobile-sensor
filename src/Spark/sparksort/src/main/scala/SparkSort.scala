@@ -71,7 +71,7 @@ object SparkSort {
             //.withColumn(N_TIMESTAMP_HDFS, date_format(date_trunc("hour", col(N_TIMESTAMP_KAFKA_IN)), "MM-dd-yyyy HH:mm"))
             //.withColumn(N_TIMESTAMP_KAFKA_IN, from_unixtime(col(N_TIMESTAMP_FIND), "MM-dd-yyyy HH:mm:ss"))
             .withColumn(N_TIMESTAMP_HDFS, to_timestamp(date_trunc("hour", col(N_TIMESTAMP_KAFKA_IN)), "MM-dd-yyyy HH:mm"))
-            .withColumn(N_TIMESTAMP_FIND, from_unixtime(col(N_TIMESTAMP_FIND), "MM-dd-yyyy HH:mm:ss").as[Timestamp])
+            .withColumn(N_TIMESTAMP_FIND, to_timestamp(from_unixtime(col(N_TIMESTAMP_FIND), "MM-dd-yyyy HH:mm:ss"), "MM-dd-yyyy HH:mm:ss"))
 
         //Here would be the save to the HDFS
         hdfsDataFrame.writeStream
