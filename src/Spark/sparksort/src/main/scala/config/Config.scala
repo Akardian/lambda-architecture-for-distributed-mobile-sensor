@@ -38,7 +38,10 @@ object Config {
 
     //Schama/column names
     val N_TIMESTAMP_KAFKA_IN = "timestampKafkaIn"
+
     val N_TIMESTAMP_FIND = "timestampFind"
+    val N_TIMESTAMP_FIND_EPOCH = "timestampFindEpoch"
+
     val N_TIMESTAMP_HDFS = "timestampHDFS"
 
     val N_SENDERNAME = "senderName"

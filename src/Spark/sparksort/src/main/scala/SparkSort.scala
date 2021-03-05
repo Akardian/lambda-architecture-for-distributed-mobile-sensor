@@ -61,17 +61,15 @@ object SparkSort {
                 col("timestamp").as(N_TIMESTAMP_KAFKA_IN),
                 col("find3.senderName").as(N_SENDERNAME),
                 col("find3.location").as(N_LOCATION),
-                col("find3.findTimestamp").as(N_TIMESTAMP_FIND),
+                col("find3.findTimestamp").as(N_TIMESTAMP_FIND_EPOCH),
                 col("find3.odomData").as(N_ODEM_DATA),
                 col("find3.wifiData").as(N_WIFI)
             )
         
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS) and change format of the find timestamp
         val hdfsDataFrame = avroDataFrame
-            //.withColumn(N_TIMESTAMP_HDFS, date_format(date_trunc("hour", col(N_TIMESTAMP_KAFKA_IN)), "MM-dd-yyyy HH:mm"))
-            //.withColumn(N_TIMESTAMP_KAFKA_IN, from_unixtime(col(N_TIMESTAMP_FIND), "MM-dd-yyyy HH:mm:ss"))
             .withColumn(N_TIMESTAMP_HDFS, to_timestamp(date_trunc("hour", col(N_TIMESTAMP_KAFKA_IN)), "MM-dd-yyyy HH:mm"))
-            .withColumn(N_TIMESTAMP_KAFKA_IN, to_timestamp(col(N_TIMESTAMP_FIND), "MM-dd-yyyy HH:mm:ss"))
+            .withColumn(N_TIMESTAMP_FIND, to_timestamp(col(N_TIMESTAMP_FIND_EPOCH), "MM-dd-yyyy HH:mm:ss"))
 
         //Here would be the save to the HDFS
         hdfsDataFrame.writeStream
