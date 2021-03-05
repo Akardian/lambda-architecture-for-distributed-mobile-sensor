@@ -56,9 +56,9 @@ object SparkFind3 {
                 from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
             .select( //Flatten data structure
                 col("timestamp").as(N_TIMESTAMP_KAFKA_IN),
+                col("find3.findTimestamp").as(N_TIMESTAMP_FIND_EPOCH),
                 col("find3.senderName").as(N_SENDERNAME),
                 col("find3.location").as(N_LOCATION),
-                col("find3.findTimestamp").as(N_TIMESTAMP_FIND),
                 col("find3.odomData").as(N_ODEM_DATA),
                 col("find3.wifiData").as(N_WIFI)
             )
@@ -68,16 +68,7 @@ object SparkFind3 {
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
         val hdfsDataFrame = avroDataFrame
             .withColumn("timestamp-hdfs", date_format(date_trunc("hour", $"timestampKafkaIn"), "yyyy-MM-dd HH-mm"))
-            .withColumn(N_TIMESTAMP_KAFKA_IN, from_unixtime(col(N_TIMESTAMP_FIND),"MM-dd-yyyy HH:mm:ss"))
 
-        //Calcutlate Average of wifiData
-        val avgWifiData = avroDataFrame
-            .withColumn(N_AVG_WIFI, aggregate(
-                map_values(col(N_WIFI)), 
-                lit(0), //set default value to 0
-                (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col(N_WIFI)) //Calculate Average
-            )
-        avgWifiData.printSchema()
 
         //Write RAW data to HDFS
         hdfsDataFrame.writeStream  
@@ -89,8 +80,31 @@ object SparkFind3 {
             .start()
         hdfsDataFrame.printSchema()
 
+
+        val convertDate = hdfsDataFrame.withColumn(N_TIMESTAMP_FIND, from_unixtime(col(N_TIMESTAMP_FIND_EPOCH)))
+
+        //Calcutlate Average of wifiData
+        val avgWifiData = convertDate
+            .withColumn(N_AVG_WIFI, aggregate(
+                map_values(col(N_WIFI)), 
+                lit(0), //set default value to 0
+                (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col(N_WIFI)) //Calculate Average
+            )
+        avgWifiData.printSchema()
+
+
+        val out = avgWifiData.select(
+                col(N_TIMESTAMP_KAFKA_IN),
+                col(N_TIMESTAMP_FIND),
+                col("timestamp-hdfs"),
+                col(N_SENDERNAME),
+                col(N_LOCATION),
+                col(N_ODEM_DATA),
+                col(N_WIFI),
+                col(N_AVG_WIFI)
+        )
         //Write Data to Kafka
-        val query = hdfsDataFrame
+        val query = out
             .selectExpr("CAST(timestampKafkaIn AS STRING) as timestamp", "to_json(struct(*)) AS value")
             .writeStream
             .format("kafka")
