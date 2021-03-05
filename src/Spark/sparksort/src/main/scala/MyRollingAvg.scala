@@ -68,7 +68,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Double] {
     //Transforms the output of the reduction
     def finish(reduction: Average): Double = {
         log.warn(DEBUG_MSG_AVG + "##### finish #####")
-        val out = reduction.entryMap.last._2.sum
+        val out = 20D
         out
     }
 
