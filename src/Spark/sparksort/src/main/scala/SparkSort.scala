@@ -78,7 +78,7 @@ object SparkSort {
             .format("console")
             .start()
 
-        val avgWifiData = hdfsDataFrame//.select($"timestamp", $"find3.wifiData.wifiData")
+        val avgWifiData = hdfsDataFrame
             .withColumn(N_AVG_WIFI, aggregate(
                 map_values(col(N_WIFI)), 
                 lit(0), //set default value to 0
@@ -109,10 +109,10 @@ object SparkSort {
             .format("console")
             .start() 
         
-
         val b = rollingAvg
-            .groupBy("timestamp", "wifiAvg")
-            .agg(averageSalary)
+            .withColumn("avg", averageSalary)
+            //.groupBy("timestamp", "wifiAvg")
+            //.agg(averageSalary)
 
         b.writeStream
             .outputMode("update")
