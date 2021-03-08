@@ -53,6 +53,6 @@ object Config {
     case class AvgWifiData(var timestamp: Timestamp, var wifiAvg: Double, var runingAverage: Double)
     case class WifiData(var timestamp: Timestamp, var wifiAvg: Double)
 
-    case class Average(var entryMap: Map[Timestamp, Entry])
+    case class Average(var list: List[(Timestamp, Entry)])
     case class Entry(var wifiDB: Double, var sum: Double, var count: Int)
 }
