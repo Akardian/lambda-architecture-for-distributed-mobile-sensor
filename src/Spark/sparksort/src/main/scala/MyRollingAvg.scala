@@ -33,7 +33,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
     def mapRollingSum(map1: Map[Timestamp, Entry], map2: Map[Timestamp, Entry]): Map[Timestamp, Entry] = {
         map2.foreach{ case (key2, value2) =>
             map1.map{ case (key1, value1) =>
-                if(key1.getTime() > key2.getTime()) {
+                if(key1.getTime() >= key2.getTime()) {
                     value1.sum += value2.wifiDB
                     value1.count += 1
                 }
