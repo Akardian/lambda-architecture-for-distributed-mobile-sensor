@@ -109,7 +109,7 @@ object SparkSort {
         val exMap = rollingAvg
             .select(averageSalary)
             .select(explode('list))
-            .select($"col._1".as("timestamp"), $"col_2".as("sum"))
+            .select($"col._1".as("timestamp"), $"col._2".as("sum"))
 
         exMap.writeStream
             .outputMode("update")
