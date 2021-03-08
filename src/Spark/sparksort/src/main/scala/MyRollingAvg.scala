@@ -25,9 +25,9 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         //Add Buffer + NewEntry and NewEntry + Buffer
         val newMap = mapRollingSum(newEntry.entryMap, buffer.entryMap) ++ mapRollingSum(buffer.entryMap, newEntry.entryMap)
 
-        buffer.entryMap = newMap
-        log.warn(DEBUG_MSG_AVG + "Out: [" + buffer.entryMap.size + "]")
-        buffer
+        log.warn(DEBUG_MSG_AVG + "Out: [" + newMap.size + "]")
+        val out = Average(newMap)
+        out
     }
 
     def mapRollingSum(map1: Map[Timestamp, Entry], map2: Map[Timestamp, Entry]): Map[Timestamp, Entry] = {
@@ -51,7 +51,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         //Add Both maps to each and Sum values
         val newMap = mapRollingSum(buffer2.entryMap, buffer1.entryMap) ++ mapRollingSum(buffer1.entryMap, buffer2.entryMap)
         
-        log.warn(DEBUG_MSG_AVG + "SumMap:" + newMap.values.toString())
+        log.warn(DEBUG_MSG_AVG + "Out:" + newMap.values.toString())
         val out = Average(newMap)
         out
     }
