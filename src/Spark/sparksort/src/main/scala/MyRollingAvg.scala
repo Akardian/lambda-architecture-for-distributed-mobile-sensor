@@ -18,22 +18,11 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         log.warn(DEBUG_MSG_AVG + "WifiData: " + wifiData.toString())
         log.warn(DEBUG_MSG_AVG + "Buffer: [" + buffer.entryMap.size + "]")
         
-        //Count and Sum all already existing entrys
+        //Create new Entry
+        val newEntry = Average(Map(wifiData.timestamp -> Entry(wifiData.wifiAvg, wifiData.wifiAvg, 1)))
 
-        var sum = wifiData.wifiAvg
-        var count = 1
-        var size = 1
-        buffer.entryMap.foreach{ case (key,value) => 
-            if(key.getTime() < wifiData.timestamp.getTime()) {
-                sum += value.sum
-                count += value.count
-                size += 1
-            }
-        }
-    
-        log.warn(DEBUG_MSG_AVG + "Sum[" + sum + "] Count[" + count + "]")
-
-        buffer.entryMap += (wifiData.timestamp -> Entry(wifiData.wifiAvg, sum, count))
+        //Add Buffer + NewEntry and NewEntry + Buffer
+        val newMap = mapRollingSum(newEntry.entryMap, buffer.entryMap) ++ mapRollingSum(buffer.entryMap, newEntry.entryMap)
 
         log.warn(DEBUG_MSG_AVG + "Out Buffer:" + buffer.toString())
         buffer
