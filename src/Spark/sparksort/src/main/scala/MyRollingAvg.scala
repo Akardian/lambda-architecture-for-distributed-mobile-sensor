@@ -4,7 +4,7 @@ import java.sql.Timestamp
 
 import  config.Config._
 
-object  MyRollingAvg extends Aggregator[WifiData, Average, Double] {
+object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
 
     //Initial value of the intermediate results
     def zero: Average = {
@@ -66,12 +66,11 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Double] {
     }
 
     //Transforms the output of the reduction
-    def finish(reduction: Average): Double = {
+    def finish(reduction: Average): Average = {
         log.warn(DEBUG_MSG_AVG + "##### finish #####")
-        val out = 20D
-        out
+        reduction
     }
 
     def bufferEncoder: Encoder[Average] = Encoders.product
-    def outputEncoder: Encoder[Double] = Encoders.scalaDouble
+    def outputEncoder: Encoder[Average] = Encoders.product
 }

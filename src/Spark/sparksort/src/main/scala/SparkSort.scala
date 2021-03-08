@@ -93,17 +93,11 @@ object SparkSort {
         // Convert the function to a `TypedColumn` and give it a name
         val averageSalary = MyRollingAvg.toColumn.name("rollingAvg")
         val v = rollingAvg.select(averageSalary)
-       /* val exMap = rollingAvg
+        val exMap = rollingAvg
             .select(averageSalary)
             .select(explode($"entryMap"))
 
         exMap.writeStream
-            .outputMode("update")
-            .option("truncate", "false")
-            .format("console")
-            .start()  */
-
-        v.writeStream
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
