@@ -16,6 +16,8 @@ import org.apache.spark.sql.expressions.Window
 import java.sql.Date
 import org.apache.hadoop.yarn.webapp.hamlet.HamletSpec.Q
 import java.sql.Time
+import org.apache.commons.logging.LogFactory
+import org.apache.spark.SparkContext
 
 object SparkSort {
 
@@ -25,6 +27,7 @@ object SparkSort {
         
         // Config Logs
         log.setLevel(LOG_LEVEL)
+
         log.warn("###############################") 
         log.warn("####### Worst Case Sort #######") 
         log.warn("###############################")
@@ -36,6 +39,14 @@ object SparkSort {
             .getOrCreate()       
         import spark.implicits._
         log.warn(DEBUG_MSG + "Building Spark Session")
+
+        //Set Executer log level
+        spark.sparkContext.parallelize(Seq("")).foreachPartition(x => {
+            LogManager.getRootLogger().setLevel(LOG_LEVEL)
+
+            val log = LogFactory.getLog("EXECUTOR-LOG:")
+            log.warn(DEBUG_MSG + "Executer log level set to" + LOG_LEVEL)
+        })
 
         log.warn("######### Sark Context Config #########")
         log.warn(spark.sparkContext.getConf.toDebugString)
