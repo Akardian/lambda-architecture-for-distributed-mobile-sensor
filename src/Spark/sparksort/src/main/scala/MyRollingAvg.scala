@@ -19,7 +19,7 @@ object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
         log.warn(DEBUG_MSG_AVG + "Buffer: [" + buffer.list.length + "]")
         
         //Create new Entry
-        val newEntry = Average(List((wifiData.timestamp, Entry(wifiData.wifiAvg, wifiData.wifiAvg, 1))))
+        val newEntry = Average(List(wifiData.timestamp -> Entry(wifiData.wifiAvg, wifiData.wifiAvg, 1)))
         log.warn(DEBUG_MSG_AVG + "newEntry: [" + newEntry.list.length + "]")
 
         //Add Buffer + NewEntry and NewEntry + Buffer
