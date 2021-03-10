@@ -136,8 +136,7 @@ object SparkSort {
         val myAverage = MyRollingAvg
 
         val c = rollingAvg
-            .agg(myAverage.toColumn)
-            //.withColumn("ava", myAverage.toColumn)
+            .select(col("timestamp").as[Timestamp], averageSalary)
 
         c.writeStream
             .outputMode("update")
