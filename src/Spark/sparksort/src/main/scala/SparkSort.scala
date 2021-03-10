@@ -122,10 +122,13 @@ object SparkSort {
         
         val b = rollingAvg
             .withWatermark("timestamp", "1 minutes")
-            .withColumn("sum", sum(rollingAvg("wifiAvg"))
+            .groupBy(window(col("timestamp"), "1 minutes"))
+            .agg(sum(col("timestamp").as("sum")))
                 //.over(Window.rowsBetween(Window.unboundedPreceding, Window.currentRow))
-            )
-            
+            /*
+            df_result = df.withWatermark("createdAt", "10 minutes" ) \
+              .groupBy( F.col('Id'), window(F.col("createdAt"), self.acceptable_time_difference)) \
+              .agg(F.max(F.col('createdAt')).alias('maxCreatedAt'))*/
 
         b.writeStream
             .outputMode("update")
