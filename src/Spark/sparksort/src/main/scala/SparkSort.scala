@@ -131,8 +131,11 @@ object SparkSort {
             .format("console")
             .start() 
 
+        // Register the function to access it
+        spark.udf.register("myAverage", functions.udaf(MyRollingAvg))
+
         val c = rollingAvg
-            .withColumn("ava", MyRollingAvg.toColumn.name("rollingAvg"))
+            .withColumn("ava", MyRollingAvg.toColumn)
 
         c.writeStream
             .outputMode("update")
