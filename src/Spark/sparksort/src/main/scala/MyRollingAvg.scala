@@ -1,6 +1,5 @@
 import org.apache.spark.sql.{Encoder, Encoders, SparkSession}
 import org.apache.spark.sql.expressions.Aggregator
-import org.apache.spark.sql.functions
 import java.sql.Timestamp
 
 import  config.Config._
