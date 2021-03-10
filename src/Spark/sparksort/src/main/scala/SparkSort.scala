@@ -132,12 +132,10 @@ object SparkSort {
             .start() */
 
         // Register the function to access it
-        //spark.udf.register("myAverage", functions.udaf(MyRollingAvg))
-        val myAverage = MyRollingAvg
+        spark.udf.register("myAverage", functions.udaf(MyRollingAvg))
+        rollingAvg.createOrReplaceTempView("wifi")
 
-        val c = rollingAvg
-            .groupBy()
-            .agg(averageSalary)
+        val c = spark.sql("SELECT myAverage(WifiData) as average FROM wifi")
 
         c.writeStream
             .outputMode("update")
