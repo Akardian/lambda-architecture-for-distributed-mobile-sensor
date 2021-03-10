@@ -102,7 +102,6 @@ object SparkSort {
         //Select columns rolling Average calculation and rename
         val rollingAvg = avgWifiData
             .select(col(N_TIMESTAMP_KAFKA_IN).as("timestamp"), col(N_AVG_WIFI).as("wifiAvg"))
-            .withColumn("rollingAvg", lit(0))
             .as[WifiData]
         rollingAvg.printSchema()
 
@@ -131,14 +130,8 @@ object SparkSort {
             .format("console")
             .start() */
 
-        // Register the function to access it
-        spark.udf.register("myAverage", functions.udaf(MyRollingAvg))
-        rollingAvg.createOrReplaceTempView("wifi")
-
-        //val c = spark.sql("SELECT myAverage(wifi) as average FROM wifi")
-
         val c = rollingAvg
-            .withColumn("col", rollingAvg.select(averageSalary).col("list"))
+            .withColumn("col", rollingAvg.select(averageSalary).col("rollingAvg"))
             
         c.writeStream
             .outputMode("update")
