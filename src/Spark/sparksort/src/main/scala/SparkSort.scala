@@ -138,7 +138,7 @@ object SparkSort {
         //val c = spark.sql("SELECT myAverage(wifi) as average FROM wifi")
 
         val c = rollingAvg
-            .withColumn("col", rollingAvg.select(averageSalary).col("rollingAvg"))
+            .withColumn("col", rollingAvg.select(averageSalary).col("list"))
             
         c.writeStream
             .outputMode("update")
