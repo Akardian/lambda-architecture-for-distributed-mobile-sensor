@@ -121,6 +121,7 @@ object SparkSort {
             .start() 
         
         val b = rollingAvg
+            .withWatermark("timestamp", "1 minutes")
             .withColumn("sum", sum(rollingAvg("wifiAvg"))
                 //.over(Window.rowsBetween(Window.unboundedPreceding, Window.currentRow))
             )
