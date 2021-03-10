@@ -100,7 +100,10 @@ object SparkSort {
         avgWifiData.printSchema()
 
         //Select columns rolling Average calculation and rename
-        val rollingAvg = avgWifiData.select(col(N_TIMESTAMP_KAFKA_IN).as("timestamp"), col(N_AVG_WIFI).as("wifiAvg")).as[WifiData]
+        val rollingAvg = avgWifiData
+            .select(col(N_TIMESTAMP_KAFKA_IN).as("timestamp"), col(N_AVG_WIFI).as("wifiAvg"))
+            .withColumn("rollingAvg", lit(0))
+            .as[WifiData]
         rollingAvg.printSchema()
 
         // Convert the function to a `TypedColumn` and give it a name
@@ -118,8 +121,10 @@ object SparkSort {
             .start() 
         
         val b = rollingAvg
-            .groupBy("timestamp", "wifiAvg")
-            .agg(Map("wifiAvg" -> "sum"))
+            .withColumn("sum", sum(rollingAvg("wifiAvg"))
+                .over(Window.rowsBetween(Window.unboundedPreceding, Window.currentRow))
+            )
+            
 
         b.writeStream
             .outputMode("update")
