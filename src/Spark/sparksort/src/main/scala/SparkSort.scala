@@ -122,7 +122,7 @@ object SparkSort {
         
         val b = rollingAvg
             .withColumn("sum", sum(rollingAvg("wifiAvg"))
-                .over(Window.rowsBetween(Window.unboundedPreceding, Window.currentRow))
+                //.over(Window.rowsBetween(Window.unboundedPreceding, Window.currentRow))
             )
             
 
