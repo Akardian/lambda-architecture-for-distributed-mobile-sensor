@@ -135,11 +135,11 @@ object SparkSort {
         spark.udf.register("myAverage", functions.udaf(MyRollingAvg))
         rollingAvg.createOrReplaceTempView("wifi")
 
-        val c = spark.sql("SELECT myAverage(wifi) as average FROM wifi")
+        //val c = spark.sql("SELECT myAverage(wifi) as average FROM wifi")
 
-        /*rollingAvg
-            .groupBy()
-            .agg(MyRollingAvg)*/
+        val c = rollingAvg
+            .select($"timestamp", sum("wifiavg"))
+            
 
         c.writeStream
             .outputMode("update")
