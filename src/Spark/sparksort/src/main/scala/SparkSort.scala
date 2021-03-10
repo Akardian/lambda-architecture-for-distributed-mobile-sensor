@@ -138,7 +138,8 @@ object SparkSort {
         //val c = spark.sql("SELECT myAverage(wifi) as average FROM wifi")
 
         val c = rollingAvg
-            .select($"timestamp", sum("wifiavg"))
+            .groupBy("timestamp", "wifiAvg")
+            .sum("wifiAvg")
             
 
         c.writeStream
