@@ -120,7 +120,7 @@ object SparkSort {
             .format("console")
             .start() 
         
-        val b = rollingAvg
+        /*val b = rollingAvg
             .withWatermark("timestamp", "1 minutes")
             .groupBy(window(col("timestamp"), "1 minutes"))
             .agg(sum(rollingAvg("wifiAvg")))
@@ -129,13 +129,15 @@ object SparkSort {
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
-            .start() 
+            .start() */
 
         // Register the function to access it
-        spark.udf.register("myAverage", functions.udaf(MyRollingAvg))
+        //spark.udf.register("myAverage", functions.udaf(MyRollingAvg))
+        val myAverage = MyRollingAvg
 
         val c = rollingAvg
-            //.withColumn("ava", MyRollingAvg.toColumn)
+            .select($"timestamp", myAverage.toColumn)
+            //.withColumn("ava", myAverage.toColumn)
 
         c.writeStream
             .outputMode("update")
