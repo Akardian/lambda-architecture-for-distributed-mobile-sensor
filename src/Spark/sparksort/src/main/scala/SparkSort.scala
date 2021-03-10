@@ -107,7 +107,7 @@ object SparkSort {
         rollingAvg.printSchema()
 
         // Convert the function to a `TypedColumn` and give it a name
-        val averageSalary = MyRollingAvg.toColumn.name("rollingAvg")
+        val averageSalary = MyRollingAvg.toColumn
         val v = rollingAvg.select(averageSalary)
         val exMap = rollingAvg
             .select(averageSalary)
@@ -135,7 +135,7 @@ object SparkSort {
         spark.udf.register("myAverage", functions.udaf(MyRollingAvg))
 
         val c = rollingAvg
-            .withColumn("ava", MyRollingAvg.toColumn)
+            //.withColumn("ava", MyRollingAvg.toColumn)
 
         c.writeStream
             .outputMode("update")
