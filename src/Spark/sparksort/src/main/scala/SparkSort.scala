@@ -8,16 +8,12 @@ import org.apache.log4j.{Level, LogManager, PropertyConfigurator}
 import org.apache.spark.sql.avro.functions._
 
 import java.sql.Timestamp
-import java.nio.file.Paths
-import java.nio.file.Files
 import scala.io.Source
-import org.apache.commons.net.ntp.TimeStamp
-import org.apache.spark.sql.expressions.Window
-import java.sql.Date
-import org.apache.hadoop.yarn.webapp.hamlet.HamletSpec.Q
-import java.sql.Time
+
 import org.apache.commons.logging.LogFactory
-import org.apache.spark.SparkContext
+
+import transformations.TransTimestamp._
+import transformations.TransWifi._
 
 object SparkSort {
 
@@ -77,30 +73,25 @@ object SparkSort {
                 col("find3.wifiData").as(N_WIFI)
             )
         
-        //Create timestamp for HDS partition(Remove not allowed characters for HDFS) and change format of the find timestamp
-        val hdfsDataFrame = avroDataFrame
-            .withColumn(N_TIMESTAMP_HDFS, to_timestamp(date_trunc("hour", col(N_TIMESTAMP_KAFKA_IN)), "MM-dd-yyyy HH:mm"))
-            .withColumn(N_TIMESTAMP_FIND, to_timestamp(from_unixtime(col(N_TIMESTAMP_FIND)), "MM-dd-yyyy HH:mm:ss.SSSS"))
+        //Change format of the find timestamp
+        val toTime = epochToTimeStamp(avroDataFrame, N_TIMESTAMP_FIND, N_TIMESTAMP_FIND)
+        //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
+        val hdfsTime = shortenTimestamp(toTime, N_TIMESTAMP_HDFS, N_TIMESTAMP_KAFKA_IN)
 
-        val prettyPrint = hdfsDataFrame.drop(N_WIFI) //Drop for pretty print
+        val print = hdfsTime.drop(N_WIFI) //Drop for print
 
         //Here would be the save to the HDFS
-        prettyPrint.writeStream
+        print.writeStream
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
             .start()
 
-        val avgWifiData = hdfsDataFrame
-            .withColumn(N_AVG_WIFI, aggregate(
-                map_values(col(N_WIFI)), 
-                lit(0), //set default value to 0
-                (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col(N_WIFI)) //Calculate Average
-            )
-        avgWifiData.printSchema()
+        val avgWifi = calculateWifiAverage(toTime, N_AVG_WIFI, N_WIFI)
+        avgWifi.printSchema()
 
         //Select columns rolling Average calculation and rename
-        val rollingAvg = avgWifiData
+        val rollingAvg = avgWifi
             .select(col(N_TIMESTAMP_KAFKA_IN).as("timestamp"), col(N_AVG_WIFI).as("wifiAvg"))
             .as[WifiData]
         rollingAvg.printSchema()
@@ -128,18 +119,7 @@ object SparkSort {
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
-            .start() */
-
-        val c = rollingAvg
-            .withColumn("col", rollingAvg.select(MyRollingAvg.toColumn))
-            
-            
-        c.writeStream
-            .outputMode("update")
-            .option("truncate", "false")
-            .format("console")
-            .start() 
-
+            .start() */            
         
         spark.streams.awaitAnyTermination()
     }
