@@ -104,6 +104,7 @@ object SparkSort {
         val senderWindow = avgWifi
             .groupBy(window(col(N_TIMESTAMP_KAFKA_IN), "10 minute", "60 seconds"), col(N_SENDERNAME), col(N_LOCATION))
             .agg(max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
+            .sort("window")
 
         senderWindow.writeStream
             .outputMode("complete")
