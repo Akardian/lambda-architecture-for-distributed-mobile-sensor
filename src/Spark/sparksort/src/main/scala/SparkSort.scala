@@ -96,7 +96,7 @@ object SparkSort {
             .agg(max(N_TIMESTAMP_KAFKA_IN), max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
 
         sender.writeStream
-            .outputMode("append")
+            .outputMode("update")
             .option("truncate", "false")
             .format("console")
             .start()
