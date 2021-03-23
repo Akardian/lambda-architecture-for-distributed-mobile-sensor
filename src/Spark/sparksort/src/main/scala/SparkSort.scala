@@ -81,29 +81,27 @@ object SparkSort {
         val print = hdfsTime.drop(N_WIFI) //Drop for print
 
         //Here would be the save to the HDFS
-        print.writeStream
+
+        val avgWifi = calculateWifiAverage(toTime, N_AVG_WIFI, N_WIFI)
+        avgWifi.printSchema()
+
+        avgWifi.writeStream
+            .outputMode("update")
+            .option("truncate", "false")
+            .format("console")
+            .start() 
+        
+        val sender = avgWifi
+            .groupBy(N_SENDERNAME)
+            .agg(max(N_TIMESTAMP_KAFKA_IN), avg(N_AVG_WIFI), count(N_AVG_WIFI))
+
+        sender.writeStream
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
             .start()
 
-        val avgWifi = calculateWifiAverage(toTime, N_AVG_WIFI, N_WIFI)
-        avgWifi.printSchema()
-
-        //Select columns rolling Average calculation and rename
-        val rollingAvg = avgWifi
-            .select(col(N_TIMESTAMP_KAFKA_IN).as("timestamp"), col(N_AVG_WIFI).as("wifiAvg"))
-            .as[WifiData]
-        rollingAvg.printSchema()
-
-        // Convert the function to a `TypedColumn` and give it a name
-        val averageSalary = MyRollingAvg.toColumn.name("rollingAvg")
-        val v = rollingAvg.select(averageSalary)
-        val exMap = rollingAvg
-            .select(averageSalary)
-            .select(explode('list))
-            .select($"col._1".as("timestamp"), $"col._2".as("sum"))
-
+        val exMap = runningAverage(spark,avgWifi, N_TIMESTAMP_KAFKA_IN, N_AVG_WIFI)
         exMap.writeStream
             .outputMode("update")
             .option("truncate", "false")
@@ -113,13 +111,7 @@ object SparkSort {
         /*val b = rollingAvg
             .withWatermark("timestamp", "1 minutes")
             .groupBy(window(col("timestamp"), "1 minutes"))
-            .agg(sum(rollingAvg("wifiAvg")))
-
-        b.writeStream
-            .outputMode("update")
-            .option("truncate", "false")
-            .format("console")
-            .start() */            
+            .agg(sum(rollingAvg("wifiAvg")))*/         
         
         spark.streams.awaitAnyTermination()
     }
