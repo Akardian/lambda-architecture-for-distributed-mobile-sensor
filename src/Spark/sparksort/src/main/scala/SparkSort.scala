@@ -87,7 +87,7 @@ object SparkSort {
 
         avgWifi.writeStream
             .outputMode("update")
-            .option("truncate", "false")
+            .option("truncate", "true")
             .format("console")
             .start() 
         
@@ -96,7 +96,7 @@ object SparkSort {
             .agg(max(N_TIMESTAMP_KAFKA_IN), avg(N_AVG_WIFI), count(N_AVG_WIFI))
 
         sender.writeStream
-            .outputMode("update")
+            .outputMode("complete")
             .option("truncate", "false")
             .format("console")
             .start()
