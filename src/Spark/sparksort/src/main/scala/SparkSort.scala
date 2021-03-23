@@ -92,27 +92,32 @@ object SparkSort {
             .start() 
         
         val sender = avgWifi
-            .groupBy(N_SENDERNAME)
-            .agg(max(N_TIMESTAMP_KAFKA_IN), avg(N_AVG_WIFI), count(N_AVG_WIFI))
+            .groupBy(N_SENDERNAME, N_LOCATION)
+            .agg(max(N_TIMESTAMP_KAFKA_IN), max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
 
         sender.writeStream
+            .outputMode("append")
+            .option("truncate", "false")
+            .format("console")
+            .start()
+
+        val senderWindow = avgWifi
+            .groupBy(window(col(N_TIMESTAMP_KAFKA_IN), "15 minute", "10 seconds"), col(N_SENDERNAME), col(N_LOCATION))
+            .agg(max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
+
+        senderWindow.writeStream
             .outputMode("complete")
             .option("truncate", "false")
             .format("console")
             .start()
 
-        val exMap = runningAverage(spark,avgWifi, N_TIMESTAMP_KAFKA_IN, N_AVG_WIFI)
+         /*val exMap = runningAverage(spark,avgWifi, N_TIMESTAMP_KAFKA_IN, N_AVG_WIFI)
         exMap.writeStream
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
-            .start() 
-        
-        /*val b = rollingAvg
-            .withWatermark("timestamp", "1 minutes")
-            .groupBy(window(col("timestamp"), "1 minutes"))
-            .agg(sum(rollingAvg("wifiAvg")))*/         
-        
+            .start()*/
+         
         spark.streams.awaitAnyTermination()
     }
 }
