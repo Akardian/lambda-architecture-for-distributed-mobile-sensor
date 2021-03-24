@@ -116,7 +116,7 @@ object SparkSort {
             .select(col(N_TIMESTAMP_KAFKA_IN), col(N_SENDERNAME), col(N_LOCATION), explode(col(N_ODEM_DATA)))
 
         movment.writeStream
-            .outputMode("complete")
+            .outputMode("update")
             .option("truncate", "false")
             .format("console")
             .start()
