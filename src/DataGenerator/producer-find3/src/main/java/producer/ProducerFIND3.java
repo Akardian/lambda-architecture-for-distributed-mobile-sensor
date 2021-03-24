@@ -82,7 +82,13 @@ public class ProducerFIND3 implements Config {
 			wifiDataMap.put(ACCESPOINTS[i], 0 - (rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET));
 		}
 
-		ArrayList<String> odomDataList = new ArrayList<String>(); 
+		ArrayList<String> odomDataList = new ArrayList<String>();
+
+		odomDataList.add("{\"position\":{\"x\":-0.0130076939240098,\"y\":-0.08033571392297745,\"z\":0.0},\"orientation\":{\"x\":0.005217432044446468,\"y\":-0.0005960796843282878,\"z\":0.3365990221500397,\"w\":0.941633403301239}}");
+		odomDataList.add("{\"position\":{\"x\":-0.0097260857000947,\"y\":-0.07754592597484589,\"z\":0.0},\"orientation\":{\"x\":0.005673218052834272,\"y\":-0.001788094057701528,\"z\":0.3537658751010895,\"w\":0.9353150725364685}}");
+		odomDataList.add("{\"position\":{\"x\":-0.004763695877045393,\"y\":-0.07332725077867508,\"z\":0.0},\"orientation\":{\"x\":0.005788087844848633,\"y\":-0.0015548872761428356,\"z\":0.340519517660141,\"w\":0.9402183294296265}}");
+		odomDataList.add("{\"position\":{\"x\":-0.004763695877045393,\"y\":-0.07332725077867508,\"z\":0.0},\"orientation\":{\"x\":0.005560061428695917,\"y\":-0.001257477910257876,\"z\":0.34051811695098877,\"w\":0.9402206540107727}}");
+		odomDataList.add("{\"position\":{\"x\":-0.004763695877045393,\"y\":-0.07332725077867508,\"z\":0.0},\"orientation\":{\"x\":0.005040878430008888,\"y\":0.0001761785097187385,\"z\":0.3405124545097351,\"w\":0.9402264952659607}}");
 
         AvroFIND3Data testData = AvroFIND3Data.newBuilder() //Create message to be send
             .setSenderName(senderName)

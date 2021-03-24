@@ -72,12 +72,6 @@ object SparkSort {
                 col("find3.odomData").as(N_ODEM_DATA),
                 col("find3.wifiData").as(N_WIFI)
             )
-
-        avroDataFrame.writeStream
-            .outputMode("update")
-            .option("truncate", "true")
-            .format("console")
-            .start() 
         
         //Change format of the find timestamp
         val toTime = epochToTimeStamp(avroDataFrame, N_TIMESTAMP_FIND, N_TIMESTAMP_FIND_UNIX)
@@ -117,6 +111,16 @@ object SparkSort {
             .option("truncate", "false")
             .format("console")
             .start()
+
+        val movment = avgWifi
+            .select(col(N_TIMESTAMP_KAFKA_IN), col(N_SENDERNAME), col(N_LOCATION), explode(col(N_ODEM_DATA)))
+
+        movment.writeStream
+            .outputMode("complete")
+            .option("truncate", "false")
+            .format("console")
+            .start()
+
 
          /*val exMap = runningAverage(spark,avgWifi, N_TIMESTAMP_KAFKA_IN, N_AVG_WIFI)
         exMap.writeStream
