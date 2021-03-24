@@ -68,13 +68,13 @@ object SparkSort {
                 col("timestamp").as(N_TIMESTAMP_KAFKA_IN),
                 col("find3.senderName").as(N_SENDERNAME),
                 col("find3.location").as(N_LOCATION),
-                col("find3.findTimestamp").as(N_TIMESTAMP_FIND),
+                col("find3.findTimestamp").as(N_TIMESTAMP_FIND_UNIX),
                 col("find3.odomData").as(N_ODEM_DATA),
                 col("find3.wifiData").as(N_WIFI)
             )
         
         //Change format of the find timestamp
-        val toTime = epochToTimeStamp(avroDataFrame, N_TIMESTAMP_FIND, N_TIMESTAMP_FIND)
+        val toTime = epochToTimeStamp(avroDataFrame, N_TIMESTAMP_FIND_UNIX, N_TIMESTAMP_FIND)
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
         val hdfsTime = shortenTimestamp(toTime, N_TIMESTAMP_HDFS, N_TIMESTAMP_KAFKA_IN)
 
