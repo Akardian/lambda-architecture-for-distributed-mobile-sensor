@@ -82,7 +82,7 @@ public class ProducerFIND3 implements Config {
 			wifiDataMap.put(ACCESPOINTS[i], 0 - (rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET));
 		}
 
-		ArrayList<String> odomDataList = new ArrayList<String>();
+		ArrayList<String> odomDataList = new ArrayList<String>(); 
 
         AvroFIND3Data testData = AvroFIND3Data.newBuilder() //Create message to be send
             .setSenderName(senderName)
