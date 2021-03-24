@@ -32,7 +32,7 @@ object TransTimestamp {
       */
     def epochToTimeStamp(dataFrame: DataFrame, name: String, timeStampColumn: String) : DataFrame = {
         dataFrame
-            .withColumn(name, to_timestamp(from_unixtime(col(timeStampColumn), "MM-dd-yyyy HH:mm:ss.SSSS")))
+            .withColumn(name, to_timestamp(from_unixtime(col(timeStampColumn), "MM-dd-yyyy HH:mm:ss")))
             .drop(timeStampColumn)
         
     }
