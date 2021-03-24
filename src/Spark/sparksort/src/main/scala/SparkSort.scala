@@ -72,6 +72,12 @@ object SparkSort {
                 col("find3.odomData").as(N_ODEM_DATA),
                 col("find3.wifiData").as(N_WIFI)
             )
+
+        avroDataFrame.writeStream
+            .outputMode("update")
+            .option("truncate", "true")
+            .format("console")
+            .start() 
         
         //Change format of the find timestamp
         val toTime = epochToTimeStamp(avroDataFrame, N_TIMESTAMP_FIND, N_TIMESTAMP_FIND_UNIX)
