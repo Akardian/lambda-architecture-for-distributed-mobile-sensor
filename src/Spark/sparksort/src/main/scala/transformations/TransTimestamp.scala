@@ -19,11 +19,11 @@ object TransTimestamp {
     * @return DataFrame with new Timestamp Column
     */
     def shortenTimestamp(dataFrame: DataFrame, name: String, timeStampColumn: String) : DataFrame = {
-        dataFrame.withColumn(N_TIMESTAMP_HDFS, to_timestamp(date_trunc("hour", col(timeStampColumn)), "MM-dd-yyyy HH:mm"))
+        dataFrame.withColumn(name, to_timestamp(date_trunc("hour", col(timeStampColumn)), "MM-dd-yyyy HH:mm"))
     }
 
     /**
-      * Converts a epoch time Column into a Timestamp Column
+      * Converts a epoch time Column into a Timestamp Column and drops the old one
       *
       * @param dataFrame DataFrame with Timestamp Column
       * @param name Name of the new Column
@@ -31,6 +31,9 @@ object TransTimestamp {
       * @return DataFrame with new Timestamp Column
       */
     def epochToTimeStamp(dataFrame: DataFrame, name: String, timeStampColumn: String) : DataFrame = {
-        dataFrame.withColumn(N_TIMESTAMP_FIND, to_timestamp(from_unixtime(col(N_TIMESTAMP_FIND), "MM-dd-yyyy HH:mm:ss.SSSS")))
+        dataFrame
+            .withColumn(name, to_timestamp(from_unixtime(col(timeStampColumn), "MM-dd-yyyy HH:mm:ss.SSSS")))
+            .drop(timeStampColumn)
+        
     }
 }

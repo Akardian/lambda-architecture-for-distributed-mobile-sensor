@@ -74,7 +74,7 @@ object SparkSort {
             )
         
         //Change format of the find timestamp
-        val toTime = epochToTimeStamp(avroDataFrame, N_TIMESTAMP_FIND_UNIX, N_TIMESTAMP_FIND)
+        val toTime = epochToTimeStamp(avroDataFrame, N_TIMESTAMP_FIND, N_TIMESTAMP_FIND_UNIX)
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
         val hdfsTime = shortenTimestamp(toTime, N_TIMESTAMP_HDFS, N_TIMESTAMP_KAFKA_IN)
 
