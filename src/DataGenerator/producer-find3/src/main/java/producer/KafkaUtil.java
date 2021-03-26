@@ -41,7 +41,7 @@ public class KafkaUtil implements Config{
         }
     }
 
-    public static String createJsonString(double px, double py, double pz, double ox, double oy, double oz, double ow, double seq, long secs, long nsecs, String frame_id) {
+    public static String createJsonString(double px, double py, double pz, double ox, double oy, double oz, double ow, long seq, long secs, long nsecs, String frame_id) {
         String json = 
             "{"+
                 "\"pose\":{" +
