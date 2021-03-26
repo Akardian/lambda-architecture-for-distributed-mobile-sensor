@@ -115,7 +115,7 @@ object SparkSort {
         val odomJson = avgWifi
             .select(col(N_TIMESTAMP_KAFKA_IN), col(N_SENDERNAME), col(N_LOCATION), explode(col(N_ODEM_DATA)).as("odomJson"))
 
-        val json_schema = spark.read.json(odomJson.select("odomJson").as[String]).schema
+        val json_schema = spark.readStream.json(odomJson.select("odomJson").as[String]).schema.start
         val odom = odomJson.withColumn("odom", from_json(col("odomJson"), json_schema))
 
         odom.writeStream
