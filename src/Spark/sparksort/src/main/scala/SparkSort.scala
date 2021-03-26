@@ -113,10 +113,12 @@ object SparkSort {
             .start()
 
         val odomJson = avgWifi
-            .select(col(N_TIMESTAMP_KAFKA_IN), col(N_SENDERNAME), col(N_LOCATION), explode(col(N_ODEM_DATA)).as("odomJson"))
+        .select(col(N_TIMESTAMP_KAFKA_IN), col(N_SENDERNAME), col(N_LOCATION), explode(col(N_ODEM_DATA)).as("odomJson"))
 
-        val json_schema = spark.readStream.json(odomJson.select("odomJson").as[String]).schema.start
-        val odom = odomJson.withColumn("odom", from_json(col("odomJson"), json_schema))
+
+        val jsondf = spark.read.json(Seq(JSON_SAMPLE).toDS) //jsondf.schema has the nested json structure we need
+      
+        val odom = odomJson.withColumn("odom", from_json(col("odomJson"), jsondf.schema))
 
         odom.writeStream
             .outputMode("update")

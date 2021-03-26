@@ -56,4 +56,7 @@ object Config {
 
     case class Average(var list: List[(Timestamp, Entry)])
     case class Entry(var wifiDB: Double, var sum: Double, var count: Int)
+
+    //Sample json String
+    val JSON_SAMPLE = "{\"pose\":{\"position\":{\"x\":0.5428311228752136,\"y\":0.01632818765938282,\"z\":0.0},\"orientation\":{\"x\":0.0083421990275383,\"y\":0.004321090877056122,\"z\":0.03856131061911583,\"w\":0.9992120862007141}},\"header\":{\"seq\":85502,\"stamp\":{\"secs\":1616158742,\"nsecs\":440000000},\"frame_id\":\"base_link\"}}"
 }
