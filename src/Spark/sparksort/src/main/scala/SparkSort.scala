@@ -119,9 +119,9 @@ object SparkSort {
         val jsondf = spark.read.json(Seq(JSON_SAMPLE).toDS) //jsondf.schema has the nested json structure we need
       
         val odom = odomJson.withColumn("odom", from_json(col("odomJson"), jsondf.schema))
-        odom.drop("odomJson")
+        val odomDrop = odom.drop("odomJson")
 
-        odom.writeStream
+        odomDrop.writeStream
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
