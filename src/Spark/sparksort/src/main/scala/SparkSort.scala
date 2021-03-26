@@ -113,7 +113,7 @@ object SparkSort {
             .start()
 
         val odom = avgWifi
-            .select(col(N_TIMESTAMP_KAFKA_IN), col(N_SENDERNAME), col(N_LOCATION), explode(col(N_ODEM_DATA).as("odomJson")))
+            .select(col(N_TIMESTAMP_KAFKA_IN), col(N_SENDERNAME), col(N_LOCATION), explode(col(N_ODEM_DATA)).as("odomJson"))
 
         val schema = schema_of_json(lit(odom.select($"odomJson").as[String].first))
         odom.withColumn("odom", from_json($"odomJson", schema))
