@@ -14,6 +14,7 @@ import config.Config;
 
 public class ProducerFIND3 implements Config {
 
+	public static long seq = 0;
 	public static void main(final String[] args) throws Exception {
 		Producer<Long, AvroFIND3Data> producer = KafkaUtil.createProducer();
 		Random rand = new Random(RANDOM_SEED);
@@ -42,7 +43,6 @@ public class ProducerFIND3 implements Config {
 				try {	
 					KafkaUtil.send(producer, testData);
 	
-					TimeUnit.SECONDS.sleep(SLEEP_SECONDS);
 					messageCount++;	
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -76,7 +76,7 @@ public class ProducerFIND3 implements Config {
 		producer.close();
 	}
     
-    private static AvroFIND3Data buildMessage(String senderName, String location, String timeStamp, Random rand){
+    private static AvroFIND3Data buildMessage(String senderName, String location, String timeStamp, Random rand) throws InterruptedException{
 		HashMap<String, Integer> wifiDataMap = new HashMap<String,Integer>();
 		for(int i = 0; i < ACCESPOINTS.length; i++) {
 			wifiDataMap.put(ACCESPOINTS[i], 0 - (rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET));
@@ -84,11 +84,44 @@ public class ProducerFIND3 implements Config {
 
 		ArrayList<String> odomDataList = new ArrayList<String>();
 
-		odomDataList.add("{\"position\":{\"x\":-0.0130076939240098,\"y\":-0.08033571392297745,\"z\":0.0},\"orientation\":{\"x\":0.005217432044446468,\"y\":-0.0005960796843282878,\"z\":0.3365990221500397,\"w\":0.941633403301239}}");
-		odomDataList.add("{\"position\":{\"x\":-0.0097260857000947,\"y\":-0.07754592597484589,\"z\":0.0},\"orientation\":{\"x\":0.005673218052834272,\"y\":-0.001788094057701528,\"z\":0.3537658751010895,\"w\":0.9353150725364685}}");
-		odomDataList.add("{\"position\":{\"x\":-0.004763695877045393,\"y\":-0.07332725077867508,\"z\":0.0},\"orientation\":{\"x\":0.005788087844848633,\"y\":-0.0015548872761428356,\"z\":0.340519517660141,\"w\":0.9402183294296265}}");
-		odomDataList.add("{\"position\":{\"x\":-0.004763695877045393,\"y\":-0.07332725077867508,\"z\":0.0},\"orientation\":{\"x\":0.005560061428695917,\"y\":-0.001257477910257876,\"z\":0.34051811695098877,\"w\":0.9402206540107727}}");
-		odomDataList.add("{\"position\":{\"x\":-0.004763695877045393,\"y\":-0.07332725077867508,\"z\":0.0},\"orientation\":{\"x\":0.005040878430008888,\"y\":0.0001761785097187385,\"z\":0.3405124545097351,\"w\":0.9402264952659607}}");
+		Instant now = Instant.now();
+		odomDataList.add(KafkaUtil.createJsonString(
+			0.5428311228752136, 0.01632818765938282, 0.0, 
+			0.008384221233427525, 0.004507092293351889, 0.03855949640274048, 0.9992109537124634, 
+			seq, now.getEpochSecond(), now.getNano(), "base_link"));
+		seq++;
+
+		TimeUnit.MILLISECONDS.sleep(SLEEP_MILLISECONDS / 4);
+		now = Instant.now();
+		odomDataList.add(KafkaUtil.createJsonString(
+			0.5428311228752136, 0.01632818765938282, 0.0,
+			0.0083421990275383, 0.004321090877056122, 0.03856131061911583, 0.9992120862007141,
+			seq, now.getEpochSecond(), now.getNano(), "base_link"));
+		seq++;
+
+		TimeUnit.MILLISECONDS.sleep(SLEEP_MILLISECONDS / 4);
+		now = Instant.now();
+		odomDataList.add(KafkaUtil.createJsonString(
+			0.5428311228752136, 0.01632818765938282, 0.0, 
+			0.008235296234488487, 0.0042941151186823845, 0.03856196999549866, 0.9992130398750305, 
+			seq, now.getEpochSecond(), now.getNano(), "base_link"));
+		seq++;
+
+		TimeUnit.MILLISECONDS.sleep(SLEEP_MILLISECONDS / 4);
+		now = Instant.now();
+		odomDataList.add(KafkaUtil.createJsonString(
+			0.5428311228752136, 0.01632818765938282, 0.0, 
+			0.00830506905913353, 0.004295618738979101, 0.038561683148145676, 0.9992125034332275, 
+			seq, now.getEpochSecond(), now.getNano(), "base_link"));
+		seq++;
+
+		TimeUnit.MILLISECONDS.sleep(SLEEP_MILLISECONDS / 4);
+		now = Instant.now();
+		odomDataList.add(KafkaUtil.createJsonString(
+			0.5428311228752136, 0.01632818765938282, 0.0, 
+			0.008352044969797134, 0.004222259856760502, 0.03856217488646507, 0.999212384223938, 
+			seq, now.getEpochSecond(), now.getNano(),"base_link"));	
+		seq++;
 
         AvroFIND3Data testData = AvroFIND3Data.newBuilder() //Create message to be send
             .setSenderName(senderName)

@@ -40,4 +40,32 @@ public class KafkaUtil implements Config{
 
         }
     }
+
+    public static String createJsonString(double px, double py, double pz, double ox, double oy, double oz, double ow, double seq, long secs, long nsecs, String frame_id) {
+        String json = 
+            "{"+
+                "\"pose\":{" +
+				    "\"position\":{" +
+					    "\"x\":" + px + "," +
+                        "\"y\":" + py + "," +
+                        "\"z\":" + pz + "" +
+                    "}," + 
+				    "\"orientation\":{" + 
+				        "\"x\":" + ox + "," +
+                        "\"y\":" + oy + "," +
+                        "\"z\":" + oz + "," +
+                        "\"w\":" + ow + "" +
+                    "}" +
+                "}," +
+			    "\"header\":{" +
+				    "\"seq\":" + seq + "," +
+				    "\"stamp\":{" +
+					    "\"secs\":" + secs + "," +
+                        "\"nsecs\":" + nsecs + "" +
+                    "}," +
+				    "\"frame_id\":\"" + frame_id + "\"" +
+			    "}" +
+            "}";
+        return json;
+    }
 }

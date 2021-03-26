@@ -13,7 +13,8 @@ public interface Config {
     public final static int SET_SIZE = 1;
     public final static int SET_REPEATS = 1;
 
-    public final static int SLEEP_SECONDS = 2;
+    public final static int SLEEP_SECONDS = 4;
+    public final static int SLEEP_MILLISECONDS = SLEEP_SECONDS * 1000;
 
     public final static String[] ACCESPOINTS = {
         "bc:26:c7:40:90:ee", "bc:26:c7:40:90:ec", "bc:26:c7:7c:cd:23",
