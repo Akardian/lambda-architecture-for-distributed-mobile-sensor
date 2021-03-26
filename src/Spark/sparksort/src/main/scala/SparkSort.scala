@@ -126,9 +126,16 @@ object SparkSort {
                 col(N_LOCATION), 
                 col("odom.header.seq"), 
                 col("odom.header.frame_id"),
-                col("odom.header.stamp.*"), 
-                col("odom.pose.position.*"), 
-                col("odom.pose.orientation.*"))
+                col("odom.header.stamp.secs"), 
+                col("odom.header.stamp.nsecs").as("nanoSecs"), 
+                col("odom.pose.position.x").as("positionX"), 
+                col("odom.pose.position.y").as("positionY"),
+                col("odom.pose.position.z").as("positionZ"),
+                col("odom.pose.orientation.x").as("orientationX"),
+                col("odom.pose.orientation.y").as("orientationY"),
+                col("odom.pose.orientation.z").as("orientationZ"),
+                col("odom.pose.orientation.w").as("orientationW")
+            )
 
         odomDrop.writeStream
             .outputMode("update")
