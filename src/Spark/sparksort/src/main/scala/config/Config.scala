@@ -4,8 +4,7 @@ import scala.concurrent.duration._
 import org.apache.log4j.Level
 import java.sql.Timestamp
 import org.apache.log4j.LogManager
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.SortedSet
+import scala.collection.immutable.SortedSet
 
 object Config {
     val NAME = "find3Generator"

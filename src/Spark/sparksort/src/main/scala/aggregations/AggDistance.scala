@@ -5,8 +5,7 @@ import org.apache.spark.sql.expressions.Aggregator
 import java.sql.Timestamp
 
 import  config.Config._
-import scala.collection.mutable.SortedSet
-
+import scala.collection.immutable.SortedSet
 import scala.math.pow
 import scala.math.sqrt
 
