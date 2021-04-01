@@ -134,12 +134,12 @@ object SparkSort {
             .format("console")
             .start()
 
-        val distancelocal = typedOdom.select(distanceAgg)
+        /*val distancelocal = typedOdom.select(distanceAgg)
         distancelocal.writeStream
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
-            .start()
+            .start()*/
 
          /*val exMap = runningAverage(spark,avgWifi, N_TIMESTAMP_KAFKA_IN, N_AVG_WIFI)
         exMap.writeStream

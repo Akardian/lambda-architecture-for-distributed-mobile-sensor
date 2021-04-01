@@ -26,19 +26,20 @@ object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance reduce #####")
         
         buffer.points += odom
+        val out = BufferPoints(buffer.points + odom)
 
-        log.warn(DEBUG_MSG_AVG + buffer)
-        buffer
+        log.warn(DEBUG_MSG_AVG + out)
+        out
     }
 
     //Merge two intermediate value
     def merge(buffer1: BufferPoints, buffer2: BufferPoints): BufferPoints = {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance merge #####")
         
-        buffer1.points ++= buffer2.points
+        val out = BufferPoints(buffer1.points ++ buffer2.points)
         
-        log.warn(DEBUG_MSG_AVG + buffer1)
-        buffer1
+        log.warn(DEBUG_MSG_AVG + out)
+        out
     }
 
     //Transforms the output of the reduction
