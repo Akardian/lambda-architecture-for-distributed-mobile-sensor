@@ -7,7 +7,7 @@ import org.apache.spark.sql._
 import org.apache.spark.sql.types._
 
 import config.Config._
-import aggregations.MyRollingAvg
+import aggregations.AggRollingAvg
 
 object TransWifi {
   
@@ -44,7 +44,7 @@ object TransWifi {
             .as[WifiData]
 
         // Convert the function to a `TypedColumn` and give it a name
-        val averageSalary = MyRollingAvg.toColumn.name("rollingAvg")
+        val averageSalary = AggRollingAvg.toColumn.name("rollingAvg")
 
         rollingAvg
             .select(averageSalary)

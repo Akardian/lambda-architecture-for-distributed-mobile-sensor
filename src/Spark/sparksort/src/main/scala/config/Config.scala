@@ -4,14 +4,18 @@ import scala.concurrent.duration._
 import org.apache.log4j.Level
 import java.sql.Timestamp
 import org.apache.log4j.LogManager
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.SortedSet
 
 object Config {
     val NAME = "find3Generator"
     //Logger Settings
     val DEBUG_MSG = "Sort: "
     val DEBUG_MSG_AVG = "Rolling-Avg-" + DEBUG_MSG
+    val DEBUG_MSG_DIS = "Rolling-DIS-" + DEBUG_MSG
     val LOG_LEVEL = Level.WARN
     val log = LogManager.getRootLogger
+    val DEBUG = true
 
     //Kafka Settings
     val GROUP_ID = "Spark-" + NAME
@@ -51,6 +55,27 @@ object Config {
     val N_SUM_TOTAL = "wifiSum"
 
     //Case class section
+
+    //AggPoint
+    case class OdomPoint(val senderName: String, val secs: Long, val nsecs: Long, val x: Double, val y: Double, val z: Double)
+    case class Position(val x: Double, val y: Double, val z: Double)
+    case class BufferPoints(var points: SortedSet[OdomPoint])
+
+    case class BufferPointsLocal(var distance: Double, var position: Position)
+
+    object TimeOrdering extends Ordering[OdomPoint] {
+        def compare(element1:OdomPoint, element2:OdomPoint): Int = {
+            if(element1.secs < element2.secs) { return -1 } 
+            else if(element1.secs > element2.secs) { return +1 } 
+            else {
+                if(element1.nsecs < element2.nsecs) { return -1 }
+                else if(element1.nsecs > element2.nsecs) { return +1 }
+                else { return 0}
+            }
+        }
+    }
+
+    //AggRollingAvg
     case class AvgWifiData(var timestamp: Timestamp, var wifiAvg: Double, var runingAverage: Double)
     case class WifiData(var timestamp: Timestamp, var wifiAvg: Double)
 
@@ -59,4 +84,5 @@ object Config {
 
     //Sample json String
     val JSON_SAMPLE = "{\"pose\":{\"position\":{\"x\":0.5428311228752136,\"y\":0.01632818765938282,\"z\":0.0},\"orientation\":{\"x\":0.0083421990275383,\"y\":0.004321090877056122,\"z\":0.03856131061911583,\"w\":0.9992120862007141}},\"header\":{\"seq\":85502,\"stamp\":{\"secs\":1616158742,\"nsecs\":440000000},\"frame_id\":\"base_link\"}}"
+
 }

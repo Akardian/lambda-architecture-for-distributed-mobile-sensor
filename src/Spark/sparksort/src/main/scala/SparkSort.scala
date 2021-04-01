@@ -14,6 +14,8 @@ import org.apache.commons.logging.LogFactory
 
 import transformations.TransTimestamp._
 import transformations.TransWifi._
+import transformations.TransOdom._
+import aggregations.AggDistance
 
 object SparkSort {
 
@@ -78,13 +80,10 @@ object SparkSort {
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
         val hdfsTime = shortenTimestamp(toTime, N_TIMESTAMP_HDFS, N_TIMESTAMP_KAFKA_IN)
 
-        val print = hdfsTime.drop(N_WIFI) //Drop for print
-
         //Here would be the save to the HDFS
 
         val avgWifi = calculateWifiAverage(toTime, N_AVG_WIFI, N_WIFI)
         avgWifi.printSchema()
-
         avgWifi.writeStream
             .outputMode("update")
             .option("truncate", "true")
@@ -94,7 +93,6 @@ object SparkSort {
         val sender = avgWifi
             .groupBy(N_SENDERNAME, N_LOCATION)
             .agg(max(N_TIMESTAMP_KAFKA_IN), max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
-
         sender.writeStream
             .outputMode("update")
             .option("truncate", "false")
@@ -105,44 +103,33 @@ object SparkSort {
             .groupBy(window(col(N_TIMESTAMP_KAFKA_IN), "10 minute", "1 minute"), col(N_SENDERNAME), col(N_LOCATION))
             .agg(max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
             .sort("window")
-
         senderWindow.writeStream
             .outputMode("complete")
             .option("truncate", "false")
             .format("console")
             .start()
 
-        val odomJson = avgWifi
-        .select(col(N_TIMESTAMP_KAFKA_IN), col(N_SENDERNAME), col(N_LOCATION), explode(col(N_ODEM_DATA)).as("odomJson"))
-
-
-        val jsondf = spark.read.json(Seq(JSON_SAMPLE).toDS) //jsondf.schema has the nested json structure we need
-      
-        val odom = odomJson.withColumn("odom", from_json(col("odomJson"), jsondf.schema))
-        val odomDrop = odom
-            .select(
-                col(N_TIMESTAMP_KAFKA_IN), 
-                col(N_SENDERNAME), 
-                col(N_LOCATION), 
-                col("odom.header.seq"), 
-                col("odom.header.frame_id"),
-                col("odom.header.stamp.secs"), 
-                col("odom.header.stamp.nsecs").as("nanoSecs"), 
-                col("odom.pose.position.x").as("positionX"), 
-                col("odom.pose.position.y").as("positionY"),
-                col("odom.pose.position.z").as("positionZ"),
-                col("odom.pose.orientation.x").as("orientationX"),
-                col("odom.pose.orientation.y").as("orientationY"),
-                col("odom.pose.orientation.z").as("orientationZ"),
-                col("odom.pose.orientation.w").as("orientationW")
-            )
-
-        odomDrop.writeStream
+        val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
+        odom.writeStream
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
             .start()
 
+        val distanceAgg = AggDistance.toColumn.name("distance")
+        val distance = odom.select(distanceAgg)
+        distance.writeStream
+            .outputMode("update")
+            .option("truncate", "false")
+            .format("console")
+            .start()
+
+        val distancelocal = odom.select(distanceAgg)
+        distancelocal.writeStream
+            .outputMode("update")
+            .option("truncate", "false")
+            .format("console")
+            .start()
 
          /*val exMap = runningAverage(spark,avgWifi, N_TIMESTAMP_KAFKA_IN, N_AVG_WIFI)
         exMap.writeStream

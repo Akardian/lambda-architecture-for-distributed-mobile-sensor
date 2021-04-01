@@ -6,7 +6,7 @@ import java.sql.Timestamp
 
 import  config.Config._
 
-object  MyRollingAvg extends Aggregator[WifiData, Average, Average] {
+object  AggRollingAvg extends Aggregator[WifiData, Average, Average] {
 
     //Initial value of the intermediate results
     def zero: Average = {
