@@ -116,15 +116,17 @@ object SparkSort {
             .format("console")
             .start()
 
+        //case class OdomPoint(val senderName: String, val secs: Long, val nsecs: Long, val x: Double, val y: Double, val z: Double)
+        val typedOdom = odom.select(N_SENDERNAME, "secs", "nanoSecs", "positionX", "positionY", "positionZ").as[OdomPoint]
         val distanceAgg = AggDistance.toColumn.name("distance")
-        val distance = odom.select(distanceAgg)
+        val distance = typedOdom.select(distanceAgg)
         distance.writeStream
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
             .start()
 
-        val distancelocal = odom.select(distanceAgg)
+        val distancelocal = typedOdom.select(distanceAgg)
         distancelocal.writeStream
             .outputMode("update")
             .option("truncate", "false")
