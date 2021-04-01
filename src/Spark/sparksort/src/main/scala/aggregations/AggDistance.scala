@@ -2,7 +2,6 @@ package aggregations
 
 import org.apache.spark.sql.{Encoder, Encoders, SparkSession}
 import org.apache.spark.sql.expressions.Aggregator
-import java.sql.Timestamp
 
 import  config.Config._
 import scala.collection.immutable.SortedSet
