@@ -3,7 +3,8 @@ package aggregations
 import config.Config._
 
 object TimeOrdering extends Ordering[OdomPoint] {
-    def compare(element1:OdomPoint, element2:OdomPoint): Int = {
+
+  override def compare(element1: OdomPoint, element2: OdomPoint): Int = {
         if(element1.secs < element2.secs) { return -1 } 
         else if(element1.secs > element2.secs) { return +1 } 
         else {

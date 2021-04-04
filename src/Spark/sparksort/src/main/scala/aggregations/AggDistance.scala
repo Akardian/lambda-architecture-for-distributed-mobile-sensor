@@ -14,10 +14,10 @@ object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
     def zero: BufferPoints = {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance zero #####")
         
-        val buffer = BufferPoints(SortedSet.empty[OdomPoint](TimeOrdering))
+        val buffer = BufferPoints(SortedSet.empty(TimeOrdering))
 
         log.warn(DEBUG_MSG_AVG + buffer)
-        
+
         buffer
     }
 
@@ -25,6 +25,8 @@ object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
     def reduce(buffer: BufferPoints, odom: OdomPoint): BufferPoints = {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance reduce #####")
         
+        val ord = Ordering[Int].reverse
+
         buffer.points += odom
         val out = BufferPoints(buffer.points + odom)
 
