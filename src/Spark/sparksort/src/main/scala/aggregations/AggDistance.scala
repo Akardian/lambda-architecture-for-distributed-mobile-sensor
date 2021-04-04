@@ -17,6 +17,7 @@ object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
         val buffer = BufferPoints(SortedSet.empty[OdomPoint](TimeOrdering))
 
         log.warn(DEBUG_MSG_AVG + buffer)
+        
         buffer
     }
 
