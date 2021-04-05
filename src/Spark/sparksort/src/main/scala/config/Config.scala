@@ -67,15 +67,10 @@ object Config {
                     else { return 0}
                 }
         }
-
-        /*
-        override def compare(element1: OdomPoint, element2: OdomPoint): Int = {
-                
-    }*/
     }
 
     case class Position(val x: Double, val y: Double, val z: Double)
-    case class BufferPoints(var points: SortedSet[OdomPoint])
+    case class BufferPoints(var points: Set[OdomPoint])
 
     case class BufferPointsLocal(var distance: Double, var position: Position)
 
