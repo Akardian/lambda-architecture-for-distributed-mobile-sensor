@@ -16,7 +16,7 @@ object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
         
         val buffer = BufferPoints(ArrayBuffer[OdomPoint]())
 
-        log.warn(DEBUG_MSG_AVG + buffer)
+        log.warn(DEBUG_MSG_AVG + "Points[" + buffer.points.length + "]")
         buffer
     }
 
@@ -27,7 +27,7 @@ object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
         buffer.points += odom
         buffer.points.sorted
 
-        log.warn(DEBUG_MSG_AVG + buffer)
+        log.warn(DEBUG_MSG_AVG  + "Points[" + buffer.points.length + "]")
         buffer
     }
 
@@ -38,7 +38,7 @@ object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
         val out = BufferPoints(buffer1.points ++ buffer2.points)
         out.points.sorted
         
-        log.warn(DEBUG_MSG_AVG + out)
+        log.warn(DEBUG_MSG_AVG  + "Points[" + out.points.length + "]")
         out
     }
 
@@ -47,7 +47,9 @@ object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance finish #####")
 
         var sum = reduction.points.foldLeft((0.0, Position(Double.NaN, Double.NaN, Double.NaN))) { (z, elem) => 
-
+            log.warn(DEBUG_MSG_AVG + "Z: " + z)
+            log.warn(DEBUG_MSG_AVG + "Elem: " + elem)
+            
             var next = (0.0, Position(elem.x, elem.y, elem.z))
             if(!z._2.x.isNaN()) {
                 val distance = distanceBetween(z._2, Position(elem.x, elem.y, elem.z))
