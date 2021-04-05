@@ -10,7 +10,9 @@ case class OdomPoint(val senderName: String, val secs: Long, val nsecs: Long, va
             else { return 0}
         }
     }
+}
 
+object OdomPoint {
     def apply(): OdomPoint = {
         OdomPoint("", 0, 0, Double.NaN, Double.NaN, Double.NaN)
     }
