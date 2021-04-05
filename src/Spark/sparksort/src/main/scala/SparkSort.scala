@@ -15,6 +15,8 @@ import org.apache.commons.logging.LogFactory
 import transformations.TransTimestamp._
 import transformations.TransWifi._
 import transformations.TransOdom._
+
+import config.OdomPoint
 import aggregations.AggDistance
 
 object SparkSort {

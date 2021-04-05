@@ -56,7 +56,7 @@ object Config {
     //Case class section
 
     //AggPoint
-    case class OdomPoint(val senderName: String, val secs: Long, val nsecs: Long, val x: Double, val y: Double, val z: Double) extends Ordered[OdomPoint] {
+    /*case class OdomPoint(val senderName: String, val secs: Long, val nsecs: Long, val x: Double, val y: Double, val z: Double) extends Ordered[OdomPoint] {
 
         override def compare(that: OdomPoint): Int = {
             if(this.secs < that.secs) { return -1 } 
@@ -67,17 +67,7 @@ object Config {
                 else { return 0}
             }
         }
-    }
-
-        /*override def compare(that: OdomPoint): Int = {
-            if(this.secs < that.secs) { return -1 } 
-                else if(this.secs > that.secs) { return +1 } 
-                else {
-                    if(this.nsecs < that.nsecs) { return -1 }
-                    else if(this.nsecs > that.nsecs) { return +1 }
-                    else { return 0}
-                }
-        }*/
+    }*/
     
     case class Position(val x: Double, val y: Double, val z: Double)
     case class BufferPoints(var points: SortedSet[OdomPoint])
