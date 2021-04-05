@@ -4,7 +4,7 @@ import scala.concurrent.duration._
 import org.apache.log4j.Level
 import java.sql.Timestamp
 import org.apache.log4j.LogManager
-import scala.collection.mutable.SortedSet
+import scala.collection.mutable.ArrayBuffer
 
 object Config {
     val NAME = "find3Generator"
@@ -56,8 +56,8 @@ object Config {
     //Case class section
 
     //AggPoint
-    /*case class OdomPoint(val senderName: String, val secs: Long, val nsecs: Long, val x: Double, val y: Double, val z: Double) extends Ordered[OdomPoint] {
-
+    case class OdomPoint(val senderName: String, val secs: Long, val nsecs: Long, val x: Double, val y: Double, val z: Double) extends Ordered[OdomPoint] {
+        // return 0 if the same, negative if this < that, positive if this > that
         override def compare(that: OdomPoint): Int = {
             if(this.secs < that.secs) { return -1 } 
             else if(this.secs > that.secs) { return +1 } 
@@ -67,10 +67,10 @@ object Config {
                 else { return 0}
             }
         }
-    }*/
+    }
     
     case class Position(val x: Double, val y: Double, val z: Double)
-    case class BufferPoints(var points: SortedSet[OdomPoint])
+    case class BufferPoints(var points: ArrayBuffer[OdomPoint])
 
     case class BufferPointsLocal(var distance: Double, var position: Position)
 

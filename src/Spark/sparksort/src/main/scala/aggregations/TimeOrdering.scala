@@ -1,7 +1,6 @@
 package aggregations
 
 import config.Config._
-import config.OdomPoint
 
 object TimeOrdering extends Ordering[OdomPoint] {
 

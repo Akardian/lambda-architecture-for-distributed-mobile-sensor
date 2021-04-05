@@ -3,11 +3,10 @@ package aggregations
 import org.apache.spark.sql.{Encoder, Encoders, SparkSession}
 import org.apache.spark.sql.expressions.Aggregator
 
-import  config.Config._
-import config.OdomPoint
-import scala.collection.mutable.SortedSet
+import config.Config._
 import scala.math.pow
 import scala.math.sqrt
+import scala.collection.mutable.ArrayBuffer
 
 object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
 
@@ -15,7 +14,7 @@ object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
     def zero: BufferPoints = {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance zero #####")
         
-        val buffer = BufferPoints(points = SortedSet[OdomPoint]())
+        val buffer = BufferPoints(ArrayBuffer[OdomPoint]())
 
         log.warn(DEBUG_MSG_AVG + buffer)
         buffer
@@ -26,10 +25,10 @@ object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance reduce #####")
 
         buffer.points += odom
-        val out = BufferPoints(buffer.points + odom)
+        buffer.points.sorted
 
-        log.warn(DEBUG_MSG_AVG + out)
-        out
+        log.warn(DEBUG_MSG_AVG + buffer)
+        buffer
     }
 
     //Merge two intermediate value
@@ -37,6 +36,7 @@ object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance merge #####")
         
         val out = BufferPoints(buffer1.points ++ buffer2.points)
+        out.points.sorted
         
         log.warn(DEBUG_MSG_AVG + out)
         out
