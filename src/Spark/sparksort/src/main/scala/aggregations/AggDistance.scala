@@ -5,7 +5,7 @@ import org.apache.spark.sql.expressions.Aggregator
 
 import  config.Config._
 import config.OdomPoint
-import scala.collection.immutable.SortedSet
+import scala.collection.mutable.SortedSet
 import scala.math.pow
 import scala.math.sqrt
 
