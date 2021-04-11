@@ -51,8 +51,8 @@ object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
             log.warn(DEBUG_MSG_AVG + "Elem: " + elem)
 
             val next = if(z._2.x.isNaN()) {
-                log.warn(DEBUG_MSG_AVG + "isNaN" + z._2)
-                (0.0, Position(elem.x, elem.y, elem.z))
+                log.warn(DEBUG_MSG_AVG + "isNaN: " + z._2)
+                (z._1 + 0.0, Position(elem.x, elem.y, elem.z))
             } else {
                 val distance = distanceBetween(z._2, Position(elem.x, elem.y, elem.z))
                 

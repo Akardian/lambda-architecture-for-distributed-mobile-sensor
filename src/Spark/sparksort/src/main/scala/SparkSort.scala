@@ -128,7 +128,7 @@ object SparkSort {
         ).as[OdomPoint]
 
         val distanceAgg = AggDistance.toColumn.name("distance")
-        val distance = typedOdom.select(distanceAgg)
+        val distance = typedOdom.select(col(N_TIMESTAMP_KAFKA_IN) , distanceAgg)
         distance.writeStream
             .outputMode("update")
             .option("truncate", "false")
