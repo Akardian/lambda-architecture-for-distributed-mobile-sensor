@@ -117,18 +117,7 @@ object SparkSort {
             .format("console")
             .start()
 
-        //case class OdomPoint(val senderName: String, val secs: Long, val nsecs: Long, val x: Double, val y: Double, val z: Double)
-        val typedOdom = odom.select(
-            col(N_SENDERNAME), 
-            col("secs"), 
-            col("nanoSecs").as("nsecs"), 
-            col("positionX").as("x"), 
-            col("positionY").as("y"), 
-            col("positionZ").as("z")
-        ).as[OdomPoint]
-
-        val distanceAgg = AggDistance.toColumn.name("distance")
-        val distance = typedOdom.select(distanceAgg)
+        val distance = calcDistance(odom, spark, "secs", "nanoSecs", "positionX", "positionY", "positionZ")
         distance.writeStream
             .outputMode("update")
             .option("truncate", "false")

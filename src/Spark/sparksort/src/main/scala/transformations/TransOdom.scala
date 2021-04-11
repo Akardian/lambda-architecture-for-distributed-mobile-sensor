@@ -7,11 +7,12 @@ import org.apache.spark.sql._
 import org.apache.spark.sql.types._
 
 import config.Config._
+import aggregations.AggDistance
 
 object TransOdom {
   
     /**
-      * Explodes a array of odom data and splitts all values into its own column. Drops the odom array.
+      * Explodes an array of odom data and splitts all values into its own column. Drops the odom array.
       *
       * @param dataframe Dataframe to use the function on
       * @param spark Current Spark Session
@@ -50,5 +51,39 @@ object TransOdom {
             )
 
         odomDrop
+    }
+
+    /**
+      * Calculates the distance between points. Needs to be a OdomPoint compatible Dataframe
+      * 
+      * case class OdomPoint(val senderName: String, val secs: Long, val nsecs: Long, val x: Double, val y: Double, val z: Double)
+      * 
+      * @param dataframe
+      * @param spark Sparksession
+      * @param secs Name for Column secs
+      * @param nSecs Name for Column nSecs
+      * @param x Name for Column x
+      * @param y Name for Column y
+      * @param z Name for Column z
+      * @return
+      */
+    def calcDistance(dataframe: DataFrame, spark: SparkSession, secs: String, nSecs: String, x: String, y: String, z: String) : Dataset[Double] = {
+        import spark.implicits._
+        
+        //Create typed DataSet
+        val typedOdom = dataframe.select(
+            col(N_SENDERNAME), 
+            col(secs), 
+            col(nSecs).as("nsecs"), 
+            col(x).as("x"), 
+            col(y).as("y"), 
+            col(z).as("z")
+        ).as[OdomPoint]
+
+        val distanceAgg = AggDistance.toColumn.name("distance")
+        val distance = typedOdom
+            .select(distanceAgg)
+
+        distance
     }
 }
