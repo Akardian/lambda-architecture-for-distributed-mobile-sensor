@@ -99,23 +99,9 @@ object SparkSort {
         val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
         printStream(odom, "false")
 
-        /*val distance = calcDistance(odom, spark, "secs", "nanoSecs", "positionX", "positionY", "positionZ")
-        distance.writeStream
-            .outputMode("update")
-            .option("truncate", "false")
-            .format("console")
-            .start()*/
+        val distance = calcDistance(odom, spark, "secs", "nanoSecs", "positionX", "positionY", "positionZ")
+        printStream(distance, "false")
 
-        //spark.udf.register("aggDistance", functions.udaf(AggDistance))
-        val my = udaf(AggDistance)
-        val group = odom
-            .agg(my($"secs", $"nsecs", $"x", $"y", $"z"))
-        
-        group.writeStream
-            .outputMode("update")
-            .option("truncate", "false")
-            .format("console")
-            .start()
 
         /*val distancelocal = typedOdom.select(distanceAgg)
         distancelocal.writeStream
