@@ -17,6 +17,7 @@ import transformations.TransWifi._
 import transformations.TransOdom._
 
 import aggregations.AggDistance
+import SendData._
 
 object SparkSort {
 
@@ -96,6 +97,7 @@ object SparkSort {
             .sort("window")
 
         val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
+        printStream(odom, "false")
 
         /*val distance = calcDistance(odom, spark, "secs", "nanoSecs", "positionX", "positionY", "positionZ")
         distance.writeStream
