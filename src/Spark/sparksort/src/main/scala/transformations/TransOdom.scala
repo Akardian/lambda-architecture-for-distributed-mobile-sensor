@@ -67,12 +67,12 @@ object TransOdom {
       * @param z Name for Column z
       * @return
       */
-    def calcDistance(dataframe: DataFrame, spark: SparkSession, secs: String, nSecs: String, x: String, y: String, z: String) : DataFrame = {
+    def calcDistance(dataframe: DataFrame, spark: SparkSession, secs: String, nSecs: String, senderName: String, x: String, y: String, z: String) : DataFrame = {
         import spark.implicits._
         
         //Create typed DataSet
         val typedOdom = dataframe.select(
-            col(N_SENDERNAME), 
+            col(senderName), 
             col(secs), 
             col(nSecs).as("nsecs"), 
             col(x).as("x"), 
@@ -82,7 +82,7 @@ object TransOdom {
 
         val my = udaf(AggDistance)
         val distance = typedOdom
-            .agg(my(col(N_ODEM_DATA), $"secs", $"nsecs", $"x", $"y", $"z"))
+            .agg(my($"secs", $"nsecs", col(senderName), $"x", $"y", $"z"))
 
         //val distanceAgg = AggDistance.toColumn.name("distance")
         //val distance = typedOdom

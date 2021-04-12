@@ -99,7 +99,7 @@ object SparkSort {
         val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
         printStream(odom, "false")
 
-        val distance = calcDistance(odom, spark, "secs", "nanoSecs", "positionX", "positionY", "positionZ")
+        val distance = calcDistance(odom, spark, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
         printStream(distance, "false")
 
 
