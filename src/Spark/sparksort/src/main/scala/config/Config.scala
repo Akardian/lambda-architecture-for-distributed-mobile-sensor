@@ -69,6 +69,8 @@ object Config {
         }
     }
     
+    case class SenderDistance(val secs: Long, val senderName: String, val distance: Double)
+
     case class Position(val x: Double, val y: Double, val z: Double)
     case class BufferPoints(var points: ArrayBuffer[OdomPoint])
 

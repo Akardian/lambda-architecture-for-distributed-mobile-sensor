@@ -80,10 +80,11 @@ object TransOdom {
             col(z).as("z")
         ).as[OdomPoint]
 
-        val distanceAgg = AggDistance.toColumn.name("distance")
-        val distance = typedOdom
-            .select(distanceAgg)
+        //val distanceAgg = AggDistance.toColumn.name("distance")
+        //val distance = typedOdom
+            //.select(distanceAgg)
 
-        distance
+        //distance
+        null
     }
 }

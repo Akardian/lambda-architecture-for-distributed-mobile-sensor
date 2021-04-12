@@ -85,40 +85,30 @@ object SparkSort {
 
         val avgWifi = calculateWifiAverage(toTime, N_AVG_WIFI, N_WIFI)
         avgWifi.printSchema()
-        avgWifi.writeStream
-            .outputMode("update")
-            .option("truncate", "true")
-            .format("console")
-            .start() 
         
         val sender = avgWifi
             .groupBy(N_SENDERNAME, N_LOCATION)
             .agg(max(N_TIMESTAMP_KAFKA_IN), max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
-        sender.writeStream
-            .outputMode("update")
-            .option("truncate", "false")
-            .format("console")
-            .start()
 
         val senderWindow = avgWifi
             .groupBy(window(col(N_TIMESTAMP_KAFKA_IN), "10 minute", "1 minute"), col(N_SENDERNAME), col(N_LOCATION))
             .agg(max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
             .sort("window")
-        senderWindow.writeStream
-            .outputMode("complete")
-            .option("truncate", "false")
-            .format("console")
-            .start()
 
         val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
-        odom.writeStream
+
+        /*val distance = calcDistance(odom, spark, "secs", "nanoSecs", "positionX", "positionY", "positionZ")
+        distance.writeStream
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
-            .start()
+            .start()*/
 
-        val distance = calcDistance(odom, spark, "secs", "nanoSecs", "positionX", "positionY", "positionZ")
-        distance.writeStream
+        //spark.udf.register("aggDistance", functions.udaf(AggDistance))
+        val group = odom
+            .agg(new AggDistance().toColumn())
+        
+        group.writeStream
             .outputMode("update")
             .option("truncate", "false")
             .format("console")
