@@ -9,7 +9,7 @@ import scala.math.sqrt
 import scala.collection.mutable.ArrayBuffer
 import org.apache.spark.sql.Row
 
-class AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
+object  AggDistance extends Aggregator[OdomPoint, BufferPoints, Double] {
 
     //Initial value of the intermediate results
     def zero: BufferPoints = {

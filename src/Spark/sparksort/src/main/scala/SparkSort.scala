@@ -107,8 +107,9 @@ object SparkSort {
             .start()*/
 
         //spark.udf.register("aggDistance", functions.udaf(AggDistance))
+        val my = udaf(AggDistance)
         val group = odom
-            .agg(new AggDistance().toColumn())
+            .agg(my($"secs", $"nsecs", $"x", $"y", $"z"))
         
         group.writeStream
             .outputMode("update")
