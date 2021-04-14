@@ -1,5 +1,3 @@
-package main
-
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming._
@@ -19,7 +17,7 @@ import transformations.TransWifi._
 import transformations.TransOdom._
 
 import aggregations.AggDistance
-import main.SendData._
+import sending.SendData._
 
 object SparkSort {
 
