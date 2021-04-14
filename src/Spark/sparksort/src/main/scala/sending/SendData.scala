@@ -43,7 +43,7 @@ object SendData {
 	  */
 	def sendStream(dataframe: DataFrame, outputMode: String, server: String, topic: String, checkpoint: String) {
         dataframe
-            .selectExpr("CAST(timestampKafkaIn AS STRING) as timestamp", "to_json(struct(*)) AS value")
+            .selectExpr("to_json(struct(*)) AS value")
             .writeStream
             .format("kafka")
             .outputMode(outputMode)
