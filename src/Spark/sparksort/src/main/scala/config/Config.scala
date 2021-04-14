@@ -16,6 +16,10 @@ object Config {
     val log = LogManager.getRootLogger
     val DEBUG = true
 
+    //Spark Checkpoints
+    val CHECKPOINT_HDFS = "hdfs://namenode:9000/user/haw/" + NAME + "/checkpoint/hdfs"
+    val CHECKPOINT_KAFKA = "hdfs://namenode:9000/user/haw/" + NAME + "/checkpoint/kafka"
+
     //Kafka Settings
     val GROUP_ID = "Spark-" + NAME
     val CONTEXT_NAME = NAME + "-consumer"
@@ -23,10 +27,18 @@ object Config {
     val BOOTSTRAP_SERVERS = "kafka01:9092";
     val TOPICS_INPUT = NAME + "-input"
 
+    //Topics and Checkpoints
     val TOPICS_WIFIDATA = NAME + "-wifiData-stream-output"
+    val CHECKPOINT_KAFKA_WIFIDATA = CHECKPOINT_KAFKA + TOPICS_WIFIDATA
+
     val TOPICS_WIFIANLY = NAME + "-wifiAnly-stream-output"
+    val CHECKPOINT_KAFKA_WIFIANLY = CHECKPOINT_KAFKA + TOPICS_WIFIANLY
+
     val TOPICS_ODOMCLEAN = NAME + "-wifiOdomClean-stream-output"
+    val CHECKPOINT_KAFKA_ODOMCLEAN = CHECKPOINT_KAFKA + TOPICS_ODOMCLEAN
+
     val TOPICS_ODOMDISTANCE = NAME + "-wifiOdomDistance-stream-output"
+    val CHECKPOINT_KAFKA_ODOMDISTANCE = CHECKPOINT_KAFKA + TOPICS_ODOMDISTANCE
     
     //Avro Schema
     val SCHEMA_PATH = "avro/FINDData.avsc"
@@ -35,10 +47,6 @@ object Config {
     val WATERMARK_SIZE = 5.seconds
     val WINDOW_SIZE = 10.seconds
     val SLIDE_SZIZE = 10.seconds
-
-    //Spark Checkpoints
-    val CHECKPOINT_HDFS = "hdfs://namenode:9000/user/haw/" + NAME + "/checkpoint/hdfs"
-    val CHECKPOINT_KAFKA = "hdfs://namenode:9000/user/haw/" + NAME + "/checkpoint/kafka"
 
     //HDFS Settings
     val HDFS_PATH = "hdfs://namenode:9000/user/haw/" + NAME + "/new-data"
@@ -59,7 +67,7 @@ object Config {
 
     //Case class section
 
-    //AggPoint
+    //AggDistance
     case class OdomPoint(val secs: Long, val nsecs: Long, val x: Double, val y: Double, val z: Double) extends Ordered[OdomPoint] {
         // return 0 if the same, negative if this < that, positive if this > that
         override def compare(that: OdomPoint): Int = {
