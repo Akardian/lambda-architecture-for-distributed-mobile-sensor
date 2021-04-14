@@ -80,14 +80,10 @@ object TransOdom {
             col(z).as("z")
         ).as[OdomPoint]
 
-        val my = udaf(AggDistance)
+        val udafDistance = udaf(AggDistance)
         val distance = typedOdom
             .groupBy(col(senderName))
-            .agg(my($"secs", $"nsecs", col(senderName), $"x", $"y", $"z"))
-
-        //val distanceAgg = AggDistance.toColumn.name("distance")
-        //val distance = typedOdom
-            //.select(distanceAgg)
+            .agg(max($"secs"), udafDistance($"secs", $"nsecs", $"x", $"y", $"z"))
 
         distance
     }

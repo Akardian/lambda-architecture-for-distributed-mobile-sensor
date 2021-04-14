@@ -42,8 +42,6 @@ object MyKafkaTest {
             .as[(String, Timestamp)]
         dataFrame.printSchema()
 
-        // Daten auf hadoop schreiben
-
         //Splitt words and keep timestamp
         val words = dataFrame
             .selectExpr("CAST(value AS STRING)", "CAST(timestamp AS Timestamp)")

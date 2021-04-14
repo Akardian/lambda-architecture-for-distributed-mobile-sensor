@@ -1,3 +1,5 @@
+package main
+
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming._
@@ -17,7 +19,7 @@ import transformations.TransWifi._
 import transformations.TransOdom._
 
 import aggregations.AggDistance
-import SendData._
+import main.SendData._
 
 object SparkSort {
 
@@ -84,6 +86,7 @@ object SparkSort {
 
         //Here would be the save to the HDFS
 
+        //
         val avgWifi = calculateWifiAverage(toTime, N_AVG_WIFI, N_WIFI)
         avgWifi.printSchema()
         
@@ -91,32 +94,18 @@ object SparkSort {
             .groupBy(N_SENDERNAME, N_LOCATION)
             .agg(max(N_TIMESTAMP_KAFKA_IN), max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
 
+        /*
         val senderWindow = avgWifi
             .groupBy(window(col(N_TIMESTAMP_KAFKA_IN), "10 minute", "1 minute"), col(N_SENDERNAME), col(N_LOCATION))
             .agg(max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
-            .sort("window")
+            .sort("window")*/
 
         val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
         printStream(odom, "false")
 
         val distance = calcDistance(odom, spark, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
         printStream(distance, "false")
-
-
-        /*val distancelocal = typedOdom.select(distanceAgg)
-        distancelocal.writeStream
-            .outputMode("update")
-            .option("truncate", "false")
-            .format("console")
-            .start()*/
-
-         /*val exMap = runningAverage(spark,avgWifi, N_TIMESTAMP_KAFKA_IN, N_AVG_WIFI)
-        exMap.writeStream
-            .outputMode("update")
-            .option("truncate", "false")
-            .format("console")
-            .start()*/
-         
+        
         spark.streams.awaitAnyTermination()
     }
 }
