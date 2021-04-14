@@ -20,12 +20,12 @@ object TransWifi {
       * @return Dataframe with new row
       */
     def calculateWifiAverage(dataframe: DataFrame, name: String, wifiColumn: String) : DataFrame = {
-        dataframe.withColumn(name, aggregate(
+        val avgWifi = dataframe.withColumn(name, aggregate(
             map_values(col(wifiColumn)), 
             lit(0), //set default value to 0
             (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col(wifiColumn)) //Calculate Average
         )
-        dataframe.drop(col(wifiColumn))
+        avgWifi.drop(col(wifiColumn))
     }
 
     /**
