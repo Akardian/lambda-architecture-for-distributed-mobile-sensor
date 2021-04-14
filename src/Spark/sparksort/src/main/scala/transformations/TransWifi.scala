@@ -14,17 +14,18 @@ object TransWifi {
     /**
       * Calculates the average wifi signal to all access points and writes it in new row
       *
-      * @param datafram DataFrame with a wifiData column
+      * @param dataframe DataFrame with a wifiData column
       * @param name Name of the new row
       * @param wifiColumn Name of the Wifi Data Column
       * @return Dataframe with new row
       */
-    def calculateWifiAverage(datafram: DataFrame, name: String, wifiColumn: String) : DataFrame = {
-        datafram.withColumn(name, aggregate(
+    def calculateWifiAverage(dataframe: DataFrame, name: String, wifiColumn: String) : DataFrame = {
+        dataframe.withColumn(name, aggregate(
             map_values(col(wifiColumn)), 
             lit(0), //set default value to 0
             (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col(wifiColumn)) //Calculate Average
         )
+        dataframe.drop(col(wifiColumn))
     }
 
     /**
