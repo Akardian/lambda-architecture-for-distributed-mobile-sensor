@@ -34,10 +34,10 @@ object Config {
     val TOPICS_WIFIANLY = NAME + "-wifiAnly-stream-output"
     val CHECKPOINT_KAFKA_WIFIANLY = CHECKPOINT_KAFKA + TOPICS_WIFIANLY
 
-    val TOPICS_ODOMCLEAN = NAME + "-wifiOdomClean-stream-output"
+    val TOPICS_ODOMCLEAN = NAME + "-OdomClean-stream-output"
     val CHECKPOINT_KAFKA_ODOMCLEAN = CHECKPOINT_KAFKA + TOPICS_ODOMCLEAN
 
-    val TOPICS_ODOMDISTANCE = NAME + "-wifiOdomDistance-stream-output"
+    val TOPICS_ODOMDISTANCE = NAME + "-OdomDist-stream-output"
     val CHECKPOINT_KAFKA_ODOMDISTANCE = CHECKPOINT_KAFKA + TOPICS_ODOMDISTANCE
     
     //Avro Schema
