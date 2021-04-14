@@ -22,7 +22,11 @@ object Config {
 
     val BOOTSTRAP_SERVERS = "kafka01:9092";
     val TOPICS_INPUT = NAME + "-input"
-    val TOPICS_OUTPUT = NAME + "-stream"
+
+    val TOPICS_WIFIDATA = NAME + "-wifiData-stream"
+    val TOPICS_WIFIANLY = NAME + "-wifiAnly-stream"
+    val TOPICS_ODOMCLEAN = NAME + "-wifiAnly-stream"
+    val TOPICS_ODOMDISTANCE = NAME + "-wifiAnly-stream"
     
     //Avro Schema
     val SCHEMA_PATH = "avro/FINDData.avsc"

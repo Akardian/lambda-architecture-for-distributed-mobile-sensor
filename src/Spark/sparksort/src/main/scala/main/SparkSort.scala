@@ -86,13 +86,16 @@ object SparkSort {
 
         //Here would be the save to the HDFS
 
-        //
+        //Calculate the average wifi strenght
         val avgWifi = calculateWifiAverage(toTime, N_AVG_WIFI, N_WIFI)
+        sendStream(avgWifi, BOOTSTRAP_SERVERS, TOPICS_WIFIDATA, CHECKPOINT_KAFKA)
         avgWifi.printSchema()
         
-        val sender = avgWifi
+        //Aggegrate diffrent analytics about the wifi strenght
+        val wifiData = avgWifi
             .groupBy(N_SENDERNAME, N_LOCATION)
             .agg(max(N_TIMESTAMP_KAFKA_IN), max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
+        sendStream(wifiData, BOOTSTRAP_SERVERS, TOPICS_WIFIANLY, CHECKPOINT_KAFKA)
 
         /*
         val senderWindow = avgWifi
@@ -100,11 +103,13 @@ object SparkSort {
             .agg(max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
             .sort("window")*/
 
+        //Explode the odometry data into a pretty table format
         val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
-        printStream(odom, "false")
+        sendStream(wifiData, BOOTSTRAP_SERVERS, TOPICS_ODOMCLEAN, CHECKPOINT_KAFKA)
 
+        //Calculate the driving distance based of the odometry data
         val distance = calcDistance(odom, spark, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
-        printStream(distance, "false")
+        sendStream(wifiData, BOOTSTRAP_SERVERS, TOPICS_ODOMDISTANCE, CHECKPOINT_KAFKA)
         
         spark.streams.awaitAnyTermination()
     }
