@@ -106,7 +106,6 @@ services:
             - -druid.processing.buffer.sizeBytes=500MiB
             - -druid.processing.numMergeBuffers=2
             - -druid.processing.numThreads=1
-            - -druid.processing.tmpDir=var/druid/processing
             - -druid.broker.cache.useCache=false
             - -druid.broker.cache.populateCache=false
         env_file:
