@@ -36,7 +36,7 @@ services:
             ZOO_LOG_LEVEL: DEBUG
 
     coordinator:
-        image: apache/druid:0.20.0
+        image: apache/druid:0.20.2
         hostname: coordinator
         restart: unless-stopped
         networks: 
@@ -57,7 +57,7 @@ services:
             - druid.env
 
     broker:
-        image: apache/druid:0.20.0
+        image: apache/druid:0.20.2
         hostname: broker
         restart: unless-stopped
         networks: 
@@ -71,11 +71,31 @@ services:
               published: 5100
         command:
             - broker
+            - -Xms4g
+            - -Xmx4g
+            - -XX:MaxDirectMemorySize=3g
+            - -XX:+ExitOnOutOfMemoryError
+            - -XX:+UseG1GC
+            - -Duser.timezone=UTC
+            - -Dfile.encoding=UTF-8
+            - -Djava.io.tmpdir=var/tmp
+            - -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager
+            - -druid.service=druid/broker
+            - -druid.plaintextPort=8082
+            - -druid.server.http.numThreads=50
+            - -druid.broker.http.numConnections=40
+            - druid.broker.http.maxQueuedBytes=5MiB
+            - -druid.processing.buffer.sizeBytes=500MiB
+            - -druid.processing.numMergeBuffers=2
+            - -druid.processing.numThreads=1
+            - -druid.processing.tmpDir=var/druid/processing
+            - -druid.broker.cache.useCache=false
+            - -druid.broker.cache.populateCache=false
         env_file:
             - druid.env
 
     router:
-        image: apache/druid:0.20.0
+        image: apache/druid:0.20.2
         hostname: router
         restart: unless-stopped
         networks: 
@@ -93,7 +113,7 @@ services:
             - druid.env
         
     middlemanager:
-        image: apache/druid:0.20.0
+        image: apache/druid:0.20.2
         hostname: middlemanager
         restart: unless-stopped
         networks: 
@@ -114,7 +134,7 @@ services:
             - druid.env
 
     historical:
-        image: apache/druid:0.20.0
+        image: apache/druid:0.20.2
         hostname: historical
         restart: unless-stopped
         networks:

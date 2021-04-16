@@ -1,1 +1,0 @@
-{"ingestionStatsAndErrors":{"taskId":"index_kafka_kafka-test-tranformed-topic_05108624cf66f9a_kfdnbmfp","payload":{"ingestionState":"COMPLETED","unparseableEvents":{},"rowStats":{"buildSegments":{"processed":20,"processedWithError":0,"thrownAway":0,"unparseable":0}},"errorMsg":null},"type":"ingestionStatsAndErrors"}}
