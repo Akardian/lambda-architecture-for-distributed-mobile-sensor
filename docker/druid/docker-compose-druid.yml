@@ -110,15 +110,11 @@ services:
               published: 5300
         command:
             - middleManager
-            - -druid.service=druid/middleManager
-            - -druid.plaintextPort=8091
             - -druid.worker.capacity=8
-            - -druid.indexer.task.baseTaskDir=var/druid/task
             - -druid.server.http.numThreads=50
             - -druid.indexer.fork.property.druid.processing.numMergeBuffers=2
             - -druid.indexer.fork.property.druid.processing.buffer.sizeBytes=100MiB
             - -druid.indexer.fork.property.druid.processing.numThreads=1
-            - -druid.indexer.task.hadoopWorkingPath=var/druid/hadoop-tmp
         env_file:
             - druid.env
 
