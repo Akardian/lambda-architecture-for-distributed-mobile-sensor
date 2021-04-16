@@ -53,6 +53,24 @@ services:
               published: 5000
         command:
             - coordinator
+            - -Xms4500m
+            - -Xmx4500m
+            - -XX:+ExitOnOutOfMemoryError
+            - -XX:+UseG1GC
+            - -Duser.timezone=UTC
+            - -Dfile.encoding=UTF-8
+            - -Djava.io.tmpdir=var/tmp
+            - -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager
+            - -Dderby.stream.error.file=var/druid/derby.log
+            - -druid.service=druid/coordinator
+            - - druid.plaintextPort=8081
+            - -druid.coordinator.startDelay=PT10S
+            - -druid.coordinator.period=PT5S
+            - -druid.coordinator.asOverlord.enabled=true
+            - -druid.coordinator.asOverlord.overlordService=druid/overlord
+            - -druid.indexer.queue.startDelay=PT5S
+            - -druid.indexer.runner.type=remote
+            - -druid.indexer.storage.type=metadata
         env_file: 
             - druid.env
 
@@ -109,6 +127,25 @@ services:
               published: 5200
         command:
             - router
+            - -Xms512m
+            - -Xmx512m
+            - -XX:+UseG1GC
+            - -XX:MaxDirectMemorySize=128m
+            - -XX:+ExitOnOutOfMemoryError
+            - -XX:+UseG1GC
+            - -Duser.timezone=UTC
+            - -Dfile.encoding=UTF-8
+            - -Djava.io.tmpdir=var/tmp
+            - -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager
+            - -druid.service=druid/router
+            - -druid.plaintextPort=8888
+            - -druid.router.http.numConnections=50
+            - -druid.router.http.readTimeout=PT5M
+            - -druid.router.http.numMaxThreads=100
+            - -druid.server.http.numThreads=100
+            - -druid.router.defaultBrokerServiceName=druid/broker
+            - -druid.router.coordinatorServiceName=druid/coordinator
+            - -druid.router.managementProxy.enabled=true
         env_file:
             - druid.env
         
@@ -129,7 +166,23 @@ services:
             - target: 8091
               published: 5300
         command:
-            - middleManager
+            - - middleManager
+            - -Xms128m
+            - -Xmx128m
+            - -XX:+ExitOnOutOfMemoryError
+            - -XX:+UseG1GC
+            - -Duser.timezone=UTC
+            - -Dfile.encoding=UTF-8
+            - -Djava.io.tmpdir=var/tmp
+            - -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager
+            - -druid.service=druid/middleManager
+            - -druid.plaintextPort=8091
+            - -druid.worker.capacity=3
+            - -druid.server.http.numThreads=50
+            - -druid.indexer.fork.property.druid.processing.numMergeBuffers=2
+            - -druid.indexer.fork.property.druid.processing.buffer.sizeBytes=100MiB
+            - -druid.indexer.fork.property.druid.processing.numThreads=1
+            - -druid.indexer.task.hadoopWorkingPath=var/druid/hadoop-tmp
         env_file:
             - druid.env
 
@@ -151,6 +204,26 @@ services:
               published: 5400
         command:
             - historical
+            - -Xms4g
+            - -Xmx4g
+            - -XX:MaxDirectMemorySize=8g
+            - -XX:+ExitOnOutOfMemoryError
+            - -XX:+UseG1GC
+            - -Duser.timezone=UTC
+            - -Dfile.encoding=UTF-8
+            - -Djava.io.tmpdir=var/tmp
+            - -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager
+            - -druid.service=druid/historical
+            - -druid.plaintextPort=8083
+            - -druid.server.http.numThreads=50
+            - -druid.processing.buffer.sizeBytes=500MiB
+            - -druid.processing.numMergeBuffers=2
+            - -druid.processing.numThreads=7
+            - - druid.processing.tmpDir=var/druid/processing
+            - -druid.historical.cache.useCache=true
+            - -druid.historical.cache.populateCache=true
+            - -druid.cache.type=caffeine
+            - -druid.cache.sizeInBytes=256MiB
         env_file:
            - druid.env
 
