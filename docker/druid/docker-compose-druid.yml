@@ -112,7 +112,7 @@ services:
             - middleManager
             - -druid.service=druid/middleManager
             - -druid.plaintextPort=8091
-            - druid.worker.capacity=8
+            - -druid.worker.capacity=8
             - -druid.indexer.task.baseTaskDir=var/druid/task
             - -druid.server.http.numThreads=50
             - -druid.indexer.fork.property.druid.processing.numMergeBuffers=2
