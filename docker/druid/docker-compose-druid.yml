@@ -110,11 +110,6 @@ services:
               published: 5300
         command:
             - middleManager
-            - -druid.worker.capacity=8
-            - -druid.server.http.numThreads=50
-            - -druid.indexer.fork.property.druid.processing.numMergeBuffers=2
-            - -druid.indexer.fork.property.druid.processing.buffer.sizeBytes=100MiB
-            - -druid.indexer.fork.property.druid.processing.numThreads=1
         env_file:
             - druid.env
 
