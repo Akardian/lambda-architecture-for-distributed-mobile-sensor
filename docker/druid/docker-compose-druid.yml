@@ -63,7 +63,7 @@ services:
             - -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager
             - -Dderby.stream.error.file=var/druid/derby.log
             - -druid.service=druid/coordinator
-            - - druid.plaintextPort=8081
+            - -druid.plaintextPort=8081
             - -druid.coordinator.startDelay=PT10S
             - -druid.coordinator.period=PT5S
             - -druid.coordinator.asOverlord.enabled=true
@@ -166,7 +166,7 @@ services:
             - target: 8091
               published: 5300
         command:
-            - - middleManager
+            - middleManager
             - -Xms128m
             - -Xmx128m
             - -XX:+ExitOnOutOfMemoryError
