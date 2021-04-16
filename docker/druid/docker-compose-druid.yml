@@ -53,10 +53,6 @@ services:
               published: 5000
         command:
             - coordinator
-            - -Xms4500m
-            - -Xmx4500m
-            - -XX:+ExitOnOutOfMemoryError
-            - -XX:+UseG1GC
         env_file: 
             - druid.env
 
@@ -75,11 +71,6 @@ services:
               published: 5100
         command:
             - broker
-            - -Xms4g
-            - -Xmx4g
-            - -XX:MaxDirectMemorySize=3g
-            - -XX:+ExitOnOutOfMemoryError
-            - -XX:+UseG1GC
         env_file:
             - druid.env
 
@@ -98,12 +89,6 @@ services:
               published: 5200
         command:
             - router
-            - -Xms512m
-            - -Xmx512m
-            - -XX:+UseG1GC
-            - -XX:MaxDirectMemorySize=128m
-            - -XX:+ExitOnOutOfMemoryError
-            - -XX:+UseG1GC
         env_file:
             - druid.env
         
@@ -125,10 +110,6 @@ services:
               published: 5300
         command:
             - middleManager
-            - -Xms128m
-            - -Xmx128m
-            - -XX:+ExitOnOutOfMemoryError
-            - -XX:+UseG1GC
         env_file:
             - druid.env
 
@@ -150,11 +131,6 @@ services:
               published: 5400
         command:
             - historical
-            - -Xms4g
-            - -Xmx4g
-            - -XX:MaxDirectMemorySize=8g
-            - -XX:+ExitOnOutOfMemoryError
-            - -XX:+UseG1GC
         env_file:
            - druid.env
 
