@@ -181,7 +181,6 @@ services:
             - -druid.indexer.fork.property.druid.processing.numMergeBuffers=2
             - -druid.indexer.fork.property.druid.processing.buffer.sizeBytes=100MiB
             - -druid.indexer.fork.property.druid.processing.numThreads=1
-            - -druid.indexer.task.hadoopWorkingPath=var/druid/hadoop-tmp
         env_file:
             - druid.env
 
@@ -218,7 +217,6 @@ services:
             - -druid.processing.buffer.sizeBytes=500MiB
             - -druid.processing.numMergeBuffers=2
             - -druid.processing.numThreads=7
-            - - druid.processing.tmpDir=var/druid/processing
             - -druid.historical.cache.useCache=true
             - -druid.historical.cache.populateCache=true
             - -druid.cache.type=caffeine
