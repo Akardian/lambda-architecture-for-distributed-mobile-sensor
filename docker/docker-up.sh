@@ -14,4 +14,4 @@ SPARK_CONTAINER=$(docker ps -q -n 1 -f name=spark_master*)
 docker exec -it spark_master_1 sbin/start-history-server.sh
 
 docker-compose --env-file ./.env -f druid/docker-compose-druid.yml up -d
-docker-compose --env-file ./.env -f dashboard/docker-compose-dasboard.yml up -d
+docker-compose --env-file ./.env -f dashboard/docker-compose-grafana.yml up -d
