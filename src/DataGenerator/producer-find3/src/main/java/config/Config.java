@@ -10,10 +10,10 @@ public interface Config {
     public final static int RANDOM_BOUND = 60;
     public final static int RANDOM_OFFSET = 30;
 
-    public final static int SET_SIZE = 1;
+    public final static int SET_SIZE = 100;
     public final static int SET_REPEATS = 1;
 
-    public final static int SLEEP_SECONDS = 4;
+    public final static int SLEEP_SECONDS = 10;
     public final static int SLEEP_MILLISECONDS = SLEEP_SECONDS * 1000;
 
     public final static String[] ACCESPOINTS = {
