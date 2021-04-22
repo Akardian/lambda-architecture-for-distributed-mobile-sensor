@@ -47,7 +47,7 @@ Business Context
 Technical Context    
 ---------------------
 
-![](https://raw.git
+![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/2-1TechnicalContext.png)
 
 <sub>Figure 2. Technical Context</sub>
 
