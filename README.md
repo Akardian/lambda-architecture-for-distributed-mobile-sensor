@@ -6,16 +6,14 @@ Introduction and Goals
 In "Internet of Things" setups large amounts of data are generate from sensors and communication. The large amount of data results in a high complexity which makes the data hard to handle and complex to analyse. Nathan Marz developed the lambda architecture to reduce the rising complexity. The lambda architecture duplicates the incoming data onto 2 path. The Batch layer and speed layer, this reduces the complexity of each path. The architecture is scalable and distributed which makes a good messenger important. We compared the wide spread Apache Kafka with new Apache Pulsar to find the differences between the messengers. 
 (TODO: Redo)
 
-Requirements Overview
----------------------
-    - Design and build a Lambda architecture
-        - Batch layer
-        - Speed layer
-        - Serving layer
-
-Quality Goals
--------------
-- working Lambda architecture
+Requirements Overview  
+-----------------------
+     
+- Batch layer
+- Speed layer
+- Serving layer
+- Dashboard
+- Test data generator
 
 Stakeholders
 ------------
@@ -25,14 +23,6 @@ Stakeholders
 | Mike Wüstenberg | Documentation, Research, Programing |
 
 <sub>Table 1. Stakeholder</sub>
-
-Architecture Constraints
-========================
-| Constraint | Explanation |
-|------------|-------------|
-| TODO:      |             |
-
-<sub>Table 2. Constraints</sub>
 
 System Scope and Context
 ========================
@@ -44,21 +34,21 @@ Business Context
 
 <sub>Figure 1. Business Context</sub>
 
-| Component           | Explanation                                                   |
-|---------------------|---------------------------------------------------------------|
-| Mobile Sensors      | Provides sonsore data for the lambda architecktuer            |
-| Test data generator | Generates test data for a comparison between Kafka and Pulsar |
-| User                | Views the data the lambda architecture provides               |
-| Lambda Architecktue | Stores and processes the collected data                       |
+| Component           | Explanation                                       |
+|---------------------|---------------------------------------------------|
+| Loomo               | Provides sonsore data such as Odometry data       |
+| Test Data Generator | Generates test data for testing and experiment's  |
+| Find3               | Provides WiFi signal data such as signal strength |
+| Lambda Architecktue | Stores and processes the collected data           |
+| Grafana Dashboard   | Visualisation of the data                         |
 
 <sub>Table 3. Business Context</sub>
 
-Technical Context
------------------
+Technical Context  
+-------------------
 ![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/2-1TechnicalContext.png)
 
 <sub>Figure 2. Technical Context</sub>
-TODO: Output Data from Serving Layer
 
 | Component           | Input                                    | Output                               |
 |---------------------|------------------------------------------|--------------------------------------|
@@ -69,7 +59,8 @@ TODO: Output Data from Serving Layer
 | Streaming Layer     | Raw Sensore Data from Messaging Service  | Saves data to HDFS                   |
 |                     | none                                     | Tranformed data to Messaging Service |
 | Master Data Storage | Raw Data from Streaming Layer            | Archived data to Batch Layer         |
-| Batch Layer         | Archived Date from Master Data Storage   | Transformed data to Serviing layer   |
+| Batch Layer         | Archived Date from Master Data Storage   | Transformed data to Serving layer    |
+| Grafana             | Processed data stored in Druid           | Dashboard                            |
 
 <sub>Table 4. Technical Context</sub>
 
@@ -95,6 +86,8 @@ Technologies
     - Spark Streaming
 - Serving Layer
     - Apache Druid
+- Visualisation
+    - Grafana Dashboard
 
 Building Block View {#section-building-block-view}
 ===================
