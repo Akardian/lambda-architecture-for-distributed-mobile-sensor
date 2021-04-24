@@ -133,7 +133,7 @@ The data is serialised into a "Avro" format and send to a "Kafka" service.
     {"name": "senderName", "type": "string", "doc": "Name of the sender"},
     {"name": "location", "type": "string", "doc": "Location of the device based on wifi data"},
     {"name": "findTimestamp", "type": "string", "doc": "Timestamp of data entry"},
-    {"name": "odomData", "type": { "type":"array", "items": "string"},"default": \[\]},
+    {"name": "odomData", "type": { "type":"array", "items": "string"},"default": []},
     {"name": "wifiData", "type": {"type": "map", "values": "int"}, "default": {}}
   ]
 }
