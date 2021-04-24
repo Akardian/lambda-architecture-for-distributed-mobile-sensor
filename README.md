@@ -124,6 +124,7 @@ The data is serialised into a "Avro" format and send to a "Kafka" service.
 | Config         | Configuration of Kafka connection address, batch size and more. |
 | KafkaUtil      | Utility methods for data generation                             |
 | AvroSerializer | Serializer for Java object into Avro byte stream                |
+
 <sub>Table 5. Producer-Find3 Blockview</sub>
 
 ##### Avro schema
