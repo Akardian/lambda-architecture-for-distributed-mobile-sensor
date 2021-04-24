@@ -68,4 +68,58 @@ public class KafkaUtil implements Config{
             "}";
         return json;
     }
+
+    public static AvroFIND3Data buildMessage(String senderName, String location, String timeStamp, Random rand) throws InterruptedException{
+		HashMap<String, Integer> wifiDataMap = new HashMap<String,Integer>();
+		for(int i = 0; i < ACCESPOINTS.length; i++) {
+			wifiDataMap.put(ACCESPOINTS[i], 0 - (rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET));
+		}
+
+		//Generate Odometry data
+		ArrayList<String> odomDataList = new ArrayList<String>();
+
+		var random = ThreadLocalRandom.current();
+		Instant now = Instant.now();
+		odomDataList.add(KafkaUtil.createJsonString(
+			random.nextDouble(0.0, 10.0), random.nextDouble(0.0, 10.0), 0.0, 
+			0.008384221233427525, 0.004507092293351889, 0.03855949640274048, 0.9992109537124634, 
+			seq, now.getEpochSecond(), now.getNano(), "base_link"));
+		seq++;
+		TimeUnit.MILLISECONDS.sleep(SLEEP_MILLISECONDS / 4);
+
+		now = Instant.now();
+		odomDataList.add(KafkaUtil.createJsonString(
+			random.nextDouble(10.0, 20.0), random.nextDouble(0.0, 10.0), 0.0, 
+			0.0083421990275383, 0.004321090877056122, 0.03856131061911583, 0.9992120862007141,
+			seq, now.getEpochSecond(), now.getNano(), "base_link"));
+		seq++;
+		TimeUnit.MILLISECONDS.sleep(SLEEP_MILLISECONDS / 4);
+
+		now = Instant.now();
+		odomDataList.add(KafkaUtil.createJsonString(
+			random.nextDouble(10.0, 20.0), random.nextDouble(10.0, 20.0), 0.0, 
+			0.008235296234488487, 0.0042941151186823845, 0.03856196999549866, 0.9992130398750305, 
+			seq, now.getEpochSecond(), now.getNano(), "base_link"));
+		seq++;
+		TimeUnit.MILLISECONDS.sleep(SLEEP_MILLISECONDS / 4);
+
+		now = Instant.now();
+		odomDataList.add(KafkaUtil.createJsonString(
+			random.nextDouble(10.0, 20.0), random.nextDouble(0.0, 10.0), 0.0,
+			0.00830506905913353, 0.004295618738979101, 0.038561683148145676, 0.9992125034332275, 
+			seq, now.getEpochSecond(), now.getNano(), "base_link"));
+		seq++;
+		TimeUnit.MILLISECONDS.sleep(SLEEP_MILLISECONDS / 4);
+
+		//Create message to be send
+        AvroFIND3Data testData = AvroFIND3Data.newBuilder() 
+            .setSenderName(senderName)
+            .setLocation(location)
+            .setFindTimestamp(timeStamp)
+            .setOdomData(odomDataList)
+            .setWifiData(wifiDataMap)
+            .build();
+
+        return testData;
+    }
 }

@@ -90,39 +90,66 @@ Technologies
 - Visualisation
     - Grafana Dashboard
 
-Building Block View {#section-building-block-view}
+Building Block View
 ===================
 
-Whitebox Overall System {#_whitebox_overall_system}
+todo: spark-streaming, spark-batch, spark-experiment
+Folder structure
+- src
+    - dataGenerator
+        - producer-find3
+    - spark
+
+Port View
 -----------------------
 
-***\<Overview Diagram\>***
 
-Motivation
 
-:   *\<text explanation\>*
+### producer-find3
 
-Contained Building Blocks
+##### Purpose
+This Java programs purpose is to generate consistent test data and send it via Kafka to the Lambda architecture. The test data is generated in random generate batches but each batch will look the same.
+The size and and number of batches send can be configured inside the program.
+The data is serialised into a "Avro" format and send to a "Kafka" service.
 
-:   *\<Description of contained building block (black boxes)\>*
+![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/4-1BlockviewProducerFind3.png)
 
-Important Interfaces
+<sub>Figure 4-1. Producer-Find3 Blockview</sub>
 
-:   *\<Description of important interfaces\>*
+| Component      | Purpose                                                         |
+|----------------|-----------------------------------------------------------------|
+| ProducerFIND3  | Build batch test data and send them to kafka                    |
+| Config         | Configuration of Kafka connection address, batch size and more. |
+| KafkaUtil      | Utility methods for data generation                             |
+| AvroSerializer | Serializer for Java object into Avro byte stream                |
+##### Avro schema
 
-### \<Name black box 1\> {#__name_black_box_1}
+```json
+{
+"type": "record",
+"name": "AvroFIND3Data",
+"namespace": "app.model.avro.generated",
+"fields": [
+    {"name": "senderName", "type": "string", "doc": "Name of the sender"},
+    {"name": "location", "type": "string", "doc": "Location of the device based on wifi data"},
+    {"name": "findTimestamp", "type": "string", "doc": "Timestamp of data entry"},
+    {"name": "odomData", "type": { "type":"array", "items": "string"},"default": \[\]},
+    {"name": "wifiData", "type": {"type": "map", "values": "int"}, "default": {}}
+  ]
+}
+```
 
-*\<Purpose/Responsibility\>*
+##### Data Generation
 
-*\<Interface(s)\>*
-
-*\<(Optional) Quality/Performance Characteristics\>*
-
-*\<(Optional) Directory/File Location\>*
-
-*\<(Optional) Fulfilled Requirements\>*
-
-*\<(optional) Open Issues/Problems/Risks\>*
+senderName: fixed name(Data01)
+location: fixed location(r287)
+findTimestamp: current Timestamp in epoch second format
+odomData: Json string containing 4 entrys of odometry data. Each entry contains x,y,z for position and x,y,z,w for its rotation. The rotation is a fixed double value. The position are randomly generated.
+    1. position between: x(00-10) and y(00-10)
+    2. position between: x(10-20) and y(00-10)
+    3. position between: x(10-20) and y(10-20)
+    4. position between: x(10-20) and y(0-10)
+wifiData: List of 18 access points with a double value between -30 and -90
 
 ### \<Name black box 2\> {#__name_black_box_2}
 
@@ -137,38 +164,6 @@ Important Interfaces
 ...
 
 ### \<Name interface m\> {#__name_interface_m}
-
-Level 2 {#_level_2}
--------
-
-### White Box *\<building block 1\>* {#_white_box_emphasis_building_block_1_emphasis}
-
-*\<white box template\>*
-
-### White Box *\<building block 2\>* {#_white_box_emphasis_building_block_2_emphasis}
-
-*\<white box template\>*
-
-...
-
-### White Box *\<building block m\>* {#_white_box_emphasis_building_block_m_emphasis}
-
-*\<white box template\>*
-
-Level 3 {#_level_3}
--------
-
-### White Box \<\_building block x.1\_\> {#_white_box_building_block_x_1}
-
-*\<white box template\>*
-
-### White Box \<\_building block x.2\_\> {#_white_box_building_block_x_2}
-
-*\<white box template\>*
-
-### White Box \<\_building block y.1\_\> {#_white_box_building_block_y_1}
-
-*\<white box template\>*
 
 Runtime View {#section-runtime-view}
 ============
