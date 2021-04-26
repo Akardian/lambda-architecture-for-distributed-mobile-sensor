@@ -1,13 +1,12 @@
 # lambda-architecture-for-distributed-mobile-sensor
 Lambda architecture for distributed mobile sensor
 
-Introduction and Goals
-====================
+## Introduction and Goals
+
 In "Internet of Things" setups large amounts of data are generate from sensors and communication. The large amount of data results in a high complexity which makes the data hard to handle and complex to analyse. Nathan Marz developed the lambda architecture to reduce the rising complexity. The lambda architecture duplicates the incoming data onto 2 path. The Batch layer and speed layer, this reduces the complexity of each path. The architecture is scalable and distributed which makes a good messenger important. We compared the wide spread Apache Kafka with new Apache Pulsar to find the differences between the messengers. 
 (TODO: Redo)
 
-Requirements Overview  
------------------------
+### Requirements Overview  
      
 - Batch layer
 - Speed layer
@@ -15,8 +14,7 @@ Requirements Overview
 - Dashboard
 - Test data generator
 
-Stakeholders
-------------
+### Stakeholders
 
 | Role/Name       | Description                         |
 |-----------------|-------------------------------------|
@@ -24,11 +22,10 @@ Stakeholders
 
 <sub>Table 1. Stakeholder</sub>
 
-System Scope and Context
-========================
+## System Scope and Context
 
-Business Context
-----------------
+
+### Business Context
 
 ![](https://github.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/blob/master/images/1-1BusinessContext.png?raw=true)
 
@@ -44,8 +41,7 @@ Business Context
 
 <sub>Table 3. Business Context</sub>
 
-Technical Context    
----------------------
+### Technical Context    
 
 ![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/2-1TechnicalContext.png)
 
@@ -65,10 +61,10 @@ Technical Context
 
 <sub>Table 4. Technical Context</sub>
 
-Solution Strategy
-=================
+# Solution Strategy
 
-Lambda Architecture
+### Lambda architecture
+
 ![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/3-1LambdaArchitecture.png)
 
 <sub>Figure 3-1. Lambda Architecture Clean</sub>
@@ -90,8 +86,7 @@ Technologies
 - Visualisation
     - Grafana Dashboard
 
-Building Block View
-===================
+## Building Block View
 
 todo: spark-streaming, spark-batch, spark-experiment
 Folder structure
@@ -101,11 +96,14 @@ Folder structure
     - spark
 
 
-Port View  
------------
-          
-(todo)
+### Port View
 
+The project start a variety of different docker container for its services. in the Diagram below(Figure 5-1) you can see the important Ports and communication connection between the containers and the world outside the "lambda-network". The "host_ip" represents the IP address of your docker host system and changes from system to system. 
+The "Kafka" container can be configured to listen to more then one IP address at a time and is so by default.
+
+![](https://raw.githubusercontent.com/Akardian/lambda-architecture-for-distributed-mobile-sensor/master/images/5-1PortView.png)
+
+<sub>Figure 5-1. Lambda Architecture Technology </sub>
 
 ### producer-find3
 
@@ -146,57 +144,40 @@ The data is serialised into a "Avro" format and send to a "Kafka" service.
 
 ##### Data Generation
 
-senderName: fixed name(Data01)
-location: fixed location(r287)
-findTimestamp: current Timestamp in epoch second format
-odomData: Json string containing 4 entrys of odometry data. Each entry contains x,y,z for position and x,y,z,w for its rotation. The rotation is a fixed double value. The position are randomly generated.
+- senderName: fixed name(Data01)
+- location: fixed location(r287)
+- findTimestamp: current Timestamp in epoch second format
+- odomData: Json string containing 4 entrys of odometry data. Each entry contains x,y,z for position and x,y,z,w for its rotation. The rotation is a fixed double value. The position are randomly generated.
 
     1. position between: x(00-10) and y(00-10)
     2. position between: x(10-20) and y(00-10)
     3. position between: x(10-20) and y(10-20)
     4. position between: x(10-20) and y(0-10)
 
-wifiData: List of 18 access points with a double value between -30 and -90
+- wifiData: List of 18 access points with a double value between -30 and -90
 
 ### \<Name black box 2\> {#__name_black_box_2}
 
-*\<black box template\>*
 
-### \<Name black box n\> {#__name_black_box_n}
+## Runtime View {#section-runtime-view}
 
-*\<black box template\>*
-
-### \<Name interface 1\> {#__name_interface_1}
-
-...
-
-### \<Name interface m\> {#__name_interface_m}
-
-Runtime View {#section-runtime-view}
-============
-
-\<Runtime Scenario 1\> {#__runtime_scenario_1}
-----------------------
+### \<Runtime Scenario 1\> {#__runtime_scenario_1}
 
 -   *\<insert runtime diagram or textual description of the scenario\>*
 
 -   *\<insert description of the notable aspects of the interactions
     between the building block instances depicted in this diagram.\>*
 
-\<Runtime Scenario 2\> {#__runtime_scenario_2}
-----------------------
+### \<Runtime Scenario 2\> {#__runtime_scenario_2}
 
 ... {#_}
----
 
-\<Runtime Scenario n\> {#__runtime_scenario_n}
-----------------------
 
-Deployment View {#section-deployment-view}
-===============
+### \<Runtime Scenario n\> {#__runtime_scenario_n}
 
-Infrastructure Level 1 {#_infrastructure_level_1}
-----------------------
+## Deployment View {#section-deployment-view}
+
+### Infrastructure Level 1 {#_infrastructure_level_1}
 
 ***\<Overview Diagram\>***
 
@@ -212,60 +193,49 @@ Mapping of Building Blocks to Infrastructure
 
 :   *\<description of the mapping\>*
 
-Infrastructure Level 2 {#_infrastructure_level_2}
-----------------------
+### Infrastructure Level 2 {#_infrastructure_level_2}
 
-### *\<Infrastructure Element 1\>* {#__emphasis_infrastructure_element_1_emphasis}
+#### *\<Infrastructure Element 1\>* {#__emphasis_infrastructure_element_1_emphasis}
 
 *\<diagram + explanation\>*
 
-### *\<Infrastructure Element 2\>* {#__emphasis_infrastructure_element_2_emphasis}
+#### *\<Infrastructure Element 2\>* {#__emphasis_infrastructure_element_2_emphasis}
 
 *\<diagram + explanation\>*
 
 ...
 
-### *\<Infrastructure Element n\>* {#__emphasis_infrastructure_element_n_emphasis}
+#### *\<Infrastructure Element n\>* {#__emphasis_infrastructure_element_n_emphasis}
 
 *\<diagram + explanation\>*
 
-Cross-cutting Concepts {#section-concepts}
-======================
+## Cross-cutting Concepts {#section-concepts}
 
-*\<Concept 1\>* {#__emphasis_concept_1_emphasis}
----------------
+### *\<Concept 1\>* {#__emphasis_concept_1_emphasis}
 
 *\<explanation\>*
 
-*\<Concept 2\>* {#__emphasis_concept_2_emphasis}
----------------
+### *\<Concept 2\>* {#__emphasis_concept_2_emphasis}
 
 *\<explanation\>*
 
 ...
 
-*\<Concept n\>* {#__emphasis_concept_n_emphasis}
----------------
+### *\<Concept n\>* {#__emphasis_concept_n_emphasis}
 
 *\<explanation\>*
 
-Design Decisions {#section-design-decisions}
-================
+## Design Decisions {#section-design-decisions}
 
-Quality Requirements {#section-quality-scenarios}
-====================
+## Quality Requirements {#section-quality-scenarios}
 
-Quality Tree {#_quality_tree}
-------------
+### Quality Tree {#_quality_tree}
 
-Quality Scenarios {#_quality_scenarios}
------------------
+### Quality Scenarios {#_quality_scenarios}
 
-Risks and Technical Debts {#section-technical-risks}
-=========================
+## Risks and Technical Debts {#section-technical-risks}
 
-Glossary {#section-glossary}
-========
+## Glossary {#section-glossary}
 
 +-----------------------------------+-----------------------------------+
 | Term                              | Definition                        |
