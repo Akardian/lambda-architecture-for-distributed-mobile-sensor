@@ -100,7 +100,7 @@ Folder structure
 
 The project start a variety of different docker container for its services. in the Diagram below(Figure 5-1) you can see the important Ports and communication connection between the containers and the world outside the "lambda-network". 
 
-The "host_ip" represents the IP address of your docker host system and changes from system to system. 
+The "host_ip" represents the IP address of your docker host system and changes depending on your host systems IP address. 
 
 The "Kafka" container can be configured to listen to more then one IP address at a time and is so by default.
 
