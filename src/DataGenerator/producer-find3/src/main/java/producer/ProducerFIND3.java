@@ -2,10 +2,7 @@ package producer;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.kafka.clients.producer.Producer;
@@ -40,7 +37,8 @@ public class ProducerFIND3 implements Config {
 			rand = new Random(RANDOM_SEED);
 
 			for(int s = 0; s < SET_SIZE; s++) {
-				AvroFIND3Data testData = buildMessage(CLIENT_ID, "r287", Long.toString(Instant.now().getEpochSecond()), rand);
+				AvroFIND3Data testData = KafkaUtil.buildMessage(CLIENT_ID, "r287", Long.toString(Instant.now().getEpochSecond()), rand, seq);
+				seq = seq + 4;
 				try {	
 					KafkaUtil.send(producer, testData);
 	

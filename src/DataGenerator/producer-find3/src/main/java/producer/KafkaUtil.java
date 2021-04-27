@@ -1,6 +1,12 @@
 package producer;
 
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -12,7 +18,6 @@ import org.apache.kafka.common.errors.ProducerFencedException;
 import org.apache.kafka.common.serialization.LongSerializer;
 
 import app.model.avro.generated.AvroFIND3Data;
-
 import config.Config;
 
 public class KafkaUtil implements Config{
@@ -69,7 +74,7 @@ public class KafkaUtil implements Config{
         return json;
     }
 
-    public static AvroFIND3Data buildMessage(String senderName, String location, String timeStamp, Random rand) throws InterruptedException{
+    public static AvroFIND3Data buildMessage(String senderName, String location, String timeStamp, Random rand, long seq) throws InterruptedException{
 		HashMap<String, Integer> wifiDataMap = new HashMap<String,Integer>();
 		for(int i = 0; i < ACCESPOINTS.length; i++) {
 			wifiDataMap.put(ACCESPOINTS[i], 0 - (rand.nextInt(RANDOM_BOUND)+RANDOM_OFFSET));
