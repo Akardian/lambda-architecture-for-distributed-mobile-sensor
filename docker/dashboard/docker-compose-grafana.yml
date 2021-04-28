@@ -19,7 +19,7 @@ services:
               source: ./grafana.ini
               target: /etc/grafana/grafana.ini
         environment:
-            GF_INSTALL_PLUGINS: "vonage-status-panel,isaozler-paretochart-panel,michaeldmoore-multistat-panel,grafana-piechart-panel,michaeldmoore-scatter-panel,factry-untimely-panel,novatec-sdg-panel,natel-plotly-panel,https://github.com/grafadruid/druid-grafana/releases/download/v1.0.3/grafadruid-druid-datasource-1.0.3.zip;druid-plugin"
+            GF_INSTALL_PLUGINS: "blackmirror1-statusbygroup-panel,vonage-status-panel,isaozler-paretochart-panel,michaeldmoore-multistat-panel,grafana-piechart-panel,michaeldmoore-scatter-panel,factry-untimely-panel,novatec-sdg-panel,natel-plotly-panel,https://github.com/grafadruid/druid-grafana/releases/download/v1.0.3/grafadruid-druid-datasource-1.0.3.zip;druid-plugin"
 
 
 volumes:
