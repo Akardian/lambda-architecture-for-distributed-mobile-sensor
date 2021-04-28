@@ -1,0 +1,985 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 2,
+  "iteration": 1619608085295,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "pconfig": {
+        "fixScale": "x",
+        "layout": {
+          "dragmode": "zoom",
+          "font": {
+            "family": "\"Open Sans\", Helvetica, Arial, sans-serif"
+          },
+          "hovermode": "closest",
+          "legend": {
+            "orientation": "h"
+          },
+          "showlegend": false,
+          "xaxis": {
+            "rangemode": "normal",
+            "showgrid": true,
+            "title": "positionX",
+            "type": "linear",
+            "zeroline": true
+          },
+          "yaxis": {
+            "rangemode": "normal",
+            "showgrid": true,
+            "title": "positionY",
+            "type": "linear",
+            "zeroline": true
+          },
+          "zaxis": {
+            "rangemode": "normal",
+            "showgrid": false,
+            "type": "linear",
+            "zeroline": true
+          }
+        },
+        "loadFromCDN": false,
+        "settings": {
+          "displayModeBar": true,
+          "type": "scatter"
+        },
+        "showAnnotations": false,
+        "traces": [
+          {
+            "mapping": {
+              "color": "__time",
+              "size": null,
+              "text": null,
+              "x": "positionX",
+              "y": "positionY",
+              "z": null
+            },
+            "name": "Trace 1",
+            "settings": {
+              "color_option": "ramp",
+              "line": {
+                "color": "#FF9830",
+                "dash": "solid",
+                "shape": "linear",
+                "width": 0.2
+              },
+              "marker": {
+                "color": "#33B5E5",
+                "colorscale": "RdBu",
+                "line": {
+                  "color": "#DDD",
+                  "width": 0
+                },
+                "showscale": false,
+                "size": 6,
+                "sizemin": 3,
+                "sizemode": "diameter",
+                "sizeref": 0.2,
+                "symbol": "circle"
+              }
+            },
+            "show": {
+              "line": true,
+              "lines": true,
+              "markers": true
+            }
+          }
+        ]
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "builder": {
+            "query": "SELECT  __time, positionX, positionY, senderName\nFROM \"test-OdomClean\"\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '8' HOUR",
+            "queryType": "sql"
+          },
+          "expr": "{\"builder\":{\"query\":\"SELECT  __time, positionX, positionY, senderName\\nFROM \\\"test-OdomClean\\\"\\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '8' HOUR\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
+          "refId": "A",
+          "settings": {
+            "contextParameters": [],
+            "format": "long"
+          }
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Loomo Data01 Path over the last 8 hours",
+      "transformations": [],
+      "type": "natel-plotly-panel",
+      "version": 1
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 5,
+      "pconfig": {
+        "fixScale": "x",
+        "layout": {
+          "dragmode": "zoom",
+          "font": {
+            "family": "\"Open Sans\", Helvetica, Arial, sans-serif"
+          },
+          "hovermode": "closest",
+          "legend": {
+            "orientation": "v"
+          },
+          "showlegend": false,
+          "xaxis": {
+            "rangemode": "normal",
+            "showgrid": true,
+            "title": "positionX",
+            "type": "linear",
+            "zeroline": false
+          },
+          "yaxis": {
+            "rangemode": "normal",
+            "showgrid": true,
+            "title": "positionY",
+            "type": "linear",
+            "zeroline": false
+          },
+          "zaxis": {
+            "rangemode": "normal",
+            "showgrid": false,
+            "type": "linear",
+            "zeroline": true
+          }
+        },
+        "loadFromCDN": false,
+        "settings": {
+          "displayModeBar": true,
+          "type": "scatter"
+        },
+        "showAnnotations": false,
+        "traces": [
+          {
+            "mapping": {
+              "color": "__time",
+              "size": null,
+              "text": null,
+              "x": "positionX",
+              "y": "positionY",
+              "z": null
+            },
+            "name": "Trace 1",
+            "settings": {
+              "color_option": "ramp",
+              "line": {
+                "color": "#FF9830",
+                "dash": "solid",
+                "shape": "linear",
+                "width": 0.3
+              },
+              "marker": {
+                "color": "#33B5E5",
+                "colorscale": "RdBu",
+                "line": {
+                  "color": "#DDD",
+                  "width": 0
+                },
+                "showscale": false,
+                "size": 8,
+                "sizemin": 3,
+                "sizemode": "diameter",
+                "sizeref": 0.2,
+                "symbol": "circle"
+              },
+              "textposition": "top"
+            },
+            "show": {
+              "line": true,
+              "lines": true,
+              "markers": true
+            }
+          }
+        ]
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "builder": {
+            "query": "SELECT  __time, positionX, positionY, senderName\nFROM \"test-OdomClean\"\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '1' DAY\nORDER BY __time desc\nLIMIT 100",
+            "queryType": "sql"
+          },
+          "expr": "{\"builder\":{\"query\":\"SELECT  __time, positionX, positionY, senderName\\nFROM \\\"test-OdomClean\\\"\\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '1' DAY\\nORDER BY __time desc\\nLIMIT 100\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
+          "refId": "A",
+          "settings": {
+            "contextParameters": [],
+            "format": "long"
+          }
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Loomo Data01 Path over the last 50 movements",
+      "transformations": [],
+      "type": "natel-plotly-panel",
+      "version": 1
+    },
+    {
+      "Aggregate": "last",
+      "BarPadding": 10,
+      "BaseLineColor": "#ff0000",
+      "BaseLineValue": null,
+      "BaseLineWidth": 1,
+      "CurveType": "Monotone",
+      "DateFormat": "YYYY-MM-DD HH:mm:ss",
+      "DateTimeColName": "__time",
+      "DotColor": "white",
+      "DotSize": 10,
+      "EvenRowColor": "rgba(61, 61, 64, 0.78)",
+      "FlashHighLimitBar": false,
+      "FlashLowLimitBar": false,
+      "GroupColName": "senderName",
+      "GroupCols": 1,
+      "GroupGap": 2,
+      "GroupLabelColor": "#ffffff",
+      "GroupLabelFontSize": "100%",
+      "GroupNameFilter": "",
+      "GroupRenamingRules": [],
+      "GroupSortString": "",
+      "HighAxisColor": "#ffffff",
+      "HighAxisWidth": 1,
+      "HighBarColor": "rgb(120, 128, 0)",
+      "HighLimitBarColor": "#ff0000",
+      "HighLimitBarFlashColor": "#ffa500",
+      "HighLimitBarFlashTimeout": 1000,
+      "HighLimitLineColor": "#ff0000",
+      "HighLimitValue": null,
+      "HighLmitLineWidth": 1,
+      "HighSideMargin": 60,
+      "Horizontal": false,
+      "LabelColName": "__time",
+      "LabelColor": "#ffffff",
+      "LabelFontSize": "100%",
+      "LabelMargin": null,
+      "LabelNameFilter": "",
+      "LabelRenamingRules": [
+        {
+          "enabled": false,
+          "from": "",
+          "to": ""
+        }
+      ],
+      "LableAngle": 0,
+      "Legend": false,
+      "LineColor": "blue",
+      "LineWidth": 5,
+      "Links": [],
+      "LowAxisColor": "#ffffff",
+      "LowAxisWidth": 1,
+      "LowBarColor": "teal",
+      "LowLimitBarColor": "#ff0000",
+      "LowLimitBarFlashColor": "#ffa500",
+      "LowLimitBarFlashTimeout": 200,
+      "LowLimitLineColor": "#ff0000",
+      "LowLimitValue": null,
+      "LowLmitLineWidth": 1,
+      "LowSideMargin": 60,
+      "MaxLineColor": "rgb(74, 232, 12)",
+      "MaxLineValue": null,
+      "MaxLineWidth": 1,
+      "MinLineColor": "#ff0000",
+      "MinLineValue": null,
+      "MinLineWidth": 1,
+      "MultiBarPadding": 10,
+      "OddRowColor": "rgba(33, 33, 34, 0.92)",
+      "OutOfRangeLabelColor": "#ffffff",
+      "OutlineColor": "rgba(245, 255, 0, 0.1)",
+      "RecolorColName": "__time",
+      "RecolorHighLimitBar": false,
+      "RecolorLowLimitBar": false,
+      "RecolorRules": [],
+      "ScaleFactor": 1,
+      "ShowBars": true,
+      "ShowBaseLine": false,
+      "ShowDate": false,
+      "ShowGroupLabels": true,
+      "ShowHighLimitLine": false,
+      "ShowLabels": false,
+      "ShowLeftAxis": true,
+      "ShowLines": false,
+      "ShowLowLimitLine": false,
+      "ShowMaxLine": true,
+      "ShowMinLine": true,
+      "ShowRightAxis": true,
+      "ShowValues": false,
+      "SortColName": "__time",
+      "SortDirection": "ascending",
+      "TZOffsetHours": 0,
+      "ToolTipFontSize": "100%",
+      "ToolTipType": "light",
+      "TooltipDateFormat": "YYYY-MM-DD HH:mm:ss",
+      "ValueColName": "",
+      "ValueColor": "#ffffff",
+      "ValueDecimals": 2,
+      "ValueFontSize": "70%",
+      "ValuePosition": "bar end",
+      "Values": [
+        {
+          "Col": 2,
+          "HighBarColor": "#8F3BB8",
+          "LowBarColor": "#5794F2",
+          "Name": "Distance",
+          "Selected": true
+        }
+      ],
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 0,
+        "y": 13
+      },
+      "id": 4,
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "builder": {
+            "query": "SELECT __time, senderName, \"aggdistance$(secs, nsecs, x, y, z)\" AS Distance\nFROM \"test-OdomDist\"\nWHERE senderName='${senderName}'",
+            "queryType": "sql"
+          },
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, senderName, \\\"aggdistance$(secs, nsecs, x, y, z)\\\" AS Distance\\nFROM \\\"test-OdomDist\\\"\\nWHERE senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
+          "hide": false,
+          "refId": "A",
+          "settings": {
+            "contextParameters": [],
+            "format": "long"
+          }
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Odometry Distance",
+      "transformations": [],
+      "type": "michaeldmoore-multistat-panel"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "decimals": 4,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": -90
+              },
+              {
+                "color": "#6ED0E0",
+                "value": -60
+              },
+              {
+                "color": "red",
+                "value": -30
+              }
+            ]
+          },
+          "unit": "dB"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 7,
+        "y": 13
+      },
+      "hiddenSeries": false,
+      "id": 8,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.7",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "sum_wifiAvg",
+          "transform": "negative-Y"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "builder": {
+            "query": "SELECT __time, senderName, sum_wifiAvg\nFROM \"test-wifiData\"\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY",
+            "queryType": "sql"
+          },
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, senderName, sum_wifiAvg\\nFROM \\\"test-wifiData\\\"\\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "refId": "A",
+          "settings": {}
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Wifi Strenght over TIme",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "dB",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "Aggregate": "last",
+      "BarPadding": 5,
+      "BaseLineColor": "#ff0000",
+      "BaseLineValue": null,
+      "BaseLineWidth": 1,
+      "CurveType": "Monotone",
+      "DateFormat": "YYYY-MM-DD HH:mm:ss",
+      "DateTimeColName": "",
+      "DotColor": "white",
+      "DotSize": 10,
+      "EvenRowColor": "rgba(61, 61, 64, 0.78)",
+      "FlashHighLimitBar": false,
+      "FlashLowLimitBar": false,
+      "GroupColName": "location",
+      "GroupCols": 0,
+      "GroupGap": 5,
+      "GroupLabelColor": "#ffffff",
+      "GroupLabelFontSize": "200%",
+      "GroupNameFilter": "",
+      "GroupRenamingRules": [],
+      "GroupSortString": "",
+      "HighAxisColor": "#ffffff",
+      "HighAxisWidth": 1,
+      "HighBarColor": "rgb(120, 128, 0)",
+      "HighLimitBarColor": "#ff0000",
+      "HighLimitBarFlashColor": "#ffa500",
+      "HighLimitBarFlashTimeout": 1000,
+      "HighLimitLineColor": "#ff0000",
+      "HighLimitValue": null,
+      "HighLmitLineWidth": 1,
+      "HighSideMargin": 25,
+      "Horizontal": false,
+      "LabelColName": "location",
+      "LabelColor": "#ffffff",
+      "LabelFontSize": "100%",
+      "LabelMargin": null,
+      "LabelNameFilter": "",
+      "LabelRenamingRules": [],
+      "LableAngle": 0,
+      "Legend": true,
+      "LineColor": "blue",
+      "LineWidth": 5,
+      "Links": [],
+      "LowAxisColor": "#ffffff",
+      "LowAxisWidth": 1,
+      "LowBarColor": "teal",
+      "LowLimitBarColor": "#ff0000",
+      "LowLimitBarFlashColor": "#ffa500",
+      "LowLimitBarFlashTimeout": 200,
+      "LowLimitLineColor": "#ff0000",
+      "LowLimitValue": null,
+      "LowLmitLineWidth": 1,
+      "LowSideMargin": 25,
+      "MaxLineColor": "rgb(74, 232, 12)",
+      "MaxLineValue": 100,
+      "MaxLineWidth": 1,
+      "MinLineColor": "#ff0000",
+      "MinLineValue": 0,
+      "MinLineWidth": 1,
+      "MultiBarPadding": 20,
+      "OddRowColor": "rgba(33, 33, 34, 0.92)",
+      "OutOfRangeLabelColor": "#ffffff",
+      "OutlineColor": "rgba(245, 255, 0, 0.1)",
+      "RecolorColName": "",
+      "RecolorHighLimitBar": false,
+      "RecolorLowLimitBar": false,
+      "RecolorRules": [],
+      "ScaleFactor": -1,
+      "ShowBars": true,
+      "ShowBaseLine": false,
+      "ShowDate": false,
+      "ShowGroupLabels": false,
+      "ShowHighLimitLine": false,
+      "ShowLabels": true,
+      "ShowLeftAxis": true,
+      "ShowLines": false,
+      "ShowLowLimitLine": false,
+      "ShowMaxLine": false,
+      "ShowMinLine": false,
+      "ShowRightAxis": true,
+      "ShowValues": true,
+      "SortColName": "location",
+      "SortDirection": "ascending",
+      "TZOffsetHours": 0,
+      "ToolTipFontSize": "100%",
+      "ToolTipType": "light",
+      "TooltipDateFormat": "YYYY-MM-DD HH:mm:ss",
+      "ValueColName": "",
+      "ValueColor": "#ffffff",
+      "ValueDecimals": 4,
+      "ValueFontSize": "100%",
+      "ValuePosition": "top",
+      "Values": [
+        {
+          "Col": 3,
+          "HighBarColor": "#C8F2C2",
+          "LowBarColor": "#C8F2C2",
+          "Name": "MIN",
+          "Selected": true
+        },
+        {
+          "Col": 2,
+          "HighBarColor": "#73BF69",
+          "LowBarColor": "#73BF69",
+          "Name": "AVG",
+          "Selected": true
+        },
+        {
+          "Col": 4,
+          "HighBarColor": "#56A64B",
+          "LowBarColor": "#37872D",
+          "Name": "MAX",
+          "Selected": true
+        }
+      ],
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "calculation": "mean",
+            "colorPalette": "interpolateSpectral",
+            "colorSpace": "rgb",
+            "filterable": false,
+            "groupBy": 60,
+            "invertPalette": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "id": 12,
+      "maxDataPoints": 100,
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "aggregation": "Sum",
+          "alias": "A",
+          "builder": {
+            "query": "SELECT __time, location, \"avg(wifiAvg)\" AS \"AVG\",  \"min(wifiAvg)\" AS \"MIN\", \"max(wifiAvg)\" AS \"MAX\", senderName\nFROM \"test-WifiAnalytics\"\nWHERE senderName='${senderName}'",
+            "queryType": "sql"
+          },
+          "crit": -80,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Always",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, location, \\\"avg(wifiAvg)\\\" AS \\\"AVG\\\",  \\\"min(wifiAvg)\\\" AS \\\"MIN\\\", \\\"max(wifiAvg)\\\" AS \\\"MAX\\\", senderName\\nFROM \\\"test-WifiAnalytics\\\"\\nWHERE senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "group": {
+            "alias": "location",
+            "name": "Status Checks",
+            "url": ""
+          },
+          "refId": "A",
+          "settings": {},
+          "units": "dB",
+          "valueHandler": "Number Threshold",
+          "warn": -60
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Wifi strength by location",
+      "type": "michaeldmoore-multistat-panel"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-YlBl"
+          },
+          "custom": {},
+          "decimals": 4,
+          "mappings": [],
+          "max": 0,
+          "min": -100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "dB"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 0,
+        "y": 18
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ],
+          "fields": "/^max\\(wifiAvg\\)$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "builder": {
+            "query": "SELECT __time, \"max(wifiAvg)\", senderName\nFROM \"test-WifiAnalytics\"\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'",
+            "queryType": "sql"
+          },
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"max(wifiAvg)\\\", senderName\\nFROM \\\"test-WifiAnalytics\\\"\\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "refId": "A",
+          "settings": {}
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Max Wifi Strenght",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-YlBl"
+          },
+          "custom": {},
+          "decimals": 4,
+          "mappings": [],
+          "max": 0,
+          "min": -100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": -100
+              },
+              {
+                "color": "#6ED0E0",
+                "value": -60
+              },
+              {
+                "color": "#EAB839",
+                "value": -30
+              }
+            ]
+          },
+          "unit": "dB"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 4,
+        "y": 18
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^avg\\(wifiAvg\\)$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "builder": {
+            "query": "SELECT __time, \"avg(wifiAvg)\", senderName\nFROM \"test-WifiAnalytics\"\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'",
+            "queryType": "sql"
+          },
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"avg(wifiAvg)\\\", senderName\\nFROM \\\"test-WifiAnalytics\\\"\\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "refId": "A",
+          "settings": {}
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Average Wifi Strenght",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-YlBl"
+          },
+          "custom": {},
+          "decimals": 4,
+          "mappings": [],
+          "max": 0,
+          "min": -100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": -100
+              },
+              {
+                "color": "#6ED0E0",
+                "value": -60
+              },
+              {
+                "color": "#EAB839",
+                "value": -30
+              }
+            ]
+          },
+          "unit": "dB"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 8,
+        "y": 18
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "min"
+          ],
+          "fields": "/^min\\(wifiAvg\\)$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "builder": {
+            "query": "SELECT __time, \"min(wifiAvg)\", senderName\nFROM \"test-WifiAnalytics\"\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'",
+            "queryType": "sql"
+          },
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"min(wifiAvg)\\\", senderName\\nFROM \\\"test-WifiAnalytics\\\"\\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "refId": "A",
+          "settings": {}
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Min Wifi Strenght",
+      "type": "stat"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 26,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "Data01",
+          "value": "Data01"
+        },
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Sender Name",
+        "multi": false,
+        "name": "senderName",
+        "options": [
+          {
+            "selected": true,
+            "text": "Data01",
+            "value": "Data01"
+          },
+          {
+            "selected": false,
+            "text": "Data02",
+            "value": "Data02"
+          }
+        ],
+        "query": "Data01, Data02",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "2021-01-20T10:21:37.936Z",
+    "to": "2021-07-23T20:04:00.912Z"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Experimental-Loomo",
+  "uid": "J7N3qDXGk",
+  "version": 26
+}

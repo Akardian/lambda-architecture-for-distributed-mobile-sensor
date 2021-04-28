@@ -37,7 +37,13 @@ public class ProducerFIND3 implements Config {
 			rand = new Random(RANDOM_SEED);
 
 			for(int s = 0; s < SET_SIZE; s++) {
-				AvroFIND3Data testData = KafkaUtil.buildMessage(CLIENT_ID, "r287", Long.toString(Instant.now().getEpochSecond()), rand, seq);
+				AvroFIND3Data testData = null;
+				if((s % 2) == 0) {
+					testData = KafkaUtil.buildMessage(CLIENT_ID, "r287", Long.toString(Instant.now().getEpochSecond()), rand, seq);
+				} else {
+					testData = KafkaUtil.buildMessage(CLIENT_ID, "r288", Long.toString(Instant.now().getEpochSecond()), rand, seq);
+				}
+				
 				seq = seq + 4;
 				try {	
 					KafkaUtil.send(producer, testData);
