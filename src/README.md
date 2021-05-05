@@ -14,8 +14,8 @@ This folder contains all projects which are connected to data generation or send
 
 ### spark folder
 
-- **sparkfind3**: Spark streaming project to read live "Ros" and find3 data from Kafka and process it.
-- **sparksort**: Experimental version of "sparkfind3" for testing.
+- **sparkFind3**: Spark streaming project to read live "Ros" and find3 data from Kafka and process it.
+- **sparkExperimental**: Experimental version of "sparkfind3" for testing.
 - **sparkWordcount**: Spark word count example.
 
     
