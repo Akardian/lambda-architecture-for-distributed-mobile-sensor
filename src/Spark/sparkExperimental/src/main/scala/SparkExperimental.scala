@@ -19,7 +19,7 @@ import transformations.TransOdom._
 import aggregations.AggDistance
 import sending.SendData._
 
-object SparkSort {
+object SparkExperimental {
 
     def main(args: Array[String]) {
         // Import config data
@@ -29,7 +29,7 @@ object SparkSort {
         log.setLevel(LOG_LEVEL)
 
         log.warn("###############################") 
-        log.warn("####### Worst Case Sort #######") 
+        log.warn("###### SparkExperimental ######") 
         log.warn("###############################")
 
         //BUild Spark Session
@@ -100,7 +100,8 @@ object SparkSort {
         val senderWindow = avgWifi
             .groupBy(window(col(N_TIMESTAMP_KAFKA_IN), "10 minute", "1 minute"), col(N_SENDERNAME), col(N_LOCATION))
             .agg(max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
-            .sort("window")*/
+            .sort("window")
+        */
 
         //Explode the odometry data into a pretty table format
         val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)

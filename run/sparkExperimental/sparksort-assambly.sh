@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Load Config"
-ENV_FILE=./sparksort.env
+ENV_FILE=./SparkExperimental.env
 
 DOCKER_COMPOSE=../docker-compose-sbt.yml
 DOCKERFILE=../.
