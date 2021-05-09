@@ -64,11 +64,11 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
     //Calculate Distance and reduce buffer size
     def sumDistanceBetween(buffer: BufferPointsLocal, bufferSize: Int): BufferPointsLocal = {
         while(buffer.points.size > 1 && buffer.points.size > bufferSize) {
-            val p1 = buffer.points(buffer.points.size)
-            val p2 = buffer.points(buffer.points.size - 1)
+            val p1 = buffer.points(buffer.points.size -1)
+            val p2 = buffer.points(buffer.points.size -2)
 
             buffer.distance +=  distanceBetween(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z)
-            buffer.points.drop(buffer.points.size)
+            buffer.points.drop(buffer.points.size -1)
         }
         buffer
     }
