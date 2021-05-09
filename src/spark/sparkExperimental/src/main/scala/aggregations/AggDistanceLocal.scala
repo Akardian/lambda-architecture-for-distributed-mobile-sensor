@@ -2,13 +2,12 @@ package aggregations
 
 import org.apache.spark.sql.{Encoder, Encoders, SparkSession}
 import org.apache.spark.sql.expressions.Aggregator
-import java.sql.Timestamp
 
-import  config.Config._
-import scala.collection.immutable.SortedSet
-
+import config.Config._
 import scala.math.pow
 import scala.math.sqrt
+import scala.collection.mutable.ArrayBuffer
+import org.apache.spark.sql.Row
 
 object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double] {
 
@@ -16,60 +15,70 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
     def zero: BufferPointsLocal = {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance zero #####")
         
-        val buffer = BufferPointsLocal(0.0, Position(Double.NaN, Double.NaN, Double.NaN))
+        val buffer = BufferPointsLocal(0, ArrayBuffer[OdomPoint]())
 
-        log.warn(DEBUG_MSG_AVG + buffer)
+        log.warn(DEBUG_MSG_AVG + "Points[" + buffer.points.length + "]")
         buffer
     }
 
     //aggegrate input value "wifiData" into current intermediate value "buffer"
     def reduce(buffer: BufferPointsLocal, odom: OdomPoint): BufferPointsLocal = {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance reduce #####")
-             
-        val nextPoint = Position(odom.x, odom.y, odom.z)
-        val next = 
-        if(buffer.position.x.isNaN()) {
-            BufferPointsLocal(0.0, nextPoint)
-        } else {
-            val distance = distanceBetween(buffer.position, nextPoint)
-            BufferPointsLocal(distance, nextPoint)
-        }
 
-        next
+        buffer.points += odom
+        buffer.points.sorted
+
+        sumDistanceBetween(buffer, AGGL_BUFFER_SIZE)
+
+        log.warn(DEBUG_MSG_AVG  + "Points[" + buffer.points.length + "]")
+        buffer
     }
 
     //Merge two intermediate value
     def merge(buffer1: BufferPointsLocal, buffer2: BufferPointsLocal): BufferPointsLocal = {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance merge #####")
         
-        val distance =
-        if(!buffer1.position.x.isNaN() || !buffer2.position.x.isNaN()) {
-            distanceBetween(buffer1.position, buffer2.position)
-        } else {
-            0.0
-        }
-
-        val out = BufferPointsLocal(buffer1.distance + buffer2.distance + distance, buffer1.position)
+        val buffer = BufferPointsLocal(0 ,buffer1.points ++ buffer2.points)
+        buffer.points.sorted
         
-        log.warn(DEBUG_MSG_AVG + out)
-        buffer1
+        sumDistanceBetween(buffer, AGGL_BUFFER_SIZE)
+
+        log.warn(DEBUG_MSG_AVG  + "Points[" + buffer.points.length + "]")
+        buffer
     }
 
     //Transforms the output of the reduction
     def finish(reduction: BufferPointsLocal): Double = {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance finish #####")
 
-        var sum = reduction.distance
-
-        log.warn(DEBUG_MSG_AVG + sum)
+        sumDistanceBetween(reduction, 1)
+        val sum = reduction.distance
+        
+        log.warn(DEBUG_MSG_AVG + "Distance[" + sum + "]")
         sum
     }
 
     def bufferEncoder: Encoder[BufferPointsLocal] = Encoders.product
     def outputEncoder: Encoder[Double] = Encoders.scalaDouble
 
+    //Calculate Distance and reduce buffer size
+    def sumDistanceBetween(buffer: BufferPointsLocal, bufferSize: Int): BufferPointsLocal = {
+        while(buffer.points.size > 1 && buffer.points.size > bufferSize) {
+            val p1 = buffer.points(buffer.points.size)
+            val p2 = buffer.points(buffer.points.size - 1)
+
+            buffer.distance +=  distanceBetween(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z)
+            buffer.points.drop(buffer.points.size)
+        }
+        buffer
+    }
+
     //https://www.calculatorsoup.com/calculators/geometry-solids/distance-two-points.php
     def distanceBetween(p1: Position, p2: Position): Double = {
-        sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2) + pow(p2.z - p1.z, 2))
+        distanceBetween(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z)
+    }
+
+    def distanceBetween(x1: Double, y1: Double, z1: Double, x2: Double, y2: Double, z2: Double): Double = {
+        sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) + pow(z2 - z1, 2))
     }
 }

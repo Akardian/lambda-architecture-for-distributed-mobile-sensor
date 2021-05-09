@@ -8,6 +8,7 @@ import org.apache.spark.sql.types._
 
 import config.Config._
 import aggregations.AggDistance
+import aggregations.AggDistanceLocal
 
 object TransOdom {
   
@@ -81,6 +82,27 @@ object TransOdom {
         ).as[OdomPoint]
 
         val udafDistance = udaf(AggDistance)
+        val distance = typedOdom
+            .groupBy(col(senderName))
+            .agg(max($"secs"), udafDistance($"secs", $"nsecs", $"x", $"y", $"z"))
+
+        distance
+    }
+
+    def calcDistanceLocal(dataframe: DataFrame, spark: SparkSession, secs: String, nSecs: String, senderName: String, x: String, y: String, z: String) : DataFrame = {
+        import spark.implicits._
+        
+        //Create typed DataSet
+        val typedOdom = dataframe.select(
+            col(senderName), 
+            col(secs), 
+            col(nSecs).as("nsecs"), 
+            col(x).as("x"), 
+            col(y).as("y"), 
+            col(z).as("z")
+        ).as[OdomPoint]
+
+        val udafDistance = udaf(AggDistanceLocal)
         val distance = typedOdom
             .groupBy(col(senderName))
             .agg(max($"secs"), udafDistance($"secs", $"nsecs", $"x", $"y", $"z"))

@@ -82,9 +82,12 @@ object Config {
     }
     
     case class Position(val x: Double, val y: Double, val z: Double)
-    case class BufferPoints(var points: ArrayBuffer[OdomPoint])
+    case class BufferPoints(var points: ArrayBuffer[OdomPoint])    
 
-    case class BufferPointsLocal(var distance: Double, var position: Position)
+    //AggDistanceLocal
+    val AGGL_BUFFER_SIZE = 50
+    
+    case class BufferPointsLocal(var distance: Double, var points: ArrayBuffer[OdomPoint])
 
     //AggRollingAvg
     case class AvgWifiData(var timestamp: Timestamp, var wifiAvg: Double, var runingAverage: Double)
