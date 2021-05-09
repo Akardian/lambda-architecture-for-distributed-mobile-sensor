@@ -1,4 +1,4 @@
-echo "Load SparkSort config"
+echo "Load SparkExperimental config"
 HDFS_CONTAINER=$(docker ps -q -n 1 -f name=hdfs_datanode*)
 SPARK_CONTAINER=$(docker ps -q -n 1 -f name=spark_master*)
 
@@ -10,7 +10,7 @@ HDFS_PATH=../haw/spark-jars
 HDFS_JAR=tmp/$JAR_NAME
 HDFS_USER=/user/haw
 
-SPARK_CLASS=SparkSort
+SPARK_CLASS=SparkExperimental
 SPARK_PATH=hdfs://namenode:9000/user/haw/spark-jars/$JAR_NAME
 
 . ./../submit.sh
