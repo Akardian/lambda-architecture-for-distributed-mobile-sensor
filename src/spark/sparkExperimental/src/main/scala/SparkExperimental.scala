@@ -113,11 +113,12 @@ object SparkExperimental {
         sendStream(distanceLocal, BOOTSTRAP_SERVERS, TOPICS_ODOMDISTANCE, CHECKPOINT_KAFKA_ODOMDISTANCE)
         distanceLocal.printSchema()
 
+        /*
         //Calculate the driving distance based of the odometry data
-        val odom2 = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
-        val distance = calcDistance(odom2, spark, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
+        val distance = calcDistance(odom, spark, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
         sendStream(distance, BOOTSTRAP_SERVERS, TOPICS_ODOMDISTANCE_EXACT, CHECKPOINT_KAFKA_ODOMDISTANCE_EXACT)
         distance.printSchema()
+        */
 
         spark.streams.awaitAnyTermination()
     }
