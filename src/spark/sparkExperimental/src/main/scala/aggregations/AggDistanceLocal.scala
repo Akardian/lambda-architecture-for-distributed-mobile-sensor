@@ -68,7 +68,9 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
             val p2 = buffer.points(buffer.points.size -2)
 
             buffer.distance +=  distanceBetween(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z)
-            buffer.points.remove(buffer.points.size -1)
+
+            val removed = buffer.points.remove(buffer.points.size -1)
+            log.warn(DEBUG_MSG_AVG + "Removed[" + removed.secs + "." + removed.nsecs + "]")
         }
         buffer
     }
