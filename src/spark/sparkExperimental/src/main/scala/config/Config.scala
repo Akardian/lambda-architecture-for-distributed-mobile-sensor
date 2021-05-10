@@ -39,6 +39,9 @@ object Config {
 
     val TOPICS_ODOMDISTANCE = NAME + "-OdomDist-stream-output"
     val CHECKPOINT_KAFKA_ODOMDISTANCE = CHECKPOINT_KAFKA + TOPICS_ODOMDISTANCE
+
+    val TOPICS_ODOMDISTANCE_EXACT = NAME + "-OdomDistExact-stream-output"
+    val CHECKPOINT_KAFKA_ODOMDISTANCE_EXACT = CHECKPOINT_KAFKA + TOPICS_ODOMDISTANCE
     
     //Avro Schema
     val SCHEMA_PATH = "avro/FINDData.avsc"

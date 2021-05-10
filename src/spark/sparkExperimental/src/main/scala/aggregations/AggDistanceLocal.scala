@@ -13,7 +13,7 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
 
     //Initial value of the intermediate results
     def zero: BufferPointsLocal = {
-        log.warn(DEBUG_MSG_AVG + "##### AggDistance zero #####")
+        log.warn(DEBUG_MSG_AVG + "##### AggDistance Local zero #####")
         
         val buffer = BufferPointsLocal(0, ArrayBuffer[OdomPoint]())
 
@@ -23,7 +23,7 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
 
     //aggegrate input value "wifiData" into current intermediate value "buffer"
     def reduce(buffer: BufferPointsLocal, odom: OdomPoint): BufferPointsLocal = {
-        log.warn(DEBUG_MSG_AVG + "##### AggDistance reduce #####")
+        log.warn(DEBUG_MSG_AVG + "##### AggDistance Local reduce #####")
 
         buffer.points += odom
         buffer.points.sorted
@@ -36,7 +36,7 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
 
     //Merge two intermediate value
     def merge(buffer1: BufferPointsLocal, buffer2: BufferPointsLocal): BufferPointsLocal = {
-        log.warn(DEBUG_MSG_AVG + "##### AggDistance merge #####")
+        log.warn(DEBUG_MSG_AVG + "##### AggDistance Local merge #####")
         
         val buffer = BufferPointsLocal(0 ,buffer1.points ++ buffer2.points)
         buffer.points.sorted
@@ -49,7 +49,7 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
 
     //Transforms the output of the reduction
     def finish(reduction: BufferPointsLocal): Double = {
-        log.warn(DEBUG_MSG_AVG + "##### AggDistance finish #####")
+        log.warn(DEBUG_MSG_AVG + "##### AggDistance Local finish #####")
 
         val sum = sumDistanceBetween(reduction, 1)
         
