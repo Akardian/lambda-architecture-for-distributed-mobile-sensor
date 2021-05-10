@@ -17,7 +17,7 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
         
         val buffer = BufferPointsLocal(0, ArrayBuffer[OdomPoint]())
 
-        log.warn(DEBUG_MSG_AVG + "Points[" + buffer.points.length + "]")
+        log.warn(DEBUG_MSG_AVG + "Points[" + buffer.points.length + "] Distance[" + buffer.distance + "]")
         buffer
     }
 
@@ -30,7 +30,7 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
 
         sumDistanceBetween(buffer, AGGL_BUFFER_SIZE)
 
-        log.warn(DEBUG_MSG_AVG  + "Points[" + buffer.points.length + "]")
+        log.warn(DEBUG_MSG_AVG  + "Points[" + buffer.points.length + "] Distance[" + buffer.distance + "]")
         buffer
     }
 
@@ -43,7 +43,7 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
         
         sumDistanceBetween(buffer, AGGL_BUFFER_SIZE)
 
-        log.warn(DEBUG_MSG_AVG  + "Points[" + buffer.points.length + "]")
+        log.warn(DEBUG_MSG_AVG  + "Points[" + buffer.points.length + "] Distance[" + buffer.distance + "]")
         buffer
     }
 
@@ -51,11 +51,11 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
     def finish(reduction: BufferPointsLocal): Double = {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance finish #####")
 
-        sumDistanceBetween(reduction, 1)
-        val sum = reduction.distance
+        val sum = sumDistanceBetween(reduction, 1)
         
-        log.warn(DEBUG_MSG_AVG + "Distance[" + sum + "]")
-        sum
+        log.warn(DEBUG_MSG_AVG + "Points[" + reduction.points.length + "Distance[" + reduction.distance + "]")
+        log.warn(DEBUG_MSG_AVG + "Points[" + sum.points.length + "Distance[" + sum.distance + "]")
+        sum.distance
     }
 
     def bufferEncoder: Encoder[BufferPointsLocal] = Encoders.product
