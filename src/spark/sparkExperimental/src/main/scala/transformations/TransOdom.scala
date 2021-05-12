@@ -68,13 +68,14 @@ object TransOdom {
       * @param z Name for Column z
       * @return
       */
-    def calcDistance(dataframe: DataFrame, spark: SparkSession, secs: String, nSecs: String, senderName: String, x: String, y: String, z: String) : DataFrame = {
+    def calcDistance(dataframe: DataFrame, spark: SparkSession, timestamp: String, secs: String, nSecs: String, senderName: String, x: String, y: String, z: String) : DataFrame = {
         import spark.implicits._
         
         //Create typed DataSet
         val typedOdom = dataframe.select(
+            col(timestamp),
             col(senderName), 
-            col(secs), 
+            col(secs).as("secs"), 
             col(nSecs).as("nsecs"), 
             col(x).as("x"), 
             col(y).as("y"), 
@@ -84,16 +85,16 @@ object TransOdom {
         val udafDistance = udaf(AggDistance)
         val distance = typedOdom
             .groupBy(col(senderName))
-            .agg(max($"secs"), udafDistance($"secs", $"nsecs", $"x", $"y", $"z"))
-
+            .agg(max($"timestamp"), udafDistance($"secs", $"nsecs", $"x", $"y", $"z"))
         distance
     }
 
-    def calcDistanceLocal(dataframe: DataFrame, spark: SparkSession, secs: String, nSecs: String, senderName: String, x: String, y: String, z: String) : DataFrame = {
+    def calcDistanceLocal(dataframe: DataFrame, spark: SparkSession, timestamp: String, secs: String, nSecs: String, senderName: String, x: String, y: String, z: String) : DataFrame = {
         import spark.implicits._
         
         //Create typed DataSet
         val typedOdom = dataframe.select(
+            col(timestamp),
             col(senderName), 
             col(secs), 
             col(nSecs).as("nsecs"), 
@@ -105,7 +106,7 @@ object TransOdom {
         val udafDistance = udaf(AggDistanceLocal)
         val distance = typedOdom
             .groupBy(col(senderName))
-            .agg(max($"secs"), udafDistance($"secs", $"nsecs", $"x", $"y", $"z"))
+            .agg(max($"timestamp"), udafDistance($"secs", $"nsecs", $"x", $"y", $"z"))
 
         distance
     }
