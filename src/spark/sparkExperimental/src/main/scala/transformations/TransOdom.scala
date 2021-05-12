@@ -85,7 +85,7 @@ object TransOdom {
         val udafDistance = udaf(AggDistance)
         val distance = typedOdom
             .groupBy(col(senderName))
-            .agg(max(col("timestamp")), udafDistance($"secs", $"nsecs", $"x", $"y", $"z"))
+            .agg(max(col(timestamp)), udafDistance($"secs", $"nsecs", $"x", $"y", $"z"))
         distance
     }
 
@@ -106,7 +106,7 @@ object TransOdom {
         val udafDistance = udaf(AggDistanceLocal)
         val distance = typedOdom
             .groupBy(col(senderName))
-            .agg(max(col("timestamp")), udafDistance($"secs", $"nsecs", $"x", $"y", $"z"))
+            .agg(max(col(timestamp)), udafDistance($"secs", $"nsecs", $"x", $"y", $"z"))
 
         distance
     }
