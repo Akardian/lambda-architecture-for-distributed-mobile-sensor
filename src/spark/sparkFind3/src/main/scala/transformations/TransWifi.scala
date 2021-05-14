@@ -7,7 +7,6 @@ import org.apache.spark.sql._
 import org.apache.spark.sql.types._
 
 import config.Config._
-import aggregations.AggRollingAvg
 
 object TransWifi {
   
