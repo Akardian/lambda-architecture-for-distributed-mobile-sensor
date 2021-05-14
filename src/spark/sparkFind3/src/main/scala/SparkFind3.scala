@@ -37,6 +37,17 @@ object SparkFind3 {
         import spark.implicits._
         log.warn(DEBUG_MSG + "Building Spark Session")
 
+        //Set Executer log level
+        spark.sparkContext.parallelize(Seq("")).foreachPartition(x => {
+            LogManager.getRootLogger().setLevel(LOG_LEVEL)
+
+            val log = LogFactory.getLog("EXECUTOR-LOG:")
+            log.warn(DEBUG_MSG + "Executer log level set to" + LOG_LEVEL)
+        })
+
+        log.warn("######### Sark Context Config #########")
+        log.warn(spark.sparkContext.getConf.toDebugString)
+
         //Read Avro Schema from Resource and convert it to a String
         val source = Source.fromResource(SCHEMA_PATH)
         log.warn(DEBUG_MSG + "Source is empty=" + source.isEmpty)
@@ -62,15 +73,14 @@ object SparkFind3 {
                 col("find3.odomData").as(N_ODEM_DATA),
                 col("find3.wifiData").as(N_WIFI)
             )
-            log.warn(DEBUG_MSG + "find3Data")
         
+        //Change format of the find timestamp
+        val toTime = epochToTimeStamp(avroDataFrame, N_TIMESTAMP_FIND, N_TIMESTAMP_FIND_UNIX)
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
-        val hdfsDataFrame = avroDataFrame
-            .withColumn(N_TIMESTAMP_HDFS, to_timestamp(date_trunc("hour", col(N_TIMESTAMP_KAFKA_IN)), "MM-dd-yyyy HH:mm"))
-            .withColumn(N_TIMESTAMP_FIND, to_timestamp(from_unixtime(col(N_TIMESTAMP_FIND)), "MM-dd-yyyy HH:mm:ss"))
+        val hdfsTime = shortenTimestamp(toTime, N_TIMESTAMP_HDFS, N_TIMESTAMP_KAFKA_IN)
 
         //Write RAW data to HDFS
-        hdfsDataFrame.writeStream  
+        hdfsTime.writeStream  
             .format("json")
             .outputMode("append")
             .partitionBy(N_TIMESTAMP_HDFS)
@@ -78,35 +88,27 @@ object SparkFind3 {
             .option("checkpointLocation", CHECKPOINT_HDFS)
             .start()
 
-        //Calcutlate Average of wifiData
-        val avgWifiData = hdfsDataFrame
-            .withColumn(N_AVG_WIFI, aggregate(
-                map_values(col(N_WIFI)), 
-                lit(0), //set default value to 0
-                (SUM, Y) => (SUM + Y)).cast(DoubleType) / size(col(N_WIFI)) //Calculate Average
-            )
-        avgWifiData.printSchema()
+        //Calculate the average wifi strenght
+        val avgWifi = calculateWifiAverage(toTime, N_AVG_WIFI, N_WIFI)
+        sendStream(avgWifi, BOOTSTRAP_SERVERS, TOPICS_WIFIDATA, CHECKPOINT_KAFKA_WIFIDATA)
+        avgWifi.printSchema()
+        
+        //Aggegrate diffrent analytics about the wifi strenght
+        val wifiData = avgWifi
+            .groupBy(N_SENDERNAME, N_LOCATION)
+            .agg(max(N_TIMESTAMP_KAFKA_IN), max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
+        sendStream(wifiData, BOOTSTRAP_SERVERS, TOPICS_WIFIANLY, CHECKPOINT_KAFKA_WIFIANLY)
+        wifiData.printSchema()
 
-        val out = avgWifiData.select(
-                col(N_TIMESTAMP_KAFKA_IN),
-                col(N_TIMESTAMP_FIND),
-                col(N_TIMESTAMP_HDFS),
-                col(N_SENDERNAME),
-                col(N_LOCATION),
-                col(N_ODEM_DATA),
-                col(N_WIFI),
-                col(N_AVG_WIFI)
-        )
-        //Write Data to Kafka
-        val query = out
-            .selectExpr("CAST(timestampKafkaIn AS STRING) as timestamp", "to_json(struct(*)) AS value")
-            .writeStream
-            .format("kafka")
-            .outputMode("update")
-            .option("kafka.bootstrap.servers", BOOTSTRAP_SERVERS)
-            .option("topic", TOPICS_OUTPUT)
-            .option("checkpointLocation", CHECKPOINT_KAFKA)
-            .start() 
+        //Explode the odometry data into a pretty table format
+        val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
+        sendStream(odom, BOOTSTRAP_SERVERS, TOPICS_ODOMCLEAN, CHECKPOINT_KAFKA_ODOMCLEAN)
+        odom.printSchema()
+
+        //Calculate the driving distance based of the odometry data
+        val distance = calcDistance(odom, spark, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
+        sendStream(distance, BOOTSTRAP_SERVERS, TOPICS_ODOMDISTANCE_EXACT, CHECKPOINT_KAFKA_ODOMDISTANCE_EXACT)
+        distance.printSchema()
         
         spark.streams.awaitAnyTermination()
     }
