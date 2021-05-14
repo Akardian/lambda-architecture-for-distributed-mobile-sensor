@@ -2,17 +2,77 @@
   "type": "kafka",
   "spec": {
     "dataSchema": {
-      "dataSource": "test-OdomDist",
+      "dataSource": "find3-OdomClean",
       "timestampSpec": {
-        "column": "max(timestampKafkaIn)",
+        "column": "timestampKafkaIn",
         "format": "iso",
         "missingValue": null
       },
       "dimensionsSpec": {
         "dimensions": [
           {
+            "type": "string",
+            "name": "frame_id",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "location",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "long",
+            "name": "nanoSecs",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": false
+          },
+          {
             "type": "double",
-            "name": "aggdistancelocal$(secs, nsecs, x, y, z)",
+            "name": "orientationW",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": false
+          },
+          {
+            "type": "double",
+            "name": "orientationX",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": false
+          },
+          {
+            "type": "double",
+            "name": "orientationY",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": false
+          },
+          {
+            "type": "double",
+            "name": "orientationZ",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": false
+          },
+          {
+            "type": "double",
+            "name": "positionX",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": false
+          },
+          {
+            "type": "double",
+            "name": "positionY",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": false
+          },
+          {
+            "type": "long",
+            "name": "positionZ",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": false
+          },
+          {
+            "type": "long",
+            "name": "secs",
             "multiValueHandling": "SORTED_ARRAY",
             "createBitmapIndex": false
           },
@@ -21,10 +81,16 @@
             "name": "senderName",
             "multiValueHandling": "SORTED_ARRAY",
             "createBitmapIndex": true
+          },
+          {
+            "type": "long",
+            "name": "seq",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": false
           }
         ],
         "dimensionExclusions": [
-          "max(timestampKafkaIn)"
+          "timestampKafkaIn"
         ]
       },
       "metricsSpec": [],
@@ -43,7 +109,7 @@
       }
     },
     "ioConfig": {
-      "topic": "find3Generator-OdomDist-stream-output",
+      "topic": "find3-OdomClean-stream-output",
       "inputFormat": {
         "type": "json",
         "flattenSpec": {
@@ -66,7 +132,7 @@
       "lateMessageRejectionPeriod": null,
       "earlyMessageRejectionPeriod": null,
       "lateMessageRejectionStartDateTime": null,
-      "stream": "find3Generator-OdomDist-stream-output",
+      "stream": "find3-OdomClean-stream-output",
       "useEarliestSequenceNumber": true,
       "type": "kafka"
     },
@@ -77,7 +143,7 @@
       "maxRowsPerSegment": 5000000,
       "maxTotalRows": null,
       "intermediatePersistPeriod": "PT10M",
-      "basePersistDirectory": "/opt/apache-druid-0.20.2/var/tmp/druid-realtime-persist7480688945019892566",
+      "basePersistDirectory": "/opt/apache-druid-0.20.2/var/tmp/druid-realtime-persist4285927126252792070",
       "maxPendingPersists": 0,
       "indexSpec": {
         "bitmap": {
