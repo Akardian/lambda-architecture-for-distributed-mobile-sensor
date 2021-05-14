@@ -1,20 +1,23 @@
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming._
+import org.apache.spark.sql._
+import org.apache.spark.sql.types._
 
 import org.apache.log4j.{Level, LogManager, PropertyConfigurator}
 import org.apache.spark.sql.avro.functions._
 
 import java.sql.Timestamp
-import java.nio.file.Paths
-import java.nio.file.Files
 import scala.io.Source
-import org.apache.commons.net.ntp.TimeStamp
-import org.apache.spark.sql.streaming.Trigger
-import org.apache.spark.sql.SaveMode
-import org.apache.spark.sql.streaming.OutputMode
-import java.util.HashMap
-import org.apache.spark.sql.types.DoubleType
-import org.apache.spark.sql.types.TimestampType
+
+import org.apache.commons.logging.LogFactory
+
+import transformations.TransTimestamp._
+import transformations.TransWifi._
+import transformations.TransOdom._
+
+import aggregations.AggDistance
+import sending.SendData._
 
 object SparkFind3 {
 
