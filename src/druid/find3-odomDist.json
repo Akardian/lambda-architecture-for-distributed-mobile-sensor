@@ -2,7 +2,7 @@
   "type": "kafka",
   "spec": {
     "dataSchema": {
-      "dataSource": "test-OdomDist",
+      "dataSource": "find3-OdomDist",
       "timestampSpec": {
         "column": "max(timestampKafkaIn)",
         "format": "iso",
@@ -12,7 +12,7 @@
         "dimensions": [
           {
             "type": "double",
-            "name": "aggdistancelocal$(secs, nsecs, x, y, z)",
+            "name": "aggdistance$(secs, nsecs, x, y, z)",
             "multiValueHandling": "SORTED_ARRAY",
             "createBitmapIndex": false
           },
@@ -43,7 +43,7 @@
       }
     },
     "ioConfig": {
-      "topic": "find3Generator-OdomDist-stream-output",
+      "topic": "find3-OdomDistExact-stream-output",
       "inputFormat": {
         "type": "json",
         "flattenSpec": {
@@ -66,7 +66,7 @@
       "lateMessageRejectionPeriod": null,
       "earlyMessageRejectionPeriod": null,
       "lateMessageRejectionStartDateTime": null,
-      "stream": "find3Generator-OdomDist-stream-output",
+      "stream": "find3-OdomDistExact-stream-output",
       "useEarliestSequenceNumber": true,
       "type": "kafka"
     },
@@ -77,7 +77,7 @@
       "maxRowsPerSegment": 5000000,
       "maxTotalRows": null,
       "intermediatePersistPeriod": "PT10M",
-      "basePersistDirectory": "/opt/apache-druid-0.20.2/var/tmp/druid-realtime-persist7480688945019892566",
+      "basePersistDirectory": "/opt/apache-druid-0.20.2/var/tmp/druid-realtime-persist336989408979476934",
       "maxPendingPersists": 0,
       "indexSpec": {
         "bitmap": {
