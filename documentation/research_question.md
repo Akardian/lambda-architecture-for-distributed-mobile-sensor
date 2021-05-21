@@ -50,31 +50,31 @@ For this aggregation to work it is necessary to sort(quadratic time) the entire 
 
 #### Tests
 
-| Messages every X Second | Number of executor |
-|-------------------------|--------------------|
-| 30                      | 1                  |
-| 30                      | 2                  |
-| 30                      | 4                  |
-|                         |                    |
-| 10                      | 1                  |
-| 10                      | 2                  |
-| 10                      | 4                  |
-|                         |                    |
-| 1                       | 1                  |
-| 1                       | 2                  |
-| 1                       | 4                  |
+To test the scalability we are going to scale 2 parameter. The first one is the number of executor running which allows for parallel calculations. The second parameter is the amount of messages which are send per second. The higher the amount of messages are send the higher the stress and the need to scale the system.
 
-#### Software Environment
+The output is going to be the processing time of the spark process. Combined with the number of send messages we can observe the processing time change over time.
 
-Messaging service: Apache Kafka
-Analytic engine: Apache Spark Streaming
+| Messages send every X seconds | Number of executor |
+|-------------------------------|--------------------|
+| 30                            | 1                  |
+| 30                            | 2                  |
+| 30                            | 4                  |
+|                               |                    |
+| 10                            | 1                  |
+| 10                            | 2                  |
+| 10                            | 4                  |
+|                               |                    |
+| 1                             | 1                  |
+| 1                             | 2                  |
+| 1                             | 4                  |
 
 #### Test Hardware
 
-CPU:
-RAM:
+- todo:
 
 ### Real World Sample Data
+
+```json
 {
     {
         "senderName": "maxpixel",
@@ -108,3 +108,4 @@ RAM:
         }
     }
 }
+```
