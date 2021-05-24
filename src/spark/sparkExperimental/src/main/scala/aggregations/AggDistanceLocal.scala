@@ -39,9 +39,9 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
     def merge(buffer1: BufferPointsLocal, buffer2: BufferPointsLocal): BufferPointsLocal = {
         log.warn(DEBUG_MSG_DIS + "##### AggDistance Local merge #####")
         
-        val buffer = BufferPointsLocal(0 ,buffer1.points ++ buffer2.points)
+        val buffer = BufferPointsLocal(buffer1.distance + buffer2.distance ,buffer1.points ++ buffer2.points)
         log.warn(DEBUG_MSG_DIS  + "Points[" + buffer.points.length + "] Distance[" + buffer.distance + "]")
-        
+
         buffer.points.sorted
         
         val sum = sumDistanceBetween(buffer, AGGL_BUFFER_SIZE)
