@@ -88,7 +88,7 @@ object Config {
     case class BufferPoints(var points: ArrayBuffer[OdomPoint])    
 
     //AggDistanceLocal
-    val AGGL_BUFFER_SIZE = 50
+    val AGGL_BUFFER_SIZE = 1
     
     case class BufferPointsLocal(val distance: Double, val points: ArrayBuffer[OdomPoint])
 
