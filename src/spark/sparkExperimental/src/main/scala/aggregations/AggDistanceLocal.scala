@@ -15,7 +15,7 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
     def zero: BufferPointsLocal = {
         log.warn(DEBUG_MSG_AVG + "##### AggDistance Local zero #####")
         
-        val buffer = BufferPointsLocal(0, ArrayBuffer[OdomPoint]())
+        val buffer = BufferPointsLocal(0.0, ArrayBuffer[OdomPoint]())
 
         log.warn(DEBUG_MSG_AVG + "Points[" + buffer.points.length + "] Distance[" + buffer.distance + "]")
         buffer
@@ -28,10 +28,10 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
         buffer.points += odom
         buffer.points.sorted
 
-        sumDistanceBetween(buffer, AGGL_BUFFER_SIZE)
+        val sum = sumDistanceBetween(buffer, AGGL_BUFFER_SIZE)
 
         log.warn(DEBUG_MSG_AVG  + "Points[" + buffer.points.length + "] Distance[" + buffer.distance + "]")
-        buffer
+        sum
     }
 
     //Merge two intermediate value
@@ -41,10 +41,10 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
         val buffer = BufferPointsLocal(0 ,buffer1.points ++ buffer2.points)
         buffer.points.sorted
         
-        sumDistanceBetween(buffer, AGGL_BUFFER_SIZE)
+        val sum = sumDistanceBetween(buffer, AGGL_BUFFER_SIZE)
 
         log.warn(DEBUG_MSG_AVG  + "Points[" + buffer.points.length + "] Distance[" + buffer.distance + "]")
-        buffer
+        sum
     }
 
     //Transforms the output of the reduction
@@ -63,16 +63,18 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
 
     //Calculate Distance and reduce buffer size
     def sumDistanceBetween(buffer: BufferPointsLocal, bufferSize: Int): BufferPointsLocal = {
-        while(buffer.points.size > 1 && buffer.points.size > bufferSize) {
+        var distance = buffer.distance
+         while(buffer.points.size > 1 && buffer.points.size > bufferSize) {
             val p1 = buffer.points(0) //Get first element
             val p2 = buffer.points(1) //Get second element
 
-            buffer.distance +=  distanceBetween(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z)
+            distance +=  distanceBetween(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z)
 
             val removed = buffer.points.remove(0) //Remove fist(oldest) element
             log.warn(DEBUG_MSG_AVG + "Removed[S:" + removed.secs + " N:" + removed.nsecs + "] PointXY[" + removed.x + "|" + removed.y + "]")
         }
-        buffer
+
+        BufferPointsLocal(distance, buffer.points)
     }
 
     //https://www.calculatorsoup.com/calculators/geometry-solids/distance-two-points.php

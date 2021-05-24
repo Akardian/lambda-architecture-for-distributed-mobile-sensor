@@ -90,7 +90,7 @@ object Config {
     //AggDistanceLocal
     val AGGL_BUFFER_SIZE = 50
     
-    case class BufferPointsLocal(var distance: Double, var points: ArrayBuffer[OdomPoint])
+    case class BufferPointsLocal(val distance: Double, val points: ArrayBuffer[OdomPoint])
 
     //AggRollingAvg
     case class AvgWifiData(var timestamp: Timestamp, var wifiAvg: Double, var runingAverage: Double)
