@@ -24,13 +24,14 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
     //aggegrate input value "wifiData" into current intermediate value "buffer"
     def reduce(buffer: BufferPointsLocal, odom: OdomPoint): BufferPointsLocal = {
         log.warn(DEBUG_MSG_DIS + "##### AggDistance Local reduce #####")
+        log.warn(DEBUG_MSG_DIS  + "Points[" + buffer.points.length + "] Distance[" + buffer.distance + "]")
 
         buffer.points += odom
         buffer.points.sorted
 
         val sum = sumDistanceBetween(buffer, AGGL_BUFFER_SIZE)
 
-        log.warn(DEBUG_MSG_DIS  + "Points[" + buffer.points.length + "] Distance[" + buffer.distance + "]")
+        log.warn(DEBUG_MSG_DIS  + "Sum Points[" + sum.points.length + "] Sum Distance[" + sum.distance + "]")
         sum
     }
 
@@ -39,11 +40,13 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
         log.warn(DEBUG_MSG_DIS + "##### AggDistance Local merge #####")
         
         val buffer = BufferPointsLocal(0 ,buffer1.points ++ buffer2.points)
+        log.warn(DEBUG_MSG_DIS  + "Points[" + buffer.points.length + "] Distance[" + buffer.distance + "]")
+        
         buffer.points.sorted
         
         val sum = sumDistanceBetween(buffer, AGGL_BUFFER_SIZE)
 
-        log.warn(DEBUG_MSG_DIS  + "Points[" + buffer.points.length + "] Distance[" + buffer.distance + "]")
+        log.warn(DEBUG_MSG_DIS  + "Sum Points[" + sum.points.length + "] Sum Distance[" + sum.distance + "]")
         sum
     }
 
@@ -71,7 +74,7 @@ object  AggDistanceLocal extends Aggregator[OdomPoint, BufferPointsLocal, Double
             distance +=  distanceBetween(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z)
 
             val removed = buffer.points.remove(0) //Remove fist(oldest) element
-            log.warn(DEBUG_MSG_DIS + "Sum Distance[" + distance + "]")
+            log.warn(DEBUG_MSG_DIS + "Sum Between Distance[" + distance + "]")
             //log.warn(DEBUG_MSG_AVG + "Removed[S:" + removed.secs + " N:" + removed.nsecs + "] PointXY[" + removed.x + "|" + removed.y + "]")
         }
 
