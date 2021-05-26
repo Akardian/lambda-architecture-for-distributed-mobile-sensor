@@ -8,6 +8,8 @@ import scala.collection.mutable.ArrayBuffer
 
 object Config {
     val NAME = "Find3Batch"
+    val HDFS_DATA = "find3Generator"
+
     //Logger Settings
     val DEBUG_MSG = "Find3: "
     val DEBUG_MSG_AVG = "Rolling-Avg-" + DEBUG_MSG
@@ -48,7 +50,7 @@ object Config {
     val SLIDE_SZIZE = 10.seconds
 
     //HDFS Settings
-    val HDFS_PATH = "hdfs://namenode:9000/user/haw/" + NAME
+    val HDFS_PATH = "hdfs://namenode:9000/user/haw/" + HDFS_DATA
     val HDFS_PATH_NEW = HDFS_PATH + "/new-data"
     val HDFS_PATH_TMP = HDFS_PATH + "/tmp-data"
 

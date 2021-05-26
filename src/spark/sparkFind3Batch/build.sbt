@@ -3,7 +3,7 @@ scalaVersion := "2.12.12"
 // ============================================================================
 
 val sparkVersion = "3.0.0"
-val projectName = "SparkFind3Batch"
+val projectName = "sparkFind3Batch"
 val projectVersion = "0.2"
 
 name := projectName
