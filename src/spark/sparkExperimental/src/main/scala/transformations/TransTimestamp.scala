@@ -19,7 +19,7 @@ object TransTimestamp {
     * @return DataFrame with new Timestamp Column
     */
     def shortenTimestamp(dataFrame: DataFrame, name: String, timeStampColumn: String) : DataFrame = {
-        dataFrame.withColumn(name, to_timestamp(date_trunc("hour", col(timeStampColumn)), "MM-dd-yyyy_HH-mm"))
+        dataFrame.withColumn(name, to_timestamp(date_trunc("hour", col(timeStampColumn)), "MM-dd-yyyy"))
     }
 
     /**
