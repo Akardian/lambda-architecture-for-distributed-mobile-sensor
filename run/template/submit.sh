@@ -13,4 +13,6 @@ HDFS_USER=/user/haw
 SPARK_CLASS=SparkSort
 SPARK_PATH=hdfs://namenode:9000/user/haw/spark-jars/$JAR_NAME
 
+EXECUTER_CORES=1
+
 . ./../submit.sh

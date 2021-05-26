@@ -10,7 +10,9 @@ HDFS_PATH=../haw/spark-jars
 HDFS_JAR=tmp/$JAR_NAME
 HDFS_USER=/user/haw
 
-SPARK_CLASS=SparkFind3
+SPARK_CLASS=SparkFind3Batch
 SPARK_PATH=hdfs://namenode:9000/user/haw/spark-jars/$JAR_NAME
+
+EXECUTER_CORES=4
 
 . ./../submit.sh
