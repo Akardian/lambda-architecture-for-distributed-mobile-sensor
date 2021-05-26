@@ -47,8 +47,7 @@ object SparkFind3Batch {
         // Create FileSystem object from Hadoop Configuration
         val fs = FileSystem.get(spark.sparkContext.hadoopConfiguration)
 
-        log.warn(DEBUG_MSG + "Wokring dir: " + fs.getWorkingDirectory())
-        log.warn(DEBUG_MSG + "Home dir: " + fs.getHomeDirectory)
+        log.warn(DEBUG_MSG + "Conf: " + fs.getConf())
 
         fs.setWorkingDirectory(new Path("file:///namenode:9000"))
 
