@@ -83,7 +83,7 @@ object SparkExperimental {
         val hdfsTime = shortenTimestamp(toTime, N_TIMESTAMP_HDFS, N_TIMESTAMP_KAFKA_IN)
 
         //Write RAW data to HDFS
-        hdfsTime.writeStream  
+        hdfsTime.writeStream
             .format("json")
             .outputMode("append")
             .partitionBy(N_TIMESTAMP_HDFS)
