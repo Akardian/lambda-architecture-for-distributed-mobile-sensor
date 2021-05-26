@@ -82,7 +82,14 @@ object SparkExperimental {
         //Create timestamp for HDS partition(Remove not allowed characters for HDFS)
         val hdfsTime = shortenTimestamp(toTime, N_TIMESTAMP_HDFS, N_TIMESTAMP_KAFKA_IN)
 
-        //Here would be the save to the HDFS
+        //Write RAW data to HDFS
+        hdfsTime.writeStream  
+            .format("json")
+            .outputMode("append")
+            .partitionBy(N_TIMESTAMP_HDFS)
+            .option("path", HDFS_PATH)
+            .option("checkpointLocation", CHECKPOINT_HDFS)
+            .start()
 
         //Calculate the average wifi strenght
         val avgWifi = calculateWifiAverage(toTime, N_AVG_WIFI, N_WIFI)
