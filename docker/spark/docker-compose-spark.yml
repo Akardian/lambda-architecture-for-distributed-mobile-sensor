@@ -42,8 +42,7 @@ services:
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
-            SPARK_WORKER_MEMORY: "8G"
-            SPARK_WORKER_CORES: "2"
+            SPARK_WORKER_CORES: "4"
             SPARK_RPC_AUTHENTICATION_ENABLED: "no"
             SPARK_RPC_ENCRYPTION_ENABLED: "no"
             SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
@@ -66,8 +65,7 @@ services:
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
-            SPARK_WORKER_MEMORY: "8G"
-            SPARK_WORKER_CORES: "2"
+            SPARK_WORKER_CORES: "4"
             SPARK_RPC_AUTHENTICATION_ENABLED: "no"
             SPARK_RPC_ENCRYPTION_ENABLED: "no"
             SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
@@ -90,8 +88,7 @@ services:
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
-            SPARK_WORKER_MEMORY: "8G"
-            SPARK_WORKER_CORES: "2"
+            SPARK_WORKER_CORES: "4"
             SPARK_RPC_AUTHENTICATION_ENABLED: "no"
             SPARK_RPC_ENCRYPTION_ENABLED: "no"
             SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
@@ -114,8 +111,7 @@ services:
         environment:
             SPARK_MODE: "worker"
             SPARK_MASTER_URL: "spark://master:7077"
-            SPARK_WORKER_MEMORY: "8G"
-            SPARK_WORKER_CORES: "2"
+            SPARK_WORKER_CORES: "4"
             SPARK_RPC_AUTHENTICATION_ENABLED: "no"
             SPARK_RPC_ENCRYPTION_ENABLED: "no"
             SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"

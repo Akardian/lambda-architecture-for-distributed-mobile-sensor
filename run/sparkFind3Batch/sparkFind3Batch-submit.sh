@@ -13,6 +13,7 @@ HDFS_USER=/user/haw
 SPARK_CLASS=SparkFind3Batch
 SPARK_PATH=hdfs://namenode:9000/user/haw/spark-jars/$JAR_NAME
 
-EXECUTER_CORES=2
+EXECUTER_CORES=1
+TOTAL_EXECUTER_CORES=2
 
 . ./../submit.sh
