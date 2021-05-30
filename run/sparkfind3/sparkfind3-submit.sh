@@ -14,6 +14,6 @@ SPARK_CLASS=SparkFind3
 SPARK_PATH=hdfs://namenode:9000/user/haw/spark-jars/$JAR_NAME
 
 EXECUTER_CORES=4
-TOTAL_EXECUTER_CORES=1
+TOTAL_EXECUTER_CORES=4
 
 . ./../submit.sh
