@@ -150,3 +150,7 @@ MarkDown
 - CodiMD
 - https://hackmd.io/
 - https://pandoc.org/MANUAL.html#slide-shows
+
+Sharding
+
+- https://blog.yugabyte.com/how-data-sharding-works-in-a-distributed-sql-database/
