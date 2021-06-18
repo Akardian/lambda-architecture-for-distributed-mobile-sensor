@@ -67,6 +67,7 @@ object SparkFind3Batch {
         //Save data back in a compacted format
         newData.write
             .format("json")
+            .option("saveMode.overwrite", "overwrite")
             .save(HDFS_PATH_SAVE)
     }
 }
