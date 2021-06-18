@@ -44,7 +44,7 @@ object Config {
     //HDFS Settings
     val HDFS_PATH_LOAD = "hdfs://namenode:9000/user/haw/" + HDFS_DATA + "/tmp-data"
     val HDFS_PATH_SAVE = "hdfs://namenode:9000/user/haw/" + HDFS_DATA + "/archive-data"
-    val HDFS_PATH_NEW = "/user/haw/" + HDFS_DATA + "/new-data/timestampnew*"
+    val HDFS_PATH_NEW = "/user/haw/" + HDFS_DATA + "/new-data/timestampne*"
     val HDFS_PATH_TMP = "/user/haw/" + HDFS_DATA + "/tmp-data"
 
     //Schama/column names
