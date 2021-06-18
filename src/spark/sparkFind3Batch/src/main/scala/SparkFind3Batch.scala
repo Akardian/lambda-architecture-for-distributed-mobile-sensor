@@ -56,6 +56,17 @@ object SparkFind3Batch {
 
         // Change file name from Spark generic to new one
         fs.rename(new Path(HDFS_PATH_NEW), new Path(HDFS_PATH_TMP))
-       
+
+        //Load data tmp data to compact
+        val newData = spark.read
+            .format("json")
+            .load(HDFS_PATH_LOAD)
+            
+        newData.printSchema()
+
+        //Save data back in a compacted format
+        newData.write
+            .format("json")
+            .save(HDFS_PATH_SAVE)
     }
 }

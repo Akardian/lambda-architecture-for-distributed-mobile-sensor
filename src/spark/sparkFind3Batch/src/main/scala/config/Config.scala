@@ -40,18 +40,11 @@ object Config {
 
     val TOPICS_ODOMDISTANCE_EXACT = NAME + "-OdomDistExact-stream-output"
     val CHECKPOINT_KAFKA_ODOMDISTANCE_EXACT = CHECKPOINT_KAFKA + TOPICS_ODOMDISTANCE
-    
-    //Avro Schema
-    val SCHEMA_PATH = "avro/FINDData.avsc"
-
-    //Spark timewindows
-    val WATERMARK_SIZE = 5.seconds
-    val WINDOW_SIZE = 10.seconds
-    val SLIDE_SZIZE = 10.seconds
 
     //HDFS Settings
-    val HDFS_PATH = "hdfs://namenode:9000/user/haw/" + HDFS_DATA
-    val HDFS_PATH_NEW = "/user/haw/" + HDFS_DATA + "/new-data"
+    val HDFS_PATH_LOAD = "hdfs://namenode:9000/user/haw/" + HDFS_DATA + "/tmp-data"
+    val HDFS_PATH_SAVE = "hdfs://namenode:9000/user/haw/" + HDFS_DATA + "/archive-data"
+    val HDFS_PATH_NEW = "/user/haw/" + HDFS_DATA + "/new-data/timestampnew*"
     val HDFS_PATH_TMP = "/user/haw/" + HDFS_DATA + "/tmp-data"
 
     //Schama/column names
