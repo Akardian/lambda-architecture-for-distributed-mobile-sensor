@@ -54,8 +54,8 @@ object SparkFind3Batch {
         log.warn(DEBUG_MSG + "Wokring dir: " + fs.getWorkingDirectory())
         log.warn(DEBUG_MSG + "Home dir: " + fs.getHomeDirectory)
 
-        // Change file name from Spark generic to new one
         fs.rename(new Path(HDFS_PATH_NEW), new Path(HDFS_PATH_TMP))
+        fs.rename(new Path(HDFS_PATH_TMP_META), new Path(HDFS_PATH_NEW_META))
 
         //Load data tmp data to compact
         val newData = spark.read
