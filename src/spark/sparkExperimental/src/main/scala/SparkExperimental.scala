@@ -61,6 +61,11 @@ object SparkExperimental {
         val jsonFormatSchema = source.mkString
         log.warn(DEBUG_MSG + "Json Schema Format\n" + jsonFormatSchema)
 
+        val conf = spark.sparkContext.hadoopConfiguration
+        conf.set("fs.defaultFS", "hdfs://namenode:9000/")
+
+        val fs = FileSystem.get(conf)
+
         
         var isStopped = false
         while (!isStopped) {
@@ -70,10 +75,9 @@ object SparkExperimental {
             if (isStopped) {
                 log.warn(DEBUG_MSG + "confirmed! The streaming context is stopped. Exiting application...")
             }
-            
+
             //Check shutdown marker
             if (fileExists) {
-                val fs = FileSystem.get(new Configuration())
                 fileExists = fs.exists(new Path(SHUTDOWN_MARKER))
             }
 

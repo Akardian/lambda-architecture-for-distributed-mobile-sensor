@@ -11,7 +11,7 @@ object Config {
 
     //Shutdown Config
     val SHUTDOWN_INTERVAL_CHECK = 10000
-    val SHUTDOWN_MARKER = "hdfs://namenode:9000/user/haw/" + NAME + "/checkpoint/marker/streamingShutdown"
+    val SHUTDOWN_MARKER = "/user/haw/" + NAME + "/checkpoint/marker/streamingShutdown"
 
     //Logger Settings
     val DEBUG_MSG = "Sort: "
