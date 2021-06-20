@@ -50,7 +50,8 @@ object SendData {
             .option("kafka.bootstrap.servers", server)
             .option("topic", topic)
             .option("checkpointLocation", checkpoint)
-            .start() 
+            .start()
+            .awaitTermination()
 	} 
 
 	/**

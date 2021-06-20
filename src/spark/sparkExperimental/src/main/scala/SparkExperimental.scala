@@ -65,33 +65,19 @@ object SparkExperimental {
         val fs = FileSystem.get(conf)
 
         var fileExists = true
-        var isStopped = false
-
-        while (!isStopped) {
+        while (fileExists) {
             //Run application and check for shutdown
-            isStopped = run(spark, jsonFormatSchema)
-            log.warn(DEBUG_MSG + "isStopped=" + isStopped)
-
-            if (isStopped) {
-                log.warn(DEBUG_MSG + "confirmed! The streaming context is stopped. Exiting application...")
-            }
+            run(spark, jsonFormatSchema)
 
             //Check shutdown marker
             if (fileExists) {
                 fileExists = fs.exists(new Path(SHUTDOWN_MARKER))
                 log.warn(DEBUG_MSG + "fileExists=" + fileExists)
             }
-
-            //Stop if marker file is non existent and is not already stopped
-            if (!isStopped && !fileExists) {
-                log.warn(DEBUG_MSG + "stopping spark session right now, isStopped [" + isStopped + "] fileExists [" + fileExists + "]")
-                //spark.sparkContext.stop()
-                log.warn(DEBUG_MSG + "Spark Context is stopped!!!!!!!")
-            }
         }        
     }
 
-    def run (spark: SparkSession, jsonFormatSchema: String): Boolean = {
+    def run (spark: SparkSession, jsonFormatSchema: String) = {
         import config.Config._
 
         // Subscribe to Kafka topic
@@ -127,6 +113,7 @@ object SparkExperimental {
             .option("path", HDFS_PATH)
             .option("checkpointLocation", CHECKPOINT_HDFS)
             .start()
+            .awaitTermination()
 
         //Calculate the average wifi strenght
         val avgWifi = calculateWifiAverage(toTime, N_AVG_WIFI, N_WIFI)
@@ -164,6 +151,6 @@ object SparkExperimental {
         distance.printSchema()
         */
 
-        spark.streams.awaitAnyTermination(SHUTDOWN_INTERVAL_CHECK)
+        //spark.streams.awaitAnyTermination()
     }
 }
