@@ -43,18 +43,6 @@ object SparkFind3Batch {
 
         log.warn("######### Sark Context Config #########")
         log.warn(spark.sparkContext.getConf.toDebugString)
-               
-        // Create FileSystem object from Hadoop Configuration
-        val conf = spark.sparkContext.hadoopConfiguration
-        conf.set("fs.defaultFS", "hdfs://namenode:9000/")
-
-        val fs = FileSystem.get(conf)
-
-        log.warn(DEBUG_MSG + "Conf: " + conf.get("fs.defaultFS"))
-        log.warn(DEBUG_MSG + "Wokring dir: " + fs.getWorkingDirectory())
-        log.warn(DEBUG_MSG + "Home dir: " + fs.getHomeDirectory)
-
-        fs.rename(new Path(HDFS_PATH_NEW), new Path(HDFS_PATH_TMP))
 
         //Load data tmp data to compact
         val newData = spark.read

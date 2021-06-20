@@ -26,7 +26,7 @@ else
     echo Is a batch Application
     driverid=`cat output | grep submissionId | grep -Po 'driver-\d+-\d+'`
     echo Submission ID is [$driverid]
-    docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit --kill $driverid
+    docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit --kill $driverid --master spark://master:7077
 
     echo Moving data to temporary folder
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW

@@ -44,11 +44,6 @@ object Config {
     //HDFS Settings
     val HDFS_PATH_LOAD = "hdfs://namenode:9000/user/haw/" + HDFS_DATA + "/tmp-data"
     val HDFS_PATH_SAVE = "hdfs://namenode:9000/user/haw/" + HDFS_DATA + "/archive-data"
-    val HDFS_PATH_NEW = "/user/haw/" + HDFS_DATA + "/new-data"
-    val HDFS_PATH_TMP = "/user/haw/" + HDFS_DATA + "/tmp-data"
-
-    val HDFS_PATH_NEW_META = "/user/haw/" + HDFS_DATA + "/new-data/_spark_metadata"
-    val HDFS_PATH_TMP_META = "/user/haw/" + HDFS_DATA + "/tmp-data/_spark_metadata"
 
     //Schama/column names
     val N_TIMESTAMP_KAFKA_IN = "timestampKafkaIn"
