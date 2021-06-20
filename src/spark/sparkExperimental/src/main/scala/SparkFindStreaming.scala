@@ -26,8 +26,8 @@ import config.{PathConfig, Config}
 object SparkFindStreaming {
 
     def main(args: Array[String]) {
-        val config = PathConfig(args(0))
-        import config._
+        val pathConfig = PathConfig(args(0))
+        import pathConfig._
         import Config._
 
         // Config Logs
@@ -67,7 +67,7 @@ object SparkFindStreaming {
         //Run Transformations
 
          // Subscribe to Kafka topic
-        log.warn(DEBUG_MSG + "Read stream from Kafka")
+        log.warn(DEBUG_MSG + "Read stream from Kafka Server[" + BOOTSTRAP_SERVERS + "] Topic[" + TOPICS_INPUT + "]")
         val avroDataFrame = spark
             .readStream
             .format("kafka")
