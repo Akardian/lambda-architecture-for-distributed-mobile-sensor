@@ -21,7 +21,7 @@ echo
 echo Check for Streaming Application [IS_STREAMING = $IS_STREAMING]
 if [ $IS_STREAMING = true ]
 then
-    echo Is a Streaming Application
+    # Streaming Application
 else
     echo Is a batch Application
     driverid=`cat output | grep submissionId | grep -Po 'driver-\d+-\d+'`

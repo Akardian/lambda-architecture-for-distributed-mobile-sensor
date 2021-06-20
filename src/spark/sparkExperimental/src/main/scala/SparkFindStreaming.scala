@@ -21,20 +21,22 @@ import sending.SendData._
 
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.hadoop.conf.Configuration
+import config.{PathConfig, Config}
 
 object SparkFindStreaming {
+
     def main(args: Array[String]) {
-        // Import config data
-        import config.Config._
-        
+        val config = PathConfig(args(0))
+        import config._
+        import Config._
+
         // Config Logs
         log.setLevel(LOG_LEVEL)
 
         log.warn("###############################") 
         log.warn("###### SparkExperimental ######") 
         log.warn("###############################")
-        log.warn("Name: " + args(0))
-        NAME = args(0)
+        log.warn("Name: " + NAME)
 
         //BUild Spark Session
         val spark = SparkSession
@@ -61,11 +63,13 @@ object SparkFindStreaming {
         val jsonFormatSchema = source.mkString
         log.warn(DEBUG_MSG + "Json Schema Format\n" + jsonFormatSchema)
 
-        run(spark, jsonFormatSchema)
+        //Run Transformations
+        run(spark, config, jsonFormatSchema)
     }
 
-    def run (spark: SparkSession, jsonFormatSchema: String) = {
-        import config.Config._
+    def run (spark: SparkSession, config: PathConfig, jsonFormatSchema: String) {
+        import config._
+        import Config._
 
         // Subscribe to Kafka topic
         log.warn(DEBUG_MSG + "Read stream from Kafka")
