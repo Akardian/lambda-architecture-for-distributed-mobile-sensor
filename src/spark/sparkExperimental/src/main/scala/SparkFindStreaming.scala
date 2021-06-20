@@ -99,7 +99,6 @@ object SparkFindStreaming {
             .option("path", HDFS_PATH)
             .option("checkpointLocation", CHECKPOINT_HDFS)
             .start()
-            .awaitTermination()
 
         //Calculate the average wifi strenght
         val avgWifi = calculateWifiAverage(toTime, N_AVG_WIFI, N_WIFI)
