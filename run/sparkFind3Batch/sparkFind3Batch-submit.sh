@@ -10,6 +10,11 @@ HDFS_PATH=../haw/spark-jars
 HDFS_JAR=tmp/$JAR_NAME
 HDFS_USER=/user/haw
 
+HDFS_PATH_NEW=../haw/find3Generator/new-data
+HDFS_PATH_TMP=../haw/find3Generator/tmp-data
+
+IS_STREAMING=false
+
 SPARK_CLASS=SparkFind3Batch
 SPARK_PATH=hdfs://namenode:9000/user/haw/spark-jars/$JAR_NAME
 

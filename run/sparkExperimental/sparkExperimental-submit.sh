@@ -7,9 +7,11 @@ JAR_NAME=SparkExperimental-0.1.jar
 FAT_JAR_PATH=../../src/spark/sparkExperimental/target/scala-2.12/$JAR_NAME
 
 HDFS_PATH=../haw/spark-jars
-HDFS_PATH_MARKER=../haw/find3Generator/checkpoint/marker
 HDFS_JAR=tmp/$JAR_NAME
 HDFS_USER=/user/haw
+
+HDFS_PATH_NEW=../haw/find3Generator/new-data
+HDFS_PATH_TMP=../haw/find3Generator/tmp-data
 
 IS_STREAMING=true
 

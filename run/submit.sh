@@ -21,9 +21,19 @@ echo
 echo Check for Streaming Application [IS_STREAMING = $IS_STREAMING]
 if [ $IS_STREAMING = true ]
 then
-    echo Create Shutdown Marker in [$HDFS_PATH_MARKER}
-    docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_MARKER
-    docker exec $HDFS_CONTAINER hdfs dfs -touchz $HDFS_PATH_MARKER/streamingShutdown
+    echo Is a Streaming Application
+else
+    echo Is a batch Application
+    driverid=`cat output | grep submissionId | grep -Po 'driver-\d+-\d+'`
+    echo Submission ID is [$driverid]
+    docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit --kill $driverid
+
+    echo Moving data to temporary folder
+    docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
+    docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_TMP
+
+    docker exec $HDFS_CONTAINER hadoop fs -rm  HDFS_PATH_NEW/_spark_metadata
+    docker exec $HDFS_CONTAINER hadoop fs -mv  HDFS_PATH_NEW HDFS_PATH_TMP
 fi
 echo
 
