@@ -23,8 +23,6 @@ import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.hadoop.conf.Configuration
 
 object SparkExperimental {
-    var fileExists = true
-
     def main(args: Array[String]) {
         // Import config data
         import config.Config._
@@ -66,11 +64,13 @@ object SparkExperimental {
 
         val fs = FileSystem.get(conf)
 
-        
+        var fileExists = true
         var isStopped = false
+
         while (!isStopped) {
             //Run application and check for shutdown
             isStopped = run(spark, jsonFormatSchema)
+            log.warn(DEBUG_MSG + "isStoppen=" + isStopped)
 
             if (isStopped) {
                 log.warn(DEBUG_MSG + "confirmed! The streaming context is stopped. Exiting application...")
@@ -83,7 +83,7 @@ object SparkExperimental {
 
             //Stop if marker file is non existent and is not already stopped
             if (!isStopped && !fileExists) {
-                log.warn(DEBUG_MSG + "stopping ssc right now")
+                log.warn(DEBUG_MSG + "stopping spark session right now, isStopped [" + isStopped + "] fileExists [" + fileExists + "]")
                 spark.sparkContext.stop()
                 log.warn(DEBUG_MSG + "Spark Context is stopped!!!!!!!")
             }
