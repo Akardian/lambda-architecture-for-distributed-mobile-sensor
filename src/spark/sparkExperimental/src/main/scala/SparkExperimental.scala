@@ -55,7 +55,7 @@ object SparkExperimental {
 
         //Read Avro Schema from Resource and convert it to a String
         val source = Source.fromResource(SCHEMA_PATH)
-        log.warn(DEBUG_MSG + "Source is empty=" + source.isEmpty)
+        log.warn(DEBUG_MSG + "Source is empty[" + source.isEmpty + "]")
         val jsonFormatSchema = source.mkString
         log.warn(DEBUG_MSG + "Json Schema Format\n" + jsonFormatSchema)
 
@@ -79,6 +79,7 @@ object SparkExperimental {
             //Check shutdown marker
             if (fileExists) {
                 fileExists = fs.exists(new Path(SHUTDOWN_MARKER))
+                log.warn(DEBUG_MSG + "fileExists=" + fileExists)
             }
 
             //Stop if marker file is non existent and is not already stopped
