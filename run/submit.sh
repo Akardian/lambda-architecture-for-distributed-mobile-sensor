@@ -39,3 +39,4 @@ docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
     $SPARK_PATH \
     > output 2>&1
     
+cat output
