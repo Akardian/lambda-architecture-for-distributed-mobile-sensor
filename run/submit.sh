@@ -22,8 +22,9 @@ if [ $IS_STREAMING = true ]
 then
     echo Create Shutdown Marker in [$HDFS_PATH_MARKER}
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_MARKER
-    docker exec $HDFS_CONTAINERhdfs dfs -touchz $HDFS_PATH_MARKER/streamingShutdown
+    docker exec $HDFS_CONTAINER hdfs dfs -touchz $HDFS_PATH_MARKER/streamingShutdown
 fi
+echo
 
 echo Submit jar file to Spark
 # Run on a Spark standalone cluster in cluster deploy mode
