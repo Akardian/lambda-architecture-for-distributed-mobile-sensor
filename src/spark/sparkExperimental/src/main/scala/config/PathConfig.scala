@@ -21,20 +21,17 @@ case class PathConfig (name: String) {
     val TOPICS_INPUT = NAME + "-input"
 
     //Topics and Checkpoints
-    val TOPICS_WIFIDATA = NAME + "-wifiData-stream-output"
+    val TOPICS_WIFIDATA = NAME + "-wifiData-output"
     val CHECKPOINT_KAFKA_WIFIDATA = CHECKPOINT_KAFKA + TOPICS_WIFIDATA
 
-    val TOPICS_WIFIANLY = NAME + "-wifiAnly-stream-output"
+    val TOPICS_WIFIANLY = NAME + "-wifiAnly-output"
     val CHECKPOINT_KAFKA_WIFIANLY = CHECKPOINT_KAFKA + TOPICS_WIFIANLY
 
-    val TOPICS_ODOMCLEAN = NAME + "-OdomClean-stream-output"
+    val TOPICS_ODOMCLEAN = NAME + "-OdomClean-output"
     val CHECKPOINT_KAFKA_ODOMCLEAN = CHECKPOINT_KAFKA + TOPICS_ODOMCLEAN
 
-    val TOPICS_ODOMDISTANCE = NAME + "-OdomDist-stream-output"
-    val CHECKPOINT_KAFKA_ODOMDISTANCE = CHECKPOINT_KAFKA + TOPICS_ODOMDISTANCE
-
-    val TOPICS_ODOMDISTANCE_EXACT = NAME + "-OdomDistExact-stream-output"
-    val CHECKPOINT_KAFKA_ODOMDISTANCE_EXACT = CHECKPOINT_KAFKA + TOPICS_ODOMDISTANCE    
+    val TOPICS_ODOMDISTANCE = NAME + "-OdomDist-output"
+    val CHECKPOINT_KAFKA_ODOMDISTANCE = CHECKPOINT_KAFKA + TOPICS_ODOMDISTANCE  
 
     //HDFS Settings
     val HDFS_PATH = "hdfs://namenode:9000/user/haw/" + NAME + "/new-data"
