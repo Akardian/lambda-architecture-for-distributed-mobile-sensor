@@ -51,7 +51,6 @@ object SendData {
             .option("topic", topic)
             .option("checkpointLocation", checkpoint)
             .start()
-            .awaitTermination()
 	} 
 
 	/**

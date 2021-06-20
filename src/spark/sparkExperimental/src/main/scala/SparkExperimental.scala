@@ -59,22 +59,7 @@ object SparkExperimental {
         val jsonFormatSchema = source.mkString
         log.warn(DEBUG_MSG + "Json Schema Format\n" + jsonFormatSchema)
 
-        val conf = spark.sparkContext.hadoopConfiguration
-        conf.set("fs.defaultFS", "hdfs://namenode:9000/")
-
-        val fs = FileSystem.get(conf)
-
-        var fileExists = true
-        while (fileExists) {
-            //Run application and check for shutdown
-            run(spark, jsonFormatSchema)
-
-            //Check shutdown marker
-            if (fileExists) {
-                fileExists = fs.exists(new Path(SHUTDOWN_MARKER))
-                log.warn(DEBUG_MSG + "fileExists=" + fileExists)
-            }
-        }        
+        run(spark, jsonFormatSchema)
     }
 
     def run (spark: SparkSession, jsonFormatSchema: String) = {
@@ -151,6 +136,6 @@ object SparkExperimental {
         distance.printSchema()
         */
 
-        //spark.streams.awaitAnyTermination()
+        spark.streams.awaitAnyTermination()
     }
 }
