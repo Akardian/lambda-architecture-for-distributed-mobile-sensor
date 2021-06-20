@@ -27,7 +27,7 @@ else
     driverid=`cat output | grep submissionId | grep -Po 'driver-\d+-\d+'`
     echo Submission ID is [$driverid]
     docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit --kill $driverid --master spark://master:7077
-
+    
     echo Moving data to temporary folder
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_TMP
@@ -43,7 +43,7 @@ docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
     --class $SPARK_CLASS \
     --master spark://master:7077 \
     --deploy-mode cluster \
-    --executor-memory 8G \
+    --executor-memory 32G \
     --executor-cores $EXECUTER_CORES \
     --total-executor-cores $TOTAL_EXECUTER_CORES \
     $SPARK_PATH \

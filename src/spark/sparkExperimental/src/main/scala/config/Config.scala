@@ -7,7 +7,7 @@ import org.apache.log4j.LogManager
 import scala.collection.mutable.ArrayBuffer
 
 object Config {
-    val NAME = "find3Generator"
+    var NAME = "defaultName"
 
     //Shutdown Config
     val SHUTDOWN_INTERVAL_CHECK = 10000

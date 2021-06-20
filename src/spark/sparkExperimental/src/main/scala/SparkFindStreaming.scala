@@ -22,7 +22,7 @@ import sending.SendData._
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.hadoop.conf.Configuration
 
-object SparkExperimental {
+object SparkFindStreaming {
     def main(args: Array[String]) {
         // Import config data
         import config.Config._
@@ -33,6 +33,8 @@ object SparkExperimental {
         log.warn("###############################") 
         log.warn("###### SparkExperimental ######") 
         log.warn("###############################")
+        log.warn("Name: " + args(0))
+        NAME = args(0)
 
         //BUild Spark Session
         val spark = SparkSession
