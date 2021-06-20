@@ -2,7 +2,7 @@ HDFS_CONTAINER=$(docker ps -q -n 1 -f name=hdfs_datanode*)
 SPARK_CONTAINER=$(docker ps -q -n 1 -f name=spark_master*)
 
 NAME=find3-streaming-test
-JAR_NAME=$NAME-0.1.jar
+JAR_NAME=SparkFindStreaming-0.1.jar
 
 FAT_JAR_PATH=../../src/spark/sparkExperimental/target/scala-2.12/$JAR_NAME
 
