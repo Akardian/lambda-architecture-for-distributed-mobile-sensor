@@ -63,15 +63,10 @@ object SparkFindStreaming {
         val jsonFormatSchema = source.mkString
         log.warn(DEBUG_MSG + "Json Schema Format\n" + jsonFormatSchema)
 
+
         //Run Transformations
-        run(spark, config, jsonFormatSchema)
-    }
 
-    def run (spark: SparkSession, config: PathConfig, jsonFormatSchema: String) {
-        import config._
-        import Config._
-
-        // Subscribe to Kafka topic
+         // Subscribe to Kafka topic
         log.warn(DEBUG_MSG + "Read stream from Kafka")
         val avroDataFrame = spark
             .readStream
