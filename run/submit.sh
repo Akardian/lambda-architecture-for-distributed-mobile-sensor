@@ -37,5 +37,5 @@ docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
     --executor-cores $EXECUTER_CORES \
     --total-executor-cores $TOTAL_EXECUTER_CORES \
     $SPARK_PATH \
-    output 2>&1
+    > output 2>&1
     
