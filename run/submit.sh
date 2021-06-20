@@ -1,3 +1,4 @@
+echo 
 echo Submit $JAR_NAME to Spark
 echo Found HDFS datanode: $HDFS_CONTAINER
 echo Found SPARK master: $SPARK_CONTAINER

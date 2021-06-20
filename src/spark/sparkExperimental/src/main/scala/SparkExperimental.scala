@@ -70,7 +70,7 @@ object SparkExperimental {
         while (!isStopped) {
             //Run application and check for shutdown
             isStopped = run(spark, jsonFormatSchema)
-            log.warn(DEBUG_MSG + "isStoppen=" + isStopped)
+            log.warn(DEBUG_MSG + "isStopped=" + isStopped)
 
             if (isStopped) {
                 log.warn(DEBUG_MSG + "confirmed! The streaming context is stopped. Exiting application...")
@@ -85,7 +85,7 @@ object SparkExperimental {
             //Stop if marker file is non existent and is not already stopped
             if (!isStopped && !fileExists) {
                 log.warn(DEBUG_MSG + "stopping spark session right now, isStopped [" + isStopped + "] fileExists [" + fileExists + "]")
-                spark.sparkContext.stop()
+                //spark.sparkContext.stop()
                 log.warn(DEBUG_MSG + "Spark Context is stopped!!!!!!!")
             }
         }        
