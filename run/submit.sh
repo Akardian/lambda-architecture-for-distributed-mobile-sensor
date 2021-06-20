@@ -46,7 +46,7 @@ docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
     --executor-memory 32G \
     --executor-cores $EXECUTER_CORES \
     --total-executor-cores $TOTAL_EXECUTER_CORES \
-    $SPARK_PATH \
+    $SPARK_PATH $NAME \
     > output 2>&1
     
 cat output
