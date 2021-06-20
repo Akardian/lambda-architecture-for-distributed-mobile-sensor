@@ -43,7 +43,7 @@ docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
     --class $SPARK_CLASS \
     --master spark://master:7077 \
     --deploy-mode cluster \
-    --executor-memory 32G \
+    --executor-memory 8G \
     --executor-cores $EXECUTER_CORES \
     --total-executor-cores $TOTAL_EXECUTER_CORES \
     $SPARK_PATH $NAME \
