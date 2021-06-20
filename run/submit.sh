@@ -8,7 +8,7 @@ echo Copy jar file to HDFS datanode
 docker cp $FAT_JAR_PATH $HDFS_CONTAINER:tmp/
 echo
 
-echo Create jar folder
+echo Create jar folder in [$HDFS_PATH]
 docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH
 echo
 
@@ -16,6 +16,14 @@ echo Copy jar file from local file system into HDFS
 docker exec $HDFS_CONTAINER hdfs dfs -put -f $HDFS_JAR $HDFS_PATH
 docker exec $HDFS_CONTAINER hadoop fs -chown -R haw:hadoop $HDFS_USER
 echo
+
+echo Check for Streaming Application [IS_STREAMING = $IS_STREAMING]
+if [ $IS_STREAMING = true ]
+then
+    echo Create Shutdown Marker in [$HDFS_PATH_MARKER}
+    docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_MARKER
+    docker exec $HDFS_CONTAINERhdfs dfs -touchz $HDFS_PATH_MARKER/streamingShutdown
+fi
 
 echo Submit jar file to Spark
 # Run on a Spark standalone cluster in cluster deploy mode

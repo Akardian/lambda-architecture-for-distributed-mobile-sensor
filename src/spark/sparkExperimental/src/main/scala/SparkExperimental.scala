@@ -19,7 +19,11 @@ import transformations.TransOdom._
 import aggregations.AggDistance
 import sending.SendData._
 
+import org.apache.hadoop.fs.{FileSystem, Path}
+import org.apache.hadoop.conf.Configuration
+
 object SparkExperimental {
+    var fileExists = true
 
     def main(args: Array[String]) {
         // Import config data
@@ -57,6 +61,34 @@ object SparkExperimental {
         val jsonFormatSchema = source.mkString
         log.warn(DEBUG_MSG + "Json Schema Format\n" + jsonFormatSchema)
 
+        
+        var isStopped = false
+        while (!isStopped) {
+            //Run application and check for shutdown
+            isStopped = run(spark, jsonFormatSchema)
+
+            if (isStopped) {
+                log.warn(DEBUG_MSG + "confirmed! The streaming context is stopped. Exiting application...")
+            }
+            
+            //Check shutdown marker
+            if (fileExists) {
+                val fs = FileSystem.get(new Configuration())
+                fileExists = fs.exists(new Path(SHUTDOWN_MARKER))
+            }
+
+            //Stop if marker file is non existent and is not already stopped
+            if (!isStopped && !fileExists) {
+                log.warn(DEBUG_MSG + "stopping ssc right now")
+                spark.sparkContext.stop()
+                log.warn(DEBUG_MSG + "Spark Context is stopped!!!!!!!")
+            }
+        }        
+    }
+
+    def run (spark: SparkSession, jsonFormatSchema: String): Boolean = {
+        import config.Config._
+
         // Subscribe to Kafka topic
         log.warn(DEBUG_MSG + "Read stream from Kafka")
         val avroDataFrame = spark
@@ -66,8 +98,8 @@ object SparkExperimental {
             .option("subscribe", TOPICS_INPUT)
             .load()
             .select(
-                $"timestamp", //Keep Kafka Timestamp
-                from_avro($"value", jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
+                col("timestamp"), //Keep Kafka Timestamp
+                from_avro(col("value"), jsonFormatSchema).as("find3")) //Convert avro schema to Spark Data
             .select( //Flatten data structure
                 col("timestamp").as(N_TIMESTAMP_KAFKA_IN),
                 col("find3.senderName").as(N_SENDERNAME),
@@ -127,6 +159,6 @@ object SparkExperimental {
         distance.printSchema()
         */
 
-        spark.streams.awaitAnyTermination()
+        spark.streams.awaitAnyTermination(SHUTDOWN_INTERVAL_CHECK)
     }
 }

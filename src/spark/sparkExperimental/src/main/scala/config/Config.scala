@@ -8,10 +8,16 @@ import scala.collection.mutable.ArrayBuffer
 
 object Config {
     val NAME = "find3Generator"
+
+    //Shutdown Config
+    val SHUTDOWN_INTERVAL_CHECK = 10000
+    val SHUTDOWN_MARKER = "hdfs://namenode:9000/user/haw/" + NAME + "/checkpoint/marker/streamingShutdown"
+
     //Logger Settings
     val DEBUG_MSG = "Sort: "
     val DEBUG_MSG_AVG = "Rolling-Avg-" + DEBUG_MSG
     val DEBUG_MSG_DIS = "Rolling-DIS-" + DEBUG_MSG
+
     val LOG_LEVEL = Level.WARN
     val log = LogManager.getRootLogger
     val DEBUG = true
