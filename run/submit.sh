@@ -24,7 +24,7 @@ then
     echo Streaming Application
 else
     echo Is a batch Application
-    driverid=grep -Po driver-[0-9]+-[0-9]+ output | head 1
+    driverid=cat output | grep -Po driver-[0-9]+-[0-9]+ | head -1
     echo Submission ID is [$driverid]
     docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit --kill $driverid --master spark://master:7077
     
