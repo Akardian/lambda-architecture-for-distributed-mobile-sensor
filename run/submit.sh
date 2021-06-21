@@ -30,6 +30,7 @@ else
     echo Kill $driverid
     docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
         --kill $driverid
+        --master spark://localhost:7077
     
     echo Moving data to temporary folder
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
