@@ -28,7 +28,7 @@ else
     echo Submission ID is [$driverid]
     echo     
     echo Kill $driverid
-    curl -X POST http://localhost:6066/v1/submissions/kill/$driverid
+    docker exec $HDFS_CONTAINER curl -X POST http://localhost:4040/v1/submissions/kill/$driverid
     
     echo Moving data to temporary folder
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
