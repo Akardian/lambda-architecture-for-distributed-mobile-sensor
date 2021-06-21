@@ -30,12 +30,14 @@ else
     echo Check Status
      docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
         --status $driverid \
-        --master spark://master:7077
+        --master spark://master:7077 \
+        --deploy-mode cluster
     
     echo Kill $driverid
     docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
         --kill $driverid \
-        --master spark://master:7077
+        --master spark://master:7077 \
+        --deploy-mode cluster
     
     echo Moving data to temporary folder
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
