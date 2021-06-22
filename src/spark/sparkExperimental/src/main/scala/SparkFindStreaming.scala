@@ -97,7 +97,7 @@ object SparkFindStreaming {
             .outputMode("append")
             //.partitionBy(N_TIMESTAMP_HDFS)
             .option("path", HDFS_PATH)
-            .option("checkpointLocation", CHECKPOINT_HDFS)
+            //.option("checkpointLocation", CHECKPOINT_HDFS)
             .start()
 
         //Calculate the average wifi strenght
