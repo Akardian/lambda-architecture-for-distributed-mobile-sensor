@@ -19,7 +19,7 @@ IS_STREAMING=false
 # Source and Destination path for new Data
 LOAD_DATA_FROM=find3Streaming-test
 
-HDFS_PATH_NEW="../haw/find3Streaming-test/new-data/timestamp*"
+HDFS_PATH_NEW="../haw/find3Streaming-test/new-data/*"
 HDFS_PATH_TMP=../haw/find3Streaming-test/tmp-data
 
 PATH_OUTPUT=../sparkExperimental/output
