@@ -32,12 +32,12 @@ else
     # --kill $driverid \
     # --master spark://master:7077
     
-    echo Moving data to temporary folder
+    echo Moving data from [$HDFS_PATH_NEW] to [$HDFS_PATH_TMP]
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_TMP
 
     # docker exec $HDFS_CONTAINER hadoop fs -rm  HDFS_PATH_NEW/_spark_metadata
-    docker exec $HDFS_CONTAINER hadoop fs -mv  HDFS_PATH_NEW HDFS_PATH_TMP
+    docker exec $HDFS_CONTAINER hadoop fs -mv  $HDFS_PATH_NEW $HDFS_PATH_TMP
 fi
 echo
 
