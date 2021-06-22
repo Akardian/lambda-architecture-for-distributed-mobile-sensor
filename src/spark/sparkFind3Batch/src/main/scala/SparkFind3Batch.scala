@@ -27,6 +27,7 @@ object SparkFind3Batch {
         log.warn("##############################") 
         log.warn("######### Find3Batch #########") 
         log.warn("##############################")
+        log.warn("NAME[" + NAME + "[ HDFS_DATA[" + HDFS_DATA +"]")
 
         //BUild Spark Session
         val spark = SparkSession
