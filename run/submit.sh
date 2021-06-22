@@ -34,6 +34,8 @@ else
     
     echo Moving data from [$HDFS_PATH_NEW] to [$HDFS_PATH_TMP]
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
+        
+    docker exec $HDFS_CONTAINER hadoop fs -rm -R $HDFS_PATH_TMP
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_TMP
 
     docker exec $HDFS_CONTAINER hadoop fs -mv  "$HDFS_PATH_NEW/part*" $HDFS_PATH_TMP
