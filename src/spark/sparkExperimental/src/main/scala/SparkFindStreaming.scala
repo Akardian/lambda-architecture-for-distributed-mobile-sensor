@@ -95,7 +95,7 @@ object SparkFindStreaming {
         hdfsTime.writeStream
             .format("json")
             .outputMode("append")
-            .partitionBy(N_TIMESTAMP_HDFS)
+            //.partitionBy(N_TIMESTAMP_HDFS)
             .option("path", HDFS_PATH)
             .option("checkpointLocation", CHECKPOINT_HDFS)
             .start()
