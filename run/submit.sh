@@ -28,10 +28,9 @@ else
      echo Submission ID is [$driverid]
     echo     
      echo Kill $driverid
-     docker exec $SPARK_CONTAINER ./bin/spark-submit --help
      docker exec $SPARK_CONTAINER ./bin/spark-submit \
     --kill $driverid \
-    --master spark://master:6066
+    --master spark://master:7077
     
     echo Moving data to temporary folder
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
