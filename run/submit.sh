@@ -27,10 +27,10 @@ else
      driverid=$(cat $PATH_OUTPUT | grep -Po driver-[0-9]+-[0-9]+ | head -1)
      echo Submission ID is [$driverid]
     echo     
-     echo Kill $driverid
-     docker exec $SPARK_CONTAINER ./bin/spark-submit \
-    --kill $driverid \
-    --master spark://master:7077
+    # echo Kill $driverid
+    # docker exec $SPARK_CONTAINER ./bin/spark-submit \
+    # --kill $driverid \
+    # --master spark://master:7077
     
     echo Moving data to temporary folder
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
@@ -43,14 +43,14 @@ echo
 
 echo Submit jar file to Spark
 # Run on a Spark standalone cluster in cluster deploy mode
-docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
-    --class $SPARK_CLASS \
-    --master spark://master:7077 \
-    --deploy-mode cluster \
-    --executor-memory 16G \
-    --executor-cores $EXECUTER_CORES \
-    --total-executor-cores $TOTAL_EXECUTER_CORES \
-    $SPARK_PATH $NAME \
-    > output 2>&1
+#docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
+#    --class $SPARK_CLASS \
+#    --master spark://master:7077 \
+#    --deploy-mode cluster \
+#    --executor-memory 16G \
+#    --executor-cores $EXECUTER_CORES \
+#    --total-executor-cores $TOTAL_EXECUTER_CORES \
+#    $SPARK_PATH $NAME \
+#    > output 2>&1
     
-cat output
+#cat output
