@@ -36,7 +36,7 @@ else
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_TMP
 
-    docker exec $HDFS_CONTAINER hadoop fs -mv  $HDFS_PATH_NEW $HDFS_PATH_TMP
+    docker exec $HDFS_CONTAINER hadoop fs -mv  "$HDFS_PATH_NEW/part*" $HDFS_PATH_TMP
 fi
 echo
 
