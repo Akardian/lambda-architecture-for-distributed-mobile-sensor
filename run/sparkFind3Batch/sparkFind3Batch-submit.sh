@@ -13,6 +13,8 @@ HDFS_USER=/user/haw
 HDFS_PATH_NEW=../haw/find3Generator/new-data
 HDFS_PATH_TMP=../haw/find3Generator/tmp-data
 
+PATH_OUTPUT=../sparkExperimental/output
+
 IS_STREAMING=false
 
 SPARK_CLASS=SparkFind3Batch

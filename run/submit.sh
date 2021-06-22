@@ -24,7 +24,7 @@ then
     echo Streaming Application
 else
     echo Is a batch Application
-     driverid=$(cat output | grep -Po driver-[0-9]+-[0-9]+ | head -1)
+     driverid=$(cat $PATH_OUTPUT | grep -Po driver-[0-9]+-[0-9]+ | head -1)
      echo Submission ID is [$driverid]
     echo     
      echo Kill $driverid
