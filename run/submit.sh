@@ -28,7 +28,7 @@ else
      echo Submission ID is [$driverid]
     echo     
      echo Kill $driverid
-     docker exec $SPARK_CONTAINER curl -X POST http://master:6066/v1/submissions/kill/$driverid
+     docker exec $SPARK_CONTAINER ./opt/bitnami/spark/bin/spark-class org.apache.spark.deploy.Client kill spark://master:7077 $driverid
     
     echo Moving data to temporary folder
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
