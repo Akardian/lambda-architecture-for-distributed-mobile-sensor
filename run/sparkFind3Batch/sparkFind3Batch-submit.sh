@@ -1,7 +1,7 @@
-echo "Load Sparkfind3 config"
 HDFS_CONTAINER=$(docker ps -q -n 1 -f name=hdfs_datanode*)
 SPARK_CONTAINER=$(docker ps -q -n 1 -f name=spark_master*)
 
+NAME=SparkFind3Batch
 JAR_NAME=sparkFind3Batch-0.2.jar
 
 FAT_JAR_PATH=../../src/spark/sparkFind3Batch/target/scala-2.12/$JAR_NAME
@@ -20,7 +20,11 @@ IS_STREAMING=false
 SPARK_CLASS=SparkFind3Batch
 SPARK_PATH=hdfs://namenode:9000/user/haw/spark-jars/$JAR_NAME
 
-EXECUTER_CORES=1
-TOTAL_EXECUTER_CORES=2
+EXECUTER_CORES=4
+TOTAL_EXECUTER_CORES=4
+
+MEMORY=16G
+
+echo Load $NAME config
 
 . ./../submit.sh

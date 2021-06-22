@@ -13,6 +13,8 @@ HDFS_USER=/user/haw
 HDFS_PATH_NEW=../haw/$NAME/new-data
 HDFS_PATH_TMP=../haw/$NAME/tmp-data
 
+PATH_OUTPUT=output
+
 IS_STREAMING=true
 
 SPARK_CLASS=SparkFindStreaming
