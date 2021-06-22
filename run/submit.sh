@@ -41,7 +41,7 @@ fi
 echo
 
 echo Submit jar file to Spark
-Run on a Spark standalone cluster in cluster deploy mode
+# Run on a Spark standalone cluster in cluster deploy mode
 docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
     --class $SPARK_CLASS \
     --master spark://master:7077 \

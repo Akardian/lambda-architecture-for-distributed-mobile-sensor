@@ -10,7 +10,7 @@ HDFS_PATH=../haw/spark-jars
 HDFS_JAR=tmp/$JAR_NAME
 HDFS_USER=/user/haw
 
-HDFS_PATH_NEW="../haw/find3Streaming-test/new-data/timestamp*"
+HDFS_PATH_NEW="../haw/find3Streaming-test/new-data/timestamp*/*"
 HDFS_PATH_TMP=../haw/find3Streaming-test/tmp-data
 
 PATH_OUTPUT=../sparkExperimental/output
