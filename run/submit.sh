@@ -29,7 +29,10 @@ else
     echo     
      echo Kill $driverid
      docker exec $SPARK_CONTAINER ./bin/spark-submit --help
-     docker exec $SPARK_CONTAINER ./bin/spark-submit --master spark://master:7077 --kill $driverid
+     docker exec $SPARK_CONTAINER ./bin/spark-submit \
+    --master spark://master:7077 \
+    --deploy-mode cluster \
+    --kill $driverid
     
     echo Moving data to temporary folder
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
