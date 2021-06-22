@@ -12,11 +12,14 @@ import org.apache.commons.logging.LogFactory
 import org.apache.hadoop.fs.FileSystem
 import org.apache.hadoop.fs.Path
 
+import config.{PathConfig, Config}
+
 object SparkFind3Batch {
 
     def main(args: Array[String]) {
-        // Import config data
-        import config.Config._
+        val pathConfig = PathConfig(args(0), args(1))
+        import pathConfig._
+        import Config._
         
         // Config Logs
         val log = LogManager.getRootLogger

@@ -6,44 +6,21 @@ import java.sql.Timestamp
 import org.apache.log4j.LogManager
 import scala.collection.mutable.ArrayBuffer
 
-object Config {
-    val NAME = "Find3Batch"
-    val HDFS_DATA = "find3Generator"
+object  Config {
 
     //Logger Settings
-    val DEBUG_MSG = "Find3: "
+    val DEBUG_MSG = "Find3Batch: "
     val DEBUG_MSG_AVG = "Rolling-Avg-" + DEBUG_MSG
     val DEBUG_MSG_DIS = "Rolling-DIS-" + DEBUG_MSG
+
     val LOG_LEVEL = Level.WARN
     val log = LogManager.getRootLogger
     val DEBUG = true
 
-    //Spark Checkpoints
-    val CHECKPOINT_HDFS = "hdfs://namenode:9000/user/haw/" + NAME + "/checkpoint/hdfs"
-    val CHECKPOINT_KAFKA = "hdfs://namenode:9000/user/haw/" + NAME + "/checkpoint/kafka"
-
-    //Spark Settings
-    val CONTEXT_NAME = NAME + "-consumer"
-
-    //Topics and Checkpoints
-    val TOPICS_WIFIDATA = NAME + "-wifiData-stream-output"
-    val CHECKPOINT_KAFKA_WIFIDATA = CHECKPOINT_KAFKA + TOPICS_WIFIDATA
-
-    val TOPICS_WIFIANLY = NAME + "-wifiAnly-stream-output"
-    val CHECKPOINT_KAFKA_WIFIANLY = CHECKPOINT_KAFKA + TOPICS_WIFIANLY
-
-    val TOPICS_ODOMCLEAN = NAME + "-OdomClean-stream-output"
-    val CHECKPOINT_KAFKA_ODOMCLEAN = CHECKPOINT_KAFKA + TOPICS_ODOMCLEAN
-
-    val TOPICS_ODOMDISTANCE = NAME + "-OdomDist-stream-output"
-    val CHECKPOINT_KAFKA_ODOMDISTANCE = CHECKPOINT_KAFKA + TOPICS_ODOMDISTANCE
-
-    val TOPICS_ODOMDISTANCE_EXACT = NAME + "-OdomDistExact-stream-output"
-    val CHECKPOINT_KAFKA_ODOMDISTANCE_EXACT = CHECKPOINT_KAFKA + TOPICS_ODOMDISTANCE
-
-    //HDFS Settings
-    val HDFS_PATH_LOAD = "hdfs://namenode:9000/user/haw/" + HDFS_DATA + "/tmp-data"
-    val HDFS_PATH_SAVE = "hdfs://namenode:9000/user/haw/" + HDFS_DATA + "/archive-data"
+    //Spark timewindows
+    val WATERMARK_SIZE = 5.seconds
+    val WINDOW_SIZE = 10.seconds
+    val SLIDE_SZIZE = 10.seconds
 
     //Schama/column names
     val N_TIMESTAMP_KAFKA_IN = "timestampKafkaIn"
@@ -79,10 +56,18 @@ object Config {
     case class BufferPoints(var points: ArrayBuffer[OdomPoint])    
 
     //AggDistanceLocal
-    val AGGL_BUFFER_SIZE = 50
+    val AGGL_BUFFER_SIZE = 1
     
-    case class BufferPointsLocal(var distance: Double, var points: ArrayBuffer[OdomPoint])
+    case class BufferPointsLocal(var distance: Double, val points: ArrayBuffer[OdomPoint])
+
+    //AggRollingAvg
+    case class AvgWifiData(var timestamp: Timestamp, var wifiAvg: Double, var runingAverage: Double)
+    case class WifiData(var timestamp: Timestamp, var wifiAvg: Double)
+
+    case class Average(var list: List[(Timestamp, Entry)])
+    case class Entry(var wifiDB: Double, var sum: Double, var count: Int)
 
     //Sample json String
     val JSON_SAMPLE = "{\"pose\":{\"position\":{\"x\":0.5428311228752136,\"y\":0.01632818765938282,\"z\":0.0},\"orientation\":{\"x\":0.0083421990275383,\"y\":0.004321090877056122,\"z\":0.03856131061911583,\"w\":0.9992120862007141}},\"header\":{\"seq\":85502,\"stamp\":{\"secs\":1616158742,\"nsecs\":440000000},\"frame_id\":\"base_link\"}}"
+
 }
