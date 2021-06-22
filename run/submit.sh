@@ -30,7 +30,7 @@ else
      echo Kill $driverid
      docker exec $SPARK_CONTAINER ./bin/spark-submit --help
      docker exec $SPARK_CONTAINER ./bin/spark-submit \
-    --master spark://master:7077 \
+    --master spark://master:6066 \
     --deploy-mode cluster \
     --kill $driverid
     
