@@ -36,21 +36,20 @@ else
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_TMP
 
-    # docker exec $HDFS_CONTAINER hadoop fs -rm  HDFS_PATH_NEW/_spark_metadata
     docker exec $HDFS_CONTAINER hadoop fs -mv  $HDFS_PATH_NEW $HDFS_PATH_TMP
 fi
 echo
 
 echo Submit jar file to Spark
-# Run on a Spark standalone cluster in cluster deploy mode
-#docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
-#    --class $SPARK_CLASS \
-#    --master spark://master:7077 \
-#    --deploy-mode cluster \
-#    --executor-memory 16G \
-#    --executor-cores $EXECUTER_CORES \
-#    --total-executor-cores $TOTAL_EXECUTER_CORES \
-#    $SPARK_PATH $NAME \
-#    > output 2>&1
+Run on a Spark standalone cluster in cluster deploy mode
+docker exec $SPARK_CONTAINER /opt/bitnami/spark/bin/spark-submit \
+    --class $SPARK_CLASS \
+    --master spark://master:7077 \
+    --deploy-mode cluster \
+    --executor-memory 16G \
+    --executor-cores $EXECUTER_CORES \
+    --total-executor-cores $TOTAL_EXECUTER_CORES \
+    $SPARK_PATH $NAME \
+    > output 2>&1
     
-#cat output
+cat output
