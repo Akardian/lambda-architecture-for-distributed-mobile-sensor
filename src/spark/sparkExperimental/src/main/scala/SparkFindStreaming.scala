@@ -93,7 +93,7 @@ object SparkFindStreaming {
 
         //Write RAW data to HDFS
         hdfsTime.writeStream
-            .format("json")
+            .format("avro")
             .outputMode("append")
             //.partitionBy(N_TIMESTAMP_HDFS)
             .option("path", HDFS_PATH)
