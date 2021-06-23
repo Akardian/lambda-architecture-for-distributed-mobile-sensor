@@ -12,6 +12,13 @@ import org.apache.commons.logging.LogFactory
 import org.apache.hadoop.fs.FileSystem
 import org.apache.hadoop.fs.Path
 
+import transformations.TransTimestamp._
+import transformations.TransWifi._
+import transformations.TransOdom._
+
+import aggregations.AggDistance
+import sending.SendData._
+
 import config.{PathConfig, Config}
 
 object SparkFind3Batch {
@@ -53,12 +60,20 @@ object SparkFind3Batch {
             .format("json")
             .load(HDFS_PATH_LOAD)
             
-        newData.printSchema()
-
         //Save data back in a compacted format
         newData.write
             .format("json")
             .mode("append")
             .save(HDFS_PATH_SAVE)
+
+        //Load all data
+        val data = spark.read
+            .format("json")
+            .load(HDFS_PATH_SAVE)
+
+        val avgWifi = calculateWifiAverage(data, N_AVG_WIFI, N_WIFI)
+        data.show()
+        avgWifi.printSchema()
+        
     }
 }
