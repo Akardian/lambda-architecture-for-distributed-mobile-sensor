@@ -70,10 +70,11 @@ object SparkFind3Batch {
         val data = spark.read
             .format("json")
             .load(HDFS_PATH_SAVE)
-
-        val avgWifi = calculateWifiAverage(data, N_AVG_WIFI, N_WIFI)
+        data.printSchema()
         data.show()
-        avgWifi.printSchema()
+
+        //val avgWifi = calculateWifiAverage(data, N_AVG_WIFI, N_WIFI)
+        //avgWifi.printSchema()
         
     }
 }
