@@ -60,7 +60,7 @@ object SparkFind3Batch {
             // Read will throw Error if directory is empty
             val newData = spark.read
                 .format("json")
-                .option("multiline", "true")
+                //.option("multiline", "true")
                 .load(HDFS_PATH_LOAD)
             newData.printSchema()
                 
@@ -77,7 +77,7 @@ object SparkFind3Batch {
         //Load all data
         val data = spark.read
             .format("json")
-            .option("multiline", "true")
+            //.option("multiline", "true")
             .load(HDFS_PATH_SAVE)
         data.printSchema()
         data.describe().show()
