@@ -56,25 +56,27 @@ object SparkFind3Batch {
         log.warn(spark.sparkContext.getConf.toDebugString)
 
         //Load data tmp data to compact
-       /* val newData = spark.read
+        val newData = spark.read
             .format("json")
             .option("multiline", "true")
             .load(HDFS_PATH_LOAD)
-        //newData.printSchema()
+        if(!newData.isEmpty) {
+            newData.printSchema()
             
-        //Save data back in a compacted format
-        newData.write
-            .format("json")
-            .mode("append")
-            .save(HDFS_PATH_SAVE) */
+            //Save data back in a compacted format
+            newData.write
+                .format("json")
+                .mode("append")
+                .save(HDFS_PATH_SAVE)
+        }
 
         //Load all data
         val data = spark.read
             .format("json")
             .option("multiline", "true")
             .load(HDFS_PATH_SAVE)
-        //data.printSchema()
-        //data.show()
+        data.printSchema()
+        data.show()
 
         //val avgWifi = calculateWifiAverage(data, N_AVG_WIFI, N_WIFI)
         //avgWifi.printSchema()
