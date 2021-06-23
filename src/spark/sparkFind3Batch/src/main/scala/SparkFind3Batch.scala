@@ -56,18 +56,21 @@ object SparkFind3Batch {
         log.warn(spark.sparkContext.getConf.toDebugString)
 
         //Load data tmp data to compact
-        val newData = spark.read
-            .format("json")
-            .option("multiline", "true")
-            .load(HDFS_PATH_LOAD)
-        if(!newData.isEmpty) {
+        try {
+            val newData = spark.read
+                .format("json")
+                .option("multiline", "true")
+                .load(HDFS_PATH_LOAD)
             newData.printSchema()
-            
+                
             //Save data back in a compacted format
             newData.write
                 .format("json")
                 .mode("append")
                 .save(HDFS_PATH_SAVE)
+        }catch {
+            case ae: AnalysisException =>
+            log.warn(DEBUG_MSG + "Read of Directory failed. No new data to read?")
         }
 
         //Load all data
