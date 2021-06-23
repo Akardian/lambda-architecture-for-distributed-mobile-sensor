@@ -66,7 +66,7 @@ object SparkFind3Batch {
                 
             //Save data back in a compacted format
             newData.write
-                .format("json")
+                .format("avro")
                 .mode("append")
                 .save(HDFS_PATH_SAVE)
         }catch {
@@ -76,7 +76,7 @@ object SparkFind3Batch {
 
         //Load all data
         val data = spark.read
-            .format("json")
+            .format("avro")
             //.option("multiline", "true")
             .load(HDFS_PATH_SAVE)
         data.printSchema()
