@@ -56,7 +56,7 @@ object SparkFind3Batch {
         log.warn(spark.sparkContext.getConf.toDebugString)
 
         //Load data tmp data to compact
-        val newData = spark.read
+       /* val newData = spark.read
             .format("json")
             .option("multiline", "true")
             .load(HDFS_PATH_LOAD)
@@ -66,7 +66,7 @@ object SparkFind3Batch {
         newData.write
             .format("json")
             .mode("append")
-            .save(HDFS_PATH_SAVE)
+            .save(HDFS_PATH_SAVE) */
 
         //Load all data
         val data = spark.read
