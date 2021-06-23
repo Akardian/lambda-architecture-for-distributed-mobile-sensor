@@ -57,8 +57,8 @@ object SparkFind3Batch {
 
         //Load data tmp data to compact
         val newData = spark.read
-            .format("json")
-            .load(HDFS_PATH_LOAD)
+            .json(HDFS_PATH_LOAD)
+        newData.printSchema()
             
         //Save data back in a compacted format
         newData.write
@@ -68,8 +68,7 @@ object SparkFind3Batch {
 
         //Load all data
         val data = spark.read
-            .format("json")
-            .load(HDFS_PATH_SAVE)
+            .json(HDFS_PATH_SAVE)
         data.printSchema()
         data.show()
 
