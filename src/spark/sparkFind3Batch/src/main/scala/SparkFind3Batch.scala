@@ -85,6 +85,24 @@ object SparkFind3Batch {
 
         val avgWifi = calculateWifiAverage(data, N_AVG_WIFI, N_WIFI)
         avgWifi.printSchema()
+        data.show()
+
+        //Aggegrate diffrent analytics about the wifi strenght
+        val wifiData = avgWifi
+            .groupBy(N_SENDERNAME, N_LOCATION)
+            .agg(max(N_TIMESTAMP_KAFKA_IN), max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
+        wifiData.printSchema()
+        wifiData.show()
+
+        //Explode the odometry data into a pretty table format
+        val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
+        odom.printSchema()
+        odom.show()
+
+        //Calculate the driving distance based of the odometry data
+        val distance = calcDistance(odom, spark, N_TIMESTAMP_KAFKA_IN, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
+        distance.printSchema()
+        odom.show()
         
     }
 }
