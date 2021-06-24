@@ -72,7 +72,7 @@ object SparkFind3Batch {
                 .save(HDFS_PATH_SAVE)
         }catch {
             case ae: FileNotFoundException =>
-            log.warn(DEBUG_MSG + "Read of Directory failed. No new data to read?")
+            log.warn(DEBUG_MSG + "Failed to read directory. No new data to read?")
         }
 
         //Load all data
@@ -84,26 +84,34 @@ object SparkFind3Batch {
         data.describe().show()
         data.show()
 
+        val date = data.agg(max(N_TIMESTAMP_KAFKA_IN))
+        date.printSchema()
+        date.show()
+
         val avgWifi = calculateWifiAverage(data, N_AVG_WIFI, N_WIFI)
         avgWifi.printSchema()
-        data.show()
+        avgWifi.describe().show()
+        avgWifi.show()
 
         //Aggegrate diffrent analytics about the wifi strenght
         val wifiData = avgWifi
             .groupBy(N_SENDERNAME, N_LOCATION)
             .agg(max(N_TIMESTAMP_KAFKA_IN), max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
         wifiData.printSchema()
+        wifiData.describe().show()
         wifiData.show()
 
         //Explode the odometry data into a pretty table format
         val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
         odom.printSchema()
+        odom.describe().show()
         odom.show()
 
         //Calculate the driving distance based of the odometry data
         val distance = calcDistance(odom, spark, N_TIMESTAMP_KAFKA_IN, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
         distance.printSchema()
-        odom.show()
+        distance.describe().show()
+        distance.show()
         
     }
 }
