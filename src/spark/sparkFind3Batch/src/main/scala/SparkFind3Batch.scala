@@ -84,7 +84,9 @@ object SparkFind3Batch {
         data.describe().show()
         data.show()
 
-        val date = data.agg(max(N_TIMESTAMP_KAFKA_IN))
+        val date = data.agg(max(N_TIMESTAMP_KAFKA_IN)).select(date_trunc("hour", "max(" + N_TIMESTAMP_KAFKA_IN + ")"))
+        val trunc = data.first().getTimestamp(0)
+        log.warn(DEBUG_MSG + "Timestamp[" + trunc + "]")
         date.printSchema()
         date.show()
 
