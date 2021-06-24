@@ -20,6 +20,7 @@ import aggregations.AggDistance
 import sending.SendData._
 
 import config.{PathConfig, Config}
+import java.io.FileNotFoundException
 
 object SparkFind3Batch {
 
@@ -70,7 +71,7 @@ object SparkFind3Batch {
                 .mode("append")
                 .save(HDFS_PATH_SAVE)
         }catch {
-            case ae: AnalysisException =>
+            case ae: FileNotFoundException =>
             log.warn(DEBUG_MSG + "Read of Directory failed. No new data to read?")
         }
 
