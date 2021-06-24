@@ -39,8 +39,11 @@ case class PathConfig (name: String, hdfsData: String) {
     val HDFS_PATH_LOAD = "hdfs://namenode:9000/user/haw/" + HDFS_DATA + "/tmp-data"
     val HDFS_PATH_SAVE = "hdfs://namenode:9000/user/haw/" + HDFS_DATA + "/archive-data"
 
-    //HDFS Settings
-    val HDFS_PATH = "hdfs://namenode:9000/user/haw/" + NAME + "/new-data"
+    val HDFS_PATH = "hdfs://namenode:9000/user/haw/" + NAME + "/data"
+    val HDFS_PATH_AVG = HDFS_PATH + "/wifiAvg"
+    val HDFS_PATH_DATA = HDFS_PATH + "/wiFiData"
+    val HDFS_PATH_ODOM = HDFS_PATH + "/odomData"
+    val HDFS_PATH_DIST = HDFS_PATH + "/odomDist"
 
     //Avro Schema
     val SCHEMA_PATH = "avro/FINDData.avsc"

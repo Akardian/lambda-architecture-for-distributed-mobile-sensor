@@ -61,7 +61,6 @@ object SparkFind3Batch {
             // Read will throw Error if directory is empty
             val newData = spark.read
                 .format("avro")
-                //.option("multiline", "true")
                 .load(HDFS_PATH_LOAD)
             newData.printSchema()
                 
@@ -78,7 +77,6 @@ object SparkFind3Batch {
         //Load all data
         val data = spark.read
             .format("avro")
-            //.option("multiline", "true")
             .load(HDFS_PATH_SAVE)
         data.printSchema()
         data.describe().show()
@@ -87,15 +85,21 @@ object SparkFind3Batch {
         val time = data
             .agg(max(N_TIMESTAMP_KAFKA_IN))
             .select(date_trunc("hour", col("max(" + N_TIMESTAMP_KAFKA_IN + ")")).as("trunc"))
-        val trunc = time.first().getTimestamp(0)
-        log.warn(DEBUG_MSG + "Timestamp[" + trunc + "]")
         time.printSchema()
         time.show()
+        time.write
+               .format("txt")
+               .mode("overwrite")
+               .save(HDFS_PATH)
 
         val avgWifi = calculateWifiAverage(data, N_AVG_WIFI, N_WIFI)
         avgWifi.printSchema()
         avgWifi.describe().show()
         avgWifi.show()
+        avgWifi.write
+               .format("json")
+               .mode("overwrite")
+               .save(HDFS_PATH_AVG)
 
         //Aggegrate diffrent analytics about the wifi strenght
         val wifiData = avgWifi
@@ -104,18 +108,30 @@ object SparkFind3Batch {
         wifiData.printSchema()
         wifiData.describe().show()
         wifiData.show()
+        wifiData.write
+               .format("avro")
+               .mode("overwrite")
+               .save(HDFS_PATH_DATA)
 
         //Explode the odometry data into a pretty table format
         val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
         odom.printSchema()
         odom.describe().show()
         odom.show()
+        odom.write
+               .format("avro")
+               .mode("overwrite")
+               .save(HDFS_PATH_ODOM)
 
         //Calculate the driving distance based of the odometry data
         val distance = calcDistance(odom, spark, N_TIMESTAMP_KAFKA_IN, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
         distance.printSchema()
         distance.describe().show()
         distance.show()
+        distance.write
+               .format("avro")
+               .mode("overwrite")
+               .save(HDFS_PATH_DIST)
         
     }
 }
