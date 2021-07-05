@@ -25,13 +25,13 @@ case class PathConfig (name: String, hdfsData: String) {
     val TOPICS_WIFIDATA = NAME + "-wifiData-output"
     val CHECKPOINT_KAFKA_WIFIDATA = CHECKPOINT_KAFKA + TOPICS_WIFIDATA
 
-    val TOPICS_WIFIANLY = NAME + "-wifiAnly-output"
+    val TOPICS_WIFIANLY = NAME + "-wifiStats-output"
     val CHECKPOINT_KAFKA_WIFIANLY = CHECKPOINT_KAFKA + TOPICS_WIFIANLY
 
-    val TOPICS_ODOMCLEAN = NAME + "-OdomClean-output"
+    val TOPICS_ODOMCLEAN = NAME + "-odomClean-output"
     val CHECKPOINT_KAFKA_ODOMCLEAN = CHECKPOINT_KAFKA + TOPICS_ODOMCLEAN
 
-    val TOPICS_ODOMDISTANCE = NAME + "-OdomDist-output"
+    val TOPICS_ODOMDISTANCE = NAME + "-odomDist-output"
     val CHECKPOINT_KAFKA_ODOMDISTANCE = CHECKPOINT_KAFKA + TOPICS_ODOMDISTANCE  
 
     
