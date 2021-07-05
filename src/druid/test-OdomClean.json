@@ -6,7 +6,7 @@
       "consumerProperties": {
         "bootstrap.servers": "kafka01:9092"
       },
-      "topic": "find3Streaming-odomClean-output",
+      "topic": "find3Streaming-test-odomClean-output",
       "inputFormat": {
         "type": "json"
       },
@@ -16,7 +16,7 @@
       "type": "kafka"
     },
     "dataSchema": {
-      "dataSource": "find3Streaming-odomClean",
+      "dataSource": "find3Streaming-test-odomClean",
       "granularitySpec": {
         "type": "uniform",
         "queryGranularity": "NONE",

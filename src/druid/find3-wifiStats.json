@@ -6,7 +6,7 @@
       "consumerProperties": {
         "bootstrap.servers": "kafka01:9092"
       },
-      "topic": "find3Streaming-odomDist-output",
+      "topic": "find3Streaming-wifiStats-output",
       "inputFormat": {
         "type": "json"
       },
@@ -16,7 +16,7 @@
       "type": "kafka"
     },
     "dataSchema": {
-      "dataSource": "find3Streaming-odomDist",
+      "dataSource": "find3Streaming-wifiStats",
       "granularitySpec": {
         "type": "uniform",
         "queryGranularity": "NONE",
@@ -31,7 +31,20 @@
         "dimensions": [
           {
             "type": "double",
-            "name": "aggdistancelocal$(secs, nsecs, x, y, z)"
+            "name": "avg(wifiAvg)"
+          },
+          {
+            "type": "long",
+            "name": "count(wifiAvg)"
+          },
+          "location",
+          {
+            "type": "double",
+            "name": "max(wifiAvg)"
+          },
+          {
+            "type": "double",
+            "name": "min(wifiAvg)"
           },
           "senderName"
         ]

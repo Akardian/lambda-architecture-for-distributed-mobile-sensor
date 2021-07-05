@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1619608085295,
+  "id": 4,
+  "iteration": 1625484159113,
   "links": [],
   "panels": [
     {
@@ -120,10 +120,10 @@
       "targets": [
         {
           "builder": {
-            "query": "SELECT  __time, positionX, positionY, senderName\nFROM \"test-OdomClean\"\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '8' HOUR",
+            "query": "SELECT  __time, positionX, positionY, senderName\nFROM \"${source}-odomClean\"\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '${odomTime}'  ${odomUnit}",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT  __time, positionX, positionY, senderName\\nFROM \\\"test-OdomClean\\\"\\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '8' HOUR\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT  __time, positionX, positionY, senderName\\nFROM \\\"${source}-odomClean\\\"\\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '${odomTime}'  ${odomUnit}\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
           "refId": "A",
           "settings": {
             "contextParameters": [],
@@ -133,7 +133,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Loomo Data01 Path over the last 8 hours",
+      "title": "Loomo path over Time",
       "transformations": [],
       "type": "natel-plotly-panel",
       "version": 1
@@ -240,10 +240,10 @@
       "targets": [
         {
           "builder": {
-            "query": "SELECT  __time, positionX, positionY, senderName\nFROM \"test-OdomClean\"\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '1' DAY\nORDER BY __time desc\nLIMIT 100",
+            "query": "SELECT  __time, positionX, positionY, senderName\nFROM \"${source}-odomClean\"\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '1' DAY\nORDER BY __time desc\nLIMIT ${odomStep}",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT  __time, positionX, positionY, senderName\\nFROM \\\"test-OdomClean\\\"\\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '1' DAY\\nORDER BY __time desc\\nLIMIT 100\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT  __time, positionX, positionY, senderName\\nFROM \\\"${source}-odomClean\\\"\\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '1' DAY\\nORDER BY __time desc\\nLIMIT ${odomStep}\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
           "refId": "A",
           "settings": {
             "contextParameters": [],
@@ -253,7 +253,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Loomo Data01 Path over the last 50 movements",
+      "title": "Loomo Path over Steps",
       "transformations": [],
       "type": "natel-plotly-panel",
       "version": 1
@@ -384,10 +384,10 @@
       "targets": [
         {
           "builder": {
-            "query": "SELECT __time, senderName, \"aggdistance$(secs, nsecs, x, y, z)\" AS Distance\nFROM \"test-OdomDist\"\nWHERE senderName='${senderName}'",
+            "query": "SELECT __time, senderName, \"aggdistancelocal$(secs, nsecs, x, y, z)\" AS Distance\nFROM \"${source}-odomDist\"\nWHERE senderName='${senderName}'",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT __time, senderName, \\\"aggdistance$(secs, nsecs, x, y, z)\\\" AS Distance\\nFROM \\\"test-OdomDist\\\"\\nWHERE senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, senderName, \\\"aggdistancelocal$(secs, nsecs, x, y, z)\\\" AS Distance\\nFROM \\\"${source}-odomDist\\\"\\nWHERE senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
           "hide": false,
           "refId": "A",
           "settings": {
@@ -464,7 +464,7 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 1,
+      "linewidth": 0,
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
@@ -474,22 +474,17 @@
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "sum_wifiAvg",
-          "transform": "negative-Y"
-        }
-      ],
+      "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
           "builder": {
-            "query": "SELECT __time, senderName, sum_wifiAvg\nFROM \"test-wifiData\"\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY",
+            "query": "SELECT __time, senderName, wifiAvg\nFROM \"${source}-wifiData\"\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT __time, senderName, sum_wifiAvg\\nFROM \\\"test-wifiData\\\"\\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, senderName, wifiAvg\\nFROM \\\"${source}-wifiData\\\"\\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY\",\"queryType\":\"sql\"},\"settings\":{}}",
           "refId": "A",
           "settings": {}
         }
@@ -517,8 +512,8 @@
           "format": "dB",
           "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
+          "max": "0",
+          "min": "-100",
           "show": true
         },
         {
@@ -527,7 +522,7 @@
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": true
+          "show": false
         }
       ],
       "yaxis": {
@@ -590,10 +585,10 @@
       "LowLmitLineWidth": 1,
       "LowSideMargin": 25,
       "MaxLineColor": "rgb(74, 232, 12)",
-      "MaxLineValue": 100,
+      "MaxLineValue": 0,
       "MaxLineWidth": 1,
       "MinLineColor": "#ff0000",
-      "MinLineValue": 0,
+      "MinLineValue": -100,
       "MinLineWidth": 1,
       "MultiBarPadding": 20,
       "OddRowColor": "rgba(33, 33, 34, 0.92)",
@@ -603,7 +598,7 @@
       "RecolorHighLimitBar": false,
       "RecolorLowLimitBar": false,
       "RecolorRules": [],
-      "ScaleFactor": -1,
+      "ScaleFactor": 1,
       "ShowBars": true,
       "ShowBaseLine": false,
       "ShowDate": false,
@@ -694,7 +689,7 @@
           "aggregation": "Sum",
           "alias": "A",
           "builder": {
-            "query": "SELECT __time, location, \"avg(wifiAvg)\" AS \"AVG\",  \"min(wifiAvg)\" AS \"MIN\", \"max(wifiAvg)\" AS \"MAX\", senderName\nFROM \"test-WifiAnalytics\"\nWHERE senderName='${senderName}'",
+            "query": "SELECT __time, location, \"avg(wifiAvg)\" AS \"AVG\",  \"min(wifiAvg)\" AS \"MIN\", \"max(wifiAvg)\" AS \"MAX\", senderName\nFROM \"${source}-wifiStats\"\nWHERE senderName='${senderName}'",
             "queryType": "sql"
           },
           "crit": -80,
@@ -703,7 +698,7 @@
           "displayAliasType": "Always",
           "displayType": "Regular",
           "displayValueWithAlias": "When Alias Displayed",
-          "expr": "{\"builder\":{\"query\":\"SELECT __time, location, \\\"avg(wifiAvg)\\\" AS \\\"AVG\\\",  \\\"min(wifiAvg)\\\" AS \\\"MIN\\\", \\\"max(wifiAvg)\\\" AS \\\"MAX\\\", senderName\\nFROM \\\"test-WifiAnalytics\\\"\\nWHERE senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, location, \\\"avg(wifiAvg)\\\" AS \\\"AVG\\\",  \\\"min(wifiAvg)\\\" AS \\\"MIN\\\", \\\"max(wifiAvg)\\\" AS \\\"MAX\\\", senderName\\nFROM \\\"${source}-wifiStats\\\"\\nWHERE senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
           "group": {
             "alias": "location",
             "name": "Status Checks",
@@ -771,10 +766,10 @@
       "targets": [
         {
           "builder": {
-            "query": "SELECT __time, \"max(wifiAvg)\", senderName\nFROM \"test-WifiAnalytics\"\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'",
+            "query": "SELECT __time, \"max(wifiAvg)\", senderName\nFROM \"${source}-wifiStats\"\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"max(wifiAvg)\\\", senderName\\nFROM \\\"test-WifiAnalytics\\\"\\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"max(wifiAvg)\\\", senderName\\nFROM \\\"${source}-wifiStats\\\"\\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
           "refId": "A",
           "settings": {}
         }
@@ -846,10 +841,10 @@
       "targets": [
         {
           "builder": {
-            "query": "SELECT __time, \"avg(wifiAvg)\", senderName\nFROM \"test-WifiAnalytics\"\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'",
+            "query": "SELECT __time, \"avg(wifiAvg)\", senderName\nFROM \"${source}-wifiStats\"\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"avg(wifiAvg)\\\", senderName\\nFROM \\\"test-WifiAnalytics\\\"\\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"avg(wifiAvg)\\\", senderName\\nFROM \\\"${source}-wifiStats\\\"\\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
           "refId": "A",
           "settings": {}
         }
@@ -921,10 +916,10 @@
       "targets": [
         {
           "builder": {
-            "query": "SELECT __time, \"min(wifiAvg)\", senderName\nFROM \"test-WifiAnalytics\"\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'",
+            "query": "SELECT __time, \"min(wifiAvg)\", senderName\nFROM \"${source}-wifiStats\"\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"min(wifiAvg)\\\", senderName\\nFROM \\\"test-WifiAnalytics\\\"\\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"min(wifiAvg)\\\", senderName\\nFROM \\\"${source}-wifiStats\\\"\\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
           "refId": "A",
           "settings": {}
         }
@@ -964,22 +959,139 @@
             "selected": false,
             "text": "Data02",
             "value": "Data02"
+          },
+          {
+            "selected": false,
+            "text": "loomo54age18gl20623",
+            "value": "loomo54age18gl20623"
           }
         ],
-        "query": "Data01, Data02",
+        "query": "Data01, Data02, loomo54age18gl20623",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "find3Streaming-test",
+          "value": "find3Streaming-test"
+        },
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Source",
+        "multi": false,
+        "name": "source",
+        "options": [
+          {
+            "selected": false,
+            "text": "find3Streaming",
+            "value": "find3Streaming"
+          },
+          {
+            "selected": true,
+            "text": "find3Streaming-test",
+            "value": "find3Streaming-test"
+          }
+        ],
+        "query": "find3Streaming, find3Streaming-test",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "1",
+          "value": "1"
+        },
+        "error": null,
+        "hide": 0,
+        "label": "Odometry TIme",
+        "name": "odomTime",
+        "options": [
+          {
+            "selected": false,
+            "text": "5",
+            "value": "5"
+          }
+        ],
+        "query": "1",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "DAY",
+          "value": "DAY"
+        },
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Time Unit",
+        "multi": false,
+        "name": "odomUnit",
+        "options": [
+          {
+            "selected": false,
+            "text": "MINUTE",
+            "value": "MINUTE"
+          },
+          {
+            "selected": false,
+            "text": "HOUR",
+            "value": "HOUR"
+          },
+          {
+            "selected": true,
+            "text": "DAY",
+            "value": "DAY"
+          },
+          {
+            "selected": false,
+            "text": "MONTHS",
+            "value": "MONTHS"
+          }
+        ],
+        "query": "MINUTE, HOUR, DAY, MONTHS",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "10",
+          "value": "10"
+        },
+        "error": null,
+        "hide": 0,
+        "label": "Odometry Steps",
+        "name": "odomStep",
+        "options": [
+          {
+            "selected": true,
+            "text": "10",
+            "value": "10"
+          }
+        ],
+        "query": "10",
+        "skipUrlSync": false,
+        "type": "textbox"
       }
     ]
   },
   "time": {
-    "from": "2021-01-20T10:21:37.936Z",
-    "to": "2021-07-23T20:04:00.912Z"
+    "from": "2021-05-13T03:17:47.688Z",
+    "to": "2021-05-13T03:17:47.691Z"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Experimental-Loomo",
-  "uid": "J7N3qDXGk",
-  "version": 26
+  "title": "Loomo",
+  "uid": "wWj4x13Gk",
+  "version": 7
 }
