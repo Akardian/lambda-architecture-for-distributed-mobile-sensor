@@ -2,7 +2,7 @@
 echo "Load Config"
 ENV_FILE=./config.env
 
-DOCKER_COMPOSE=../docker/docker-compose-sbt.yml
-DOCKERFILE=../docker/.
+DOCKER_COMPOSE=../docker-compose-sbt.yml
+DOCKERFILE=../.
 
 . ./../assambly.sh
