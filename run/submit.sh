@@ -1,4 +1,8 @@
+echo Load $NAME config
 echo 
+# Get Container IDs
+HDFS_CONTAINER=$(docker ps -q -n 1 -f name=hdfs_datanode*)
+SPARK_CONTAINER=$(docker ps -q -n 1 -f name=spark_master*)
 echo Submit $JAR_NAME to Spark
 echo Found HDFS datanode: $HDFS_CONTAINER
 echo Found SPARK master: $SPARK_CONTAINER
@@ -22,15 +26,12 @@ echo Check for Streaming Application [IS_STREAMING = $IS_STREAMING]
 if [ $IS_STREAMING = true ]
 then
     echo Streaming Application
+    # Nothing to do here
 else
     echo Is a batch Application
      driverid=$(cat $PATH_OUTPUT | grep -Po driver-[0-9]+-[0-9]+ | head -1)
      echo Submission ID is [$driverid]
     echo     
-    # echo Kill $driverid
-    # docker exec $SPARK_CONTAINER ./bin/spark-submit \
-    # --kill $driverid \
-    # --master spark://master:7077
     
     echo Moving data from [$HDFS_PATH_NEW] to [$HDFS_PATH_TMP]
     docker exec $HDFS_CONTAINER hdfs dfs -mkdir -p $HDFS_PATH_NEW

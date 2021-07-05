@@ -1,19 +1,37 @@
-echo "Load SparkSort config"
-HDFS_CONTAINER=$(docker ps -q -n 1 -f name=hdfs_datanode*)
-SPARK_CONTAINER=$(docker ps -q -n 1 -f name=spark_master*)
+# Application Name and Jar Name
+NAME=example-name
+JAR_NAME=example-name-jarfile-0.1.jar
 
-JAR_NAME=SparkSort-0.1.jar
+# The Path where your fat jar is located
+FAT_JAR_PATH=../../src/Spark/example-project/target/scala-2.12/$JAR_NAME
 
-FAT_JAR_PATH=../../src/Spark/sparksort/target/scala-2.12/$JAR_NAME
-
+# HDFS Locations and user
 HDFS_PATH=../haw/spark-jars
 HDFS_JAR=tmp/$JAR_NAME
 HDFS_USER=/user/haw
 
+# Output location/name for the log
+PATH_OUTPUT=output
+
+# Is this a Streaming application or a Batch application
+IS_STREAMING=true
+
+# Batch Application Settings
+# Path to read from tmp folder to new new folder
+LOAD_DATA_FROM=find3Streaming-test
+
+HDFS_PATH_NEW=../haw/$LOAD_DATA_FROM/new-data
+HDFS_PATH_TMP=../haw/$LOAD_DATA_FROM/tmp-data
+
+# Spark Settings
+# Spark Name and hdfs path to jar
 SPARK_CLASS=SparkSort
 SPARK_PATH=hdfs://namenode:9000/user/haw/spark-jars/$JAR_NAME
 
-EXECUTER_CORES=1
-TOTAL_EXECUTER_CORES=1
+# CPU Core settings
+EXECUTER_CORES=4
+TOTAL_EXECUTER_CORES=4
+
+MEMORY=16G
 
 . ./../submit.sh
