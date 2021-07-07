@@ -116,7 +116,7 @@ services:
         env_file:
             - druid.env
         
-   router:
+    router:
         image: apache/druid:0.21.1
         hostname: router
         restart: unless-stopped
