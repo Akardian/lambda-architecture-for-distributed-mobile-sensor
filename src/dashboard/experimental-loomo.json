@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 4,
-  "iteration": 1625484159113,
+  "iteration": 1625665155020,
   "links": [],
   "panels": [
     {
@@ -384,10 +384,10 @@
       "targets": [
         {
           "builder": {
-            "query": "SELECT __time, senderName, \"aggdistancelocal$(secs, nsecs, x, y, z)\" AS Distance\nFROM \"${source}-odomDist\"\nWHERE senderName='${senderName}'",
+            "query": "SELECT __time, sendername, \"distance\" AS Distance\nFROM \"${source}-odomDista\"\nWHERE sendername='${senderName}'",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT __time, senderName, \\\"aggdistancelocal$(secs, nsecs, x, y, z)\\\" AS Distance\\nFROM \\\"${source}-odomDist\\\"\\nWHERE senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, sendername, \\\"distance\\\" AS Distance\\nFROM \\\"${source}-odomDista\\\"\\nWHERE sendername='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
           "hide": false,
           "refId": "A",
           "settings": {
@@ -403,11 +403,109 @@
       "type": "michaeldmoore-multistat-panel"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
+      "Aggregate": "all",
+      "BarPadding": 5,
+      "BaseLineColor": "#ff0000",
+      "BaseLineValue": null,
+      "BaseLineWidth": 1,
+      "CurveType": "Monotone",
+      "DateFormat": "YYYY-MM-DD HH:mm:ss",
+      "DateTimeColName": "",
+      "DotColor": "white",
+      "DotSize": 10,
+      "EvenRowColor": "rgba(61, 61, 64, 0.78)",
+      "FlashHighLimitBar": false,
+      "FlashLowLimitBar": false,
+      "GroupColName": "senderName",
+      "GroupCols": 0,
+      "GroupGap": 5,
+      "GroupLabelColor": "#ffffff",
+      "GroupLabelFontSize": "200%",
+      "GroupNameFilter": "",
+      "GroupRenamingRules": [],
+      "GroupSortString": "",
+      "HighAxisColor": "#ffffff",
+      "HighAxisWidth": 1,
+      "HighBarColor": "rgb(120, 128, 0)",
+      "HighLimitBarColor": "#ff0000",
+      "HighLimitBarFlashColor": "#ffa500",
+      "HighLimitBarFlashTimeout": 1000,
+      "HighLimitLineColor": "#ff0000",
+      "HighLimitValue": null,
+      "HighLmitLineWidth": 1,
+      "HighSideMargin": 22,
+      "Horizontal": false,
+      "LabelColName": "__time",
+      "LabelColor": "#ffffff",
+      "LabelFontSize": "100%",
+      "LabelMargin": null,
+      "LabelNameFilter": "",
+      "LabelRenamingRules": [],
+      "LableAngle": 0,
+      "Legend": false,
+      "LineColor": "blue",
+      "LineWidth": 5,
+      "Links": [],
+      "LowAxisColor": "#ffffff",
+      "LowAxisWidth": 1,
+      "LowBarColor": "teal",
+      "LowLimitBarColor": "#ff0000",
+      "LowLimitBarFlashColor": "#ffa500",
+      "LowLimitBarFlashTimeout": 200,
+      "LowLimitLineColor": "#ff0000",
+      "LowLimitValue": null,
+      "LowLmitLineWidth": 1,
+      "LowSideMargin": 22,
+      "MaxLineColor": "rgb(74, 232, 12)",
+      "MaxLineValue": 120,
+      "MaxLineWidth": 1,
+      "MinLineColor": "#ff0000",
+      "MinLineValue": 0,
+      "MinLineWidth": 4,
+      "MultiBarPadding": 10,
+      "OddRowColor": "rgba(33, 33, 34, 0.92)",
+      "OutOfRangeLabelColor": "#ffffff",
+      "OutlineColor": "rgba(245, 255, 0, 0.1)",
+      "RecolorColName": null,
+      "RecolorHighLimitBar": false,
+      "RecolorLowLimitBar": false,
+      "RecolorRules": [],
+      "ScaleFactor": -1,
+      "ShowBars": true,
+      "ShowBaseLine": false,
+      "ShowDate": false,
+      "ShowGroupLabels": true,
+      "ShowHighLimitLine": false,
+      "ShowLabels": false,
+      "ShowLeftAxis": true,
+      "ShowLines": false,
+      "ShowLowLimitLine": false,
+      "ShowMaxLine": false,
+      "ShowMinLine": false,
+      "ShowRightAxis": true,
+      "ShowValues": false,
+      "SortColName": "",
+      "SortDirection": "ascending",
+      "TZOffsetHours": 0,
+      "ToolTipFontSize": "100%",
+      "ToolTipType": "light",
+      "TooltipDateFormat": "YYYY-MM-DD HH:mm:ss",
+      "ValueColName": "",
+      "ValueColor": "#ffffff",
+      "ValueDecimals": 1,
+      "ValueFontSize": "100%",
+      "ValuePosition": "top",
+      "Values": [
+        {
+          "Col": 1,
+          "HighBarColor": "#73BF69",
+          "LowBarColor": "#73BF69",
+          "Name": "wifiAvg",
+          "Selected": true
+        }
+      ],
       "datasource": null,
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -441,94 +539,32 @@
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 5,
         "w": 5,
         "x": 7,
         "y": 13
       },
-      "hiddenSeries": false,
       "id": 8,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "hideEmpty": false,
-        "hideZero": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 0,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
       "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
       "targets": [
         {
           "builder": {
-            "query": "SELECT __time, senderName, wifiAvg\nFROM \"${source}-wifiData\"\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY",
+            "query": "SELECT __time,  wifiAvg, senderName\nFROM \"${source}-wifiData\"\nWHERE senderName='${senderName}' \nAND __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT __time, senderName, wifiAvg\\nFROM \\\"${source}-wifiData\\\"\\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time,  wifiAvg, senderName\\nFROM \\\"${source}-wifiData\\\"\\nWHERE senderName='${senderName}' \\nAND __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
           "refId": "A",
-          "settings": {}
+          "settings": {
+            "contextParameters": [],
+            "format": "long"
+          }
         }
       ],
-      "thresholds": [],
       "timeFrom": null,
-      "timeRegions": [],
       "timeShift": null,
-      "title": "Wifi Strenght over TIme",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "dB",
-          "label": null,
-          "logBase": 1,
-          "max": "0",
-          "min": "-100",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": "",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "title": "Wifi average over the last 30 days",
+      "type": "michaeldmoore-multistat-panel"
     },
     {
       "Aggregate": "last",
@@ -939,7 +975,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "Data01",
           "value": "Data01"
         },
@@ -974,7 +1010,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "find3Streaming-test",
           "value": "find3Streaming-test"
         },
@@ -1025,7 +1061,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "DAY",
           "value": "DAY"
         },
@@ -1074,12 +1110,12 @@
         "name": "odomStep",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "10",
             "value": "10"
           }
         ],
-        "query": "10",
+        "query": "40",
         "skipUrlSync": false,
         "type": "textbox"
       }
@@ -1093,5 +1129,5 @@
   "timezone": "",
   "title": "Loomo",
   "uid": "wWj4x13Gk",
-  "version": 7
+  "version": 9
 }
