@@ -120,6 +120,10 @@ object SparkFindStreaming {
 
         //Calculate the driving distance based of the odometry data
         val distance = calcDistanceLocal(odom, spark, N_TIMESTAMP_KAFKA_IN, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
+        distance.select(
+                col("sendername").as("sendername"),
+                col("max(timestampKafkaIn").as("timestamp"),
+                col("aggdistancelocal$(secs, nsecs, x, y, z)").as("distance"))
         sendStream(distance, BOOTSTRAP_SERVERS, TOPICS_ODOMDISTANCE, CHECKPOINT_KAFKA_ODOMDISTANCE)
         distance.printSchema()
 
