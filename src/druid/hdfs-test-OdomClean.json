@@ -1,0 +1,82 @@
+{
+  "type": "index_parallel",
+  "spec": {
+    "ioConfig": {
+      "type": "index_parallel",
+      "inputSource": {
+        "type": "hdfs",
+        "paths": "hdfs://namenode:9000/user/haw/SparkFind3Batch/data/odomData"
+      },
+      "inputFormat": {
+        "type": "json"
+      },
+      "appendToExisting": true
+    },
+    "tuningConfig": {
+      "type": "index_parallel",
+      "partitionsSpec": {
+        "type": "dynamic"
+      }
+    },
+    "dataSchema": {
+      "dataSource": "find3Streaming-test-odomClean",
+      "granularitySpec": {
+        "type": "uniform",
+        "queryGranularity": "NONE",
+        "rollup": false,
+        "segmentGranularity": "HOUR"
+      },
+      "timestampSpec": {
+        "column": "timestampKafkaIn",
+        "format": "iso"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          "frame_id",
+          "location",
+          {
+            "type": "long",
+            "name": "nanoSecs"
+          },
+          {
+            "type": "double",
+            "name": "orientationW"
+          },
+          {
+            "type": "double",
+            "name": "orientationX"
+          },
+          {
+            "type": "double",
+            "name": "orientationY"
+          },
+          {
+            "type": "double",
+            "name": "orientationZ"
+          },
+          {
+            "type": "double",
+            "name": "positionX"
+          },
+          {
+            "type": "double",
+            "name": "positionY"
+          },
+          {
+            "type": "long",
+            "name": "positionZ"
+          },
+          {
+            "type": "long",
+            "name": "secs"
+          },
+          "senderName",
+          {
+            "type": "long",
+            "name": "seq"
+          }
+        ]
+      }
+    }
+  }
+}
