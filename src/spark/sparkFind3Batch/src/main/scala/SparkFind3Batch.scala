@@ -88,7 +88,6 @@ object SparkFind3Batch {
         time.printSchema()
         time.show()
         time.write
-               .format("txt")
                .mode("overwrite")
                .save(HDFS_PATH)
 
@@ -109,7 +108,7 @@ object SparkFind3Batch {
         wifiData.describe().show()
         wifiData.show()
         wifiData.write
-               .format("avro")
+               .format("json")
                .mode("overwrite")
                .save(HDFS_PATH_DATA)
 
@@ -119,7 +118,7 @@ object SparkFind3Batch {
         odom.describe().show()
         odom.show()
         odom.write
-               .format("avro")
+               .format("json")
                .mode("overwrite")
                .save(HDFS_PATH_ODOM)
 
@@ -129,7 +128,7 @@ object SparkFind3Batch {
         distance.describe().show()
         distance.show()
         distance.write
-               .format("avro")
+               .format("json")
                .mode("overwrite")
                .save(HDFS_PATH_DIST)
         
