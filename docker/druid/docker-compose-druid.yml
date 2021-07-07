@@ -42,9 +42,9 @@ services:
         networks: 
             - lambda-network
         volumes:
-            - type: bind
-              source: ./storage
-              target: /opt/data
+            - type: volume
+              source: druid_shared
+              target: /opt/shared
             - type: volume
               source: coordinator_var
               target: /opt/druid/var
@@ -73,8 +73,50 @@ services:
             - broker
         env_file:
             - druid.env
-
-    router:
+            
+    historical:
+        image: apache/druid:0.21.1
+        hostname: historical
+        restart: unless-stopped
+        networks:
+            - lambda-network
+        volumes:
+            - type: volume
+              source: druid_shared
+              target: /opt/shared
+            - type: volume 
+              source: historical_var
+              target: /opt/druid/var
+        ports:
+            - target: 8083
+              published: 5400
+        command:
+            - historical
+        env_file:
+           - druid.env
+           
+    middlemanager:
+        image: apache/druid:0.21.1
+        hostname: middlemanager
+        restart: unless-stopped
+        networks: 
+            - lambda-network
+        volumes:
+            - type: volume
+              source: druid_shared
+              target: /opt/shared
+            - type: volume
+              source: middle_var
+              target: /opt/druid/var
+        ports:
+            - target: 8091
+              published: 5300
+        command:
+            - middleManager
+        env_file:
+            - druid.env
+        
+   router:
         image: apache/druid:0.21.1
         hostname: router
         restart: unless-stopped
@@ -91,48 +133,6 @@ services:
             - router
         env_file:
             - druid.env
-        
-    middlemanager:
-        image: apache/druid:0.21.1
-        hostname: middlemanager
-        restart: unless-stopped
-        networks: 
-            - lambda-network
-        volumes:
-            - type: bind
-              source: ./storage
-              target: /opt/data
-            - type: volume
-              source: middle_var
-              target: /opt/druid/var
-        ports:
-            - target: 8091
-              published: 5300
-        command:
-            - middleManager
-        env_file:
-            - druid.env
-
-    historical:
-        image: apache/druid:0.21.1
-        hostname: historical
-        restart: unless-stopped
-        networks:
-            - lambda-network
-        volumes:
-            - type: bind
-              source: ./storage
-              target: /opt/data
-            - type: volume 
-              source: historical_var
-              target: /opt/druid/var
-        ports:
-            - target: 8083
-              published: 5400
-        command:
-            - historical
-        env_file:
-           - druid.env
 
 networks:
     lambda-network:
@@ -146,3 +146,4 @@ volumes:
     broker_var:
     router_var:
     middle_var:
+    druid_shared:
