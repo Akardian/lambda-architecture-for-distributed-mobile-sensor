@@ -88,8 +88,9 @@ object SparkFind3Batch {
         time.printSchema()
         time.show()
         time.write
+                .format("json")
                .mode("overwrite")
-               .save(HDFS_PATH)
+               .save(HDFS_PATH_TIME)
 
         val avgWifi = calculateWifiAverage(data, N_AVG_WIFI, N_WIFI)
         avgWifi.printSchema()
