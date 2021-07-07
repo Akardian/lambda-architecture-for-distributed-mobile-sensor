@@ -125,14 +125,14 @@ object SparkFind3Batch {
 
         //Calculate the driving distance based of the odometry data
         val distance = calcDistance(odom, spark, N_TIMESTAMP_KAFKA_IN, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
-        distance.select(
+        val cleanDistance = distance.select(
                 col("sendername").as("sendername"),
-                col("max(timestampKafkaIn").as("timestamp"),
+                col("max(timestampKafkaIn)").as("timestamp"),
                 col("aggdistance$(secs, nsecs, x, y, z)").as("distance"))
-        distance.printSchema()
-        distance.describe().show()
-        distance.show()
-        distance.write
+        cleanDistance.printSchema()
+        cleanDistance.describe().show()
+        cleanDistance.show()
+        cleanDistance.write
                .format("json")
                .mode("overwrite")
                .save(HDFS_PATH_DIST)
