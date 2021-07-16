@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 4,
-  "iteration": 1625665155020,
+  "iteration": 1626444466792,
   "links": [],
   "panels": [
     {
@@ -269,7 +269,7 @@
       "DateTimeColName": "__time",
       "DotColor": "white",
       "DotSize": 10,
-      "EvenRowColor": "rgba(61, 61, 64, 0.78)",
+      "EvenRowColor": "rgba(0, 0, 0, 0)",
       "FlashHighLimitBar": false,
       "FlashLowLimitBar": false,
       "GroupColName": "senderName",
@@ -325,9 +325,9 @@
       "MinLineValue": null,
       "MinLineWidth": 1,
       "MultiBarPadding": 10,
-      "OddRowColor": "rgba(33, 33, 34, 0.92)",
+      "OddRowColor": "rgba(0, 0, 0, 0)",
       "OutOfRangeLabelColor": "#ffffff",
-      "OutlineColor": "rgba(245, 255, 0, 0.1)",
+      "OutlineColor": "rgba(0, 0, 0, 0)",
       "RecolorColName": "__time",
       "RecolorHighLimitBar": false,
       "RecolorLowLimitBar": false,
@@ -360,7 +360,7 @@
       "Values": [
         {
           "Col": 2,
-          "HighBarColor": "#8F3BB8",
+          "HighBarColor": "#73BF69",
           "LowBarColor": "#5794F2",
           "Name": "Distance",
           "Selected": true
@@ -413,7 +413,7 @@
       "DateTimeColName": "",
       "DotColor": "white",
       "DotSize": 10,
-      "EvenRowColor": "rgba(61, 61, 64, 0.78)",
+      "EvenRowColor": "rgba(0, 0, 0, 0)",
       "FlashHighLimitBar": false,
       "FlashLowLimitBar": false,
       "GroupColName": "senderName",
@@ -463,9 +463,9 @@
       "MinLineValue": 0,
       "MinLineWidth": 4,
       "MultiBarPadding": 10,
-      "OddRowColor": "rgba(33, 33, 34, 0.92)",
+      "OddRowColor": "rgba(0, 0, 0, 0)",
       "OutOfRangeLabelColor": "#ffffff",
-      "OutlineColor": "rgba(245, 255, 0, 0.1)",
+      "OutlineColor": "rgba(0, 0, 0, 0)",
       "RecolorColName": null,
       "RecolorHighLimitBar": false,
       "RecolorLowLimitBar": false,
@@ -975,7 +975,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "Data01",
           "value": "Data01"
         },
@@ -1010,7 +1010,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "find3Streaming-test",
           "value": "find3Streaming-test"
         },
@@ -1039,9 +1039,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "1",
-          "value": "1"
+          "selected": true,
+          "text": "10",
+          "value": "10"
         },
         "error": null,
         "hide": 0,
@@ -1049,19 +1049,19 @@
         "name": "odomTime",
         "options": [
           {
-            "selected": false,
-            "text": "5",
-            "value": "5"
+            "selected": true,
+            "text": "10",
+            "value": "10"
           }
         ],
-        "query": "1",
+        "query": "10",
         "skipUrlSync": false,
         "type": "textbox"
       },
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "DAY",
           "value": "DAY"
         },
@@ -1100,7 +1100,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "10",
           "value": "10"
         },
@@ -1110,12 +1110,12 @@
         "name": "odomStep",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "10",
             "value": "10"
           }
         ],
-        "query": "40",
+        "query": "10",
         "skipUrlSync": false,
         "type": "textbox"
       }
@@ -1129,5 +1129,5 @@
   "timezone": "",
   "title": "Loomo",
   "uid": "wWj4x13Gk",
-  "version": 9
+  "version": 11
 }
