@@ -41,8 +41,8 @@ object SendData {
 	  * @param topic Kafka topic
 	  * @param checkpoint hdfs path for checkpoint location
 	  */
-	def sendStream(dataframe: DataFrame, outputMode: String, server: String, topic: String, checkpoint: String) {
-        dataframe
+	def sendStream(dataframe: DataFrame, outputMode: String, server: String, topic: String, checkpoint: String) : StreamingQuery = {
+        val out = dataframe
             .selectExpr("to_json(struct(*)) AS value")
             .writeStream
             .format("kafka")
@@ -51,6 +51,7 @@ object SendData {
             .option("topic", topic)
             .option("checkpointLocation", checkpoint)
             .start()
+        out
 	} 
 
 	/**
@@ -61,7 +62,7 @@ object SendData {
 	  * @param topic Kafka topic
 	  * @param checkpoint hdfs path for checkpoint location
 	  */
-	def sendStream(dataframe: DataFrame, server: String, topic: String, checkpoint: String) {
+	def sendStream(dataframe: DataFrame, server: String, topic: String, checkpoint: String) : StreamingQuery ={
 		sendStream(dataframe, "update", server, topic, checkpoint)
 	}
 }
