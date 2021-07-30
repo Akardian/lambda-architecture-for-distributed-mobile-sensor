@@ -1,5 +1,5 @@
 # Application Name and Jar Name
-NAME=find3Streaming-scale-test-4
+NAME=find3Streaming-scale-test-3
 JAR_NAME=SparkFindStreaming-0.1.jar
 
 # The Path where your fat jar is located

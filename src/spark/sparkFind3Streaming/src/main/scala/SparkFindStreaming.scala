@@ -98,7 +98,7 @@ object SparkFindStreaming {
         val odom = explodeOdom(avgWifi, spark, JSON_SAMPLE, N_TIMESTAMP_KAFKA_IN, N_SENDERNAME, N_LOCATION, N_ODEM_DATA)
 
         //Calculate the driving distance based of the odometry data
-        val distance = calcDistanceLocal(odom, spark, N_TIMESTAMP_KAFKA_IN, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
+        val distance = calcDistance(odom, spark, N_TIMESTAMP_KAFKA_IN, "secs", "nanoSecs", N_SENDERNAME, "positionX", "positionY", "positionZ")
         val cleanDistance = distance.select(
                 col("sendername").as("sendername"),
                 col("max(timestampKafkaIn)").as("timestamp"),
