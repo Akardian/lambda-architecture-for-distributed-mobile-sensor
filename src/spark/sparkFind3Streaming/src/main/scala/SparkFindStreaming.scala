@@ -102,7 +102,7 @@ object SparkFindStreaming {
         val cleanDistance = distance.select(
                 col("sendername").as("sendername"),
                 col("max(timestampKafkaIn)").as("timestamp"),
-                col("aggdistancelocal$(secs, nsecs, x, y, z)").as("distance"))
+                col("aggdistance$(secs, nsecs, x, y, z)").as("distance"))
         val querry = sendStream(cleanDistance, BOOTSTRAP_SERVERS, TOPICS_ODOMDISTANCE, CHECKPOINT_KAFKA_ODOMDISTANCE)
         cleanDistance.printSchema()
 
