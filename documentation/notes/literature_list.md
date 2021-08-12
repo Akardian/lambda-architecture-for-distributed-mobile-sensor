@@ -154,3 +154,12 @@ MarkDown
 Sharding
 
 - https://blog.yugabyte.com/how-data-sharding-works-in-a-distributed-sql-database/
+
+Statistics
+
+- https://www.statista.com/statistics/970920/monetizable-daily-active-twitter-users-worldwide/
+- https://s22.q4cdn.com/826641620/files/doc_financials/2020/q4/Q4_20__InvestorFactSheet.pdf
+
+BibTex
+
+- https://www.economics.utoronto.ca/osborne/latex/BIBTEX.HTM
