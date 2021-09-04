@@ -1,0 +1,58 @@
+{
+  "type": "index_parallel",
+  "spec": {
+    "ioConfig": {
+      "type": "index_parallel",
+      "inputSource": {
+        "type": "hdfs",
+        "paths": "hdfs://namenode:9000//user/haw/shared/event-logs/!!! ADD LOG NAME !!!"
+      },
+      "inputFormat": {
+        "type": "json",
+        "flattenSpec": {
+          "useFieldDiscovery": true,
+          "fields": [
+            {
+              "type": "path",
+              "name": "Submission Time",
+              "expr": "$.['Submission Time']"
+            },
+            {
+              "type": "path",
+              "name": "Completion Time",
+              "expr": "$.['Completion Time']"
+            }
+          ]
+        }
+      }
+    },
+    "tuningConfig": {
+      "type": "index_parallel",
+      "partitionsSpec": {
+        "type": "dynamic"
+      }
+    },
+    "dataSchema": {
+      "timestampSpec": {
+        "column": "!!!_no_such_column_!!!",
+        "missingValue": "2010-01-01T00:00:00Z"
+      },
+      "granularitySpec": {
+        "queryGranularity": "none",
+        "rollup": false,
+        "segmentGranularity": "day"
+      },
+      "transformSpec": {
+        "filter": {
+          "type": "regex",
+          "dimension": "Event",
+          "pattern": "SparkListenerJob*"
+        }
+      },
+      "dataSource": "!!! ADD DATASOURCE NAME !!!",
+      "dimensionsSpec": {
+        "dimensionExclusions": []
+      }
+    }
+  }
+}
