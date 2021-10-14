@@ -8,7 +8,7 @@ RUN \
     mkdir /working/ && \
     cd /working/ && \
     echo Download && \
-    curl -L -o sbt$SBT_VERSION.deb https://scala.jfrog.io/native/debian/sbt-$SBT_VERSION.deb && \
+    curl -L -o sbt$SBT_VERSION.deb https://repo.scala-sbt.org/scalasbt/debian/sbt-$SBT_VERSION.deb && \
     echo Download Finished && \
     ls && \
     dpkg -i sbt$SBT_VERSION.deb && \
