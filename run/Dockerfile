@@ -7,10 +7,12 @@ RUN \
     echo Start && \
     mkdir /working/ && \
     cd /working/ && \
-    echo download && \
+    echo Download && \
     curl -L -o sbt-$SBT_VERSION.deb https://scala.jfrog.io/native/debian/sbt-$SBT_VERSION.deb && \
-    dpkg -i sbt-$SBT_VERSION.deb && \
+    echo Download Finished
+    dpkg -i sbt$SBT_VERSION.deb && \
     rm sbt-$SBT_VERSION.deb && \
+    echo Update
     apt-get update && \
     apt-get install sbt && \
     cd && \
@@ -27,4 +29,4 @@ RUN \
     && chmod +x /entrypoint.sh
 WORKDIR /
 ENTRYPOINT [ "/entrypoint.sh" ]
-CMD [ "bash" ]
+CMD [ "bash" ]y
