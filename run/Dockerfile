@@ -9,10 +9,10 @@ RUN \
     cd /working/ && \
     echo Download && \
     curl -L -o sbt-$SBT_VERSION.deb https://scala.jfrog.io/native/debian/sbt-$SBT_VERSION.deb && \
-    echo Download Finished
+    echo Download Finished && \
     dpkg -i sbt$SBT_VERSION.deb && \
     rm sbt-$SBT_VERSION.deb && \
-    echo Update
+    echo Update && \
     apt-get update && \
     apt-get install sbt && \
     cd && \
