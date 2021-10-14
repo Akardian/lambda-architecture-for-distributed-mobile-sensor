@@ -12,7 +12,7 @@ RUN \
     echo Download Finished && \
     ls && \
     dpkg -i sbt$SBT_VERSION.deb && \
-    rm sbt-$SBT_VERSION.deb && \
+    rm sbt$SBT_VERSION.deb && \
     echo Update && \
     apt-get update && \
     apt-get install sbt && \
