@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
     grafana:
-        image: grafana/grafana:7.3.7
+        image: grafana/grafana:8.2.2
         hostname: grafana
         restart: unless-stopped
         networks:
