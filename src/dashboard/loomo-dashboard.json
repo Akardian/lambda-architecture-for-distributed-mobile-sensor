@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 4,
-  "iteration": 1626444466792,
+  "iteration": 1631108876538,
   "links": [],
   "panels": [
     {
@@ -31,7 +31,7 @@
       "gridPos": {
         "h": 13,
         "w": 12,
-        "x": 0,
+        "x": 0,		
         "y": 0
       },
       "id": 2,
@@ -240,10 +240,10 @@
       "targets": [
         {
           "builder": {
-            "query": "SELECT  __time, positionX, positionY, senderName\nFROM \"${source}-odomClean\"\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '1' DAY\nORDER BY __time desc\nLIMIT ${odomStep}",
+            "query": "SELECT  __time, positionX, positionY, senderName\nFROM \"${source}-odomClean\"\nWHERE senderName='${senderName}' \nORDER BY __time desc\nLIMIT ${odomStep}",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT  __time, positionX, positionY, senderName\\nFROM \\\"${source}-odomClean\\\"\\nWHERE senderName='${senderName}' AND __time >= CURRENT_TIMESTAMP - INTERVAL '1' DAY\\nORDER BY __time desc\\nLIMIT ${odomStep}\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT  __time, positionX, positionY, senderName\\nFROM \\\"${source}-odomClean\\\"\\nWHERE senderName='${senderName}' \\nORDER BY __time desc\\nLIMIT ${odomStep}\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
           "refId": "A",
           "settings": {
             "contextParameters": [],
@@ -550,10 +550,10 @@
       "targets": [
         {
           "builder": {
-            "query": "SELECT __time,  wifiAvg, senderName\nFROM \"${source}-wifiData\"\nWHERE senderName='${senderName}' \nAND __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY",
+            "query": "SELECT __time,  wifiAvg, senderName\nFROM \"${source}-wifiData\"\nWHERE senderName='${senderName}' \nAND __time <= CURRENT_TIMESTAMP - INTERVAL '30' DAY",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT __time,  wifiAvg, senderName\\nFROM \\\"${source}-wifiData\\\"\\nWHERE senderName='${senderName}' \\nAND __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time,  wifiAvg, senderName\\nFROM \\\"${source}-wifiData\\\"\\nWHERE senderName='${senderName}' \\nAND __time <= CURRENT_TIMESTAMP - INTERVAL '30' DAY\",\"queryType\":\"sql\"},\"settings\":{\"contextParameters\":[],\"format\":\"long\"}}",
           "refId": "A",
           "settings": {
             "contextParameters": [],
@@ -802,10 +802,10 @@
       "targets": [
         {
           "builder": {
-            "query": "SELECT __time, \"max(wifiAvg)\", senderName\nFROM \"${source}-wifiStats\"\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'",
+            "query": "SELECT __time, \"max(wifiAvg)\", senderName\nFROM \"${source}-wifiStats\"\nWHERE senderName='${senderName}'",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"max(wifiAvg)\\\", senderName\\nFROM \\\"${source}-wifiStats\\\"\\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"max(wifiAvg)\\\", senderName\\nFROM \\\"${source}-wifiStats\\\"\\nWHERE senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
           "refId": "A",
           "settings": {}
         }
@@ -877,10 +877,10 @@
       "targets": [
         {
           "builder": {
-            "query": "SELECT __time, \"avg(wifiAvg)\", senderName\nFROM \"${source}-wifiStats\"\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'",
+            "query": "SELECT __time, \"avg(wifiAvg)\", senderName\nFROM \"${source}-wifiStats\"\nWHERE senderName='${senderName}'",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"avg(wifiAvg)\\\", senderName\\nFROM \\\"${source}-wifiStats\\\"\\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"avg(wifiAvg)\\\", senderName\\nFROM \\\"${source}-wifiStats\\\"\\nWHERE senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
           "refId": "A",
           "settings": {}
         }
@@ -952,10 +952,10 @@
       "targets": [
         {
           "builder": {
-            "query": "SELECT __time, \"min(wifiAvg)\", senderName\nFROM \"${source}-wifiStats\"\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'",
+            "query": "SELECT __time, \"min(wifiAvg)\", senderName\nFROM \"${source}-wifiStats\"\nWHERE senderName='${senderName}'",
             "queryType": "sql"
           },
-          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"min(wifiAvg)\\\", senderName\\nFROM \\\"${source}-wifiStats\\\"\\nWHERE __time >= CURRENT_TIMESTAMP - INTERVAL '30' DAY AND senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
+          "expr": "{\"builder\":{\"query\":\"SELECT __time, \\\"min(wifiAvg)\\\", senderName\\nFROM \\\"${source}-wifiStats\\\"\\nWHERE senderName='${senderName}'\",\"queryType\":\"sql\"},\"settings\":{}}",
           "refId": "A",
           "settings": {}
         }
@@ -966,7 +966,7 @@
       "type": "stat"
     }
   ],
-  "refresh": false,
+  "refresh": "5s",
   "schemaVersion": 26,
   "style": "dark",
   "tags": [],
@@ -975,7 +975,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "Data01",
           "value": "Data01"
         },
@@ -1010,9 +1010,9 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "find3Streaming-test",
-          "value": "find3Streaming-test"
+          "selected": true,
+          "text": "find3Streaming",
+          "value": "find3Streaming"
         },
         "error": null,
         "hide": 0,
@@ -1022,12 +1022,12 @@
         "name": "source",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "find3Streaming",
             "value": "find3Streaming"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "find3Streaming-test",
             "value": "find3Streaming-test"
           }
@@ -1039,9 +1039,9 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": "10",
-          "value": "10"
+          "selected": false,
+          "text": "1",
+          "value": "1"
         },
         "error": null,
         "hide": 0,
@@ -1050,11 +1050,11 @@
         "options": [
           {
             "selected": true,
-            "text": "10",
-            "value": "10"
+            "text": "1",
+            "value": "1"
           }
         ],
-        "query": "10",
+        "query": "1",
         "skipUrlSync": false,
         "type": "textbox"
       },
@@ -1101,8 +1101,8 @@
       {
         "current": {
           "selected": false,
-          "text": "10",
-          "value": "10"
+          "text": "50",
+          "value": "50"
         },
         "error": null,
         "hide": 0,
@@ -1111,11 +1111,11 @@
         "options": [
           {
             "selected": true,
-            "text": "10",
-            "value": "10"
+            "text": "50",
+            "value": "50"
           }
         ],
-        "query": "10",
+        "query": "50",
         "skipUrlSync": false,
         "type": "textbox"
       }
@@ -1129,5 +1129,5 @@
   "timezone": "",
   "title": "Loomo",
   "uid": "wWj4x13Gk",
-  "version": 11
+  "version": 14
 }

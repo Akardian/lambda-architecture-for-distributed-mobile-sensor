@@ -4,11 +4,16 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV SBT_VERSION 1.4.4
 
 RUN \
+    echo Start && \
     mkdir /working/ && \
     cd /working/ && \
-    curl -L -o sbt-$SBT_VERSION.deb http://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
-    dpkg -i sbt-$SBT_VERSION.deb && \
-    rm sbt-$SBT_VERSION.deb && \
+    echo Download && \
+    curl -L -o sbt$SBT_VERSION.deb https://repo.scala-sbt.org/scalasbt/debian/sbt-$SBT_VERSION.deb && \
+    echo Download Finished && \
+    ls && \
+    dpkg -i sbt$SBT_VERSION.deb && \
+    rm sbt$SBT_VERSION.deb && \
+    echo Update && \
     apt-get update && \
     apt-get install sbt && \
     cd && \
@@ -25,4 +30,4 @@ RUN \
     && chmod +x /entrypoint.sh
 WORKDIR /
 ENTRYPOINT [ "/entrypoint.sh" ]
-CMD [ "bash" ]
+CMD [ "bash" ]y

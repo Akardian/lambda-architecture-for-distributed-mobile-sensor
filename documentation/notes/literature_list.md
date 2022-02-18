@@ -163,3 +163,7 @@ Statistics
 BibTex
 
 - https://www.economics.utoronto.ca/osborne/latex/BIBTEX.HTM
+
+CAP
+
+- https://codahale.com/you-cant-sacrifice-partition-tolerance/
