@@ -101,6 +101,6 @@ object SparkFindStreaming {
         val querry = sendStream(wifiData, BOOTSTRAP_SERVERS, TOPICS_WIFIANLY, CHECKPOINT_KAFKA_WIFIANLY)
         wifiData.printSchema()
 
-        querry.awaitAnyTermination()
+        querry.awaitTermination()
     }
 }
