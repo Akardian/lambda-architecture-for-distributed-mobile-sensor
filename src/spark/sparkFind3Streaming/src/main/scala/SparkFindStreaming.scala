@@ -108,9 +108,9 @@ object SparkFindStreaming {
         val wifiData = avgWifi
             .groupBy(N_SENDERNAME, N_LOCATION)
             .agg(max(N_TIMESTAMP_KAFKA_IN), max(N_AVG_WIFI), min(N_AVG_WIFI), avg(N_AVG_WIFI), count(N_AVG_WIFI))
-        sendStream(wifiData, BOOTSTRAP_SERVERS, TOPICS_WIFIANLY, CHECKPOINT_KAFKA_WIFIANLY)
+        val querry = sendStream(wifiData, BOOTSTRAP_SERVERS, TOPICS_WIFIANLY, CHECKPOINT_KAFKA_WIFIANLY)
         wifiData.printSchema()
 
-        spark.streams.awaitAnyTermination()
+        querry.awaitTermination()
     }
 }
